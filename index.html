@@ -99,7 +99,7 @@
                 </div>
                 <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
                     <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin gluten</h3>
-                    <p class="text-sm text-[#899078]">Elaborado sin ingredientes que contienen gluten bajo estrictos controles.</p>
+                    <p class="text-sm text-[#899078]">Propuestas formuladas sin ingredientes que contienen gluten. Consulta los detalles de cada producto.</p>
                 </div>
                 <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
                     <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin harina de trigo</h3>
@@ -113,7 +113,19 @@
         </div>
     </section>
 
-    <!-- SECCIÓN 4: CATÁLOGO DE PRODUCTOS -->
+    <!-- SECCIÓN 4: PRODUCTOS DESTACADOS -->
+    <section id="favoritos" class="max-w-6xl mx-auto px-4 pt-16">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+            <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Una invitación a descubrir</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-[#563B30] mb-4">Favoritos de la casa</h2>
+            <p class="text-[#899078]">Una selección de nuestra repostería. Explora cada propuesta y encuentra tu próximo sabor favorito.</p>
+        </div>
+        <div id="grid-destacados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <p class="text-[#899078] text-sm col-span-full text-center">Preparando nuestra selección...</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 5: CATÁLOGO DE PRODUCTOS -->
     <main id="catalogo" class="max-w-6xl mx-auto py-16 px-4">
         
         <!-- A. Ponqués -->
@@ -191,12 +203,24 @@
 
     <!-- SECCIÓN 7: MOMENTOS ESPECIALES & SECCIÓN 8: TESTIMONIOS -->
     <section id="momentos" class="bg-white py-16 px-4 border-t border-[#A87853]/10">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-[#563B30] mb-4">HAY MOMENTOS QUE MERECEN UN SABOR ESPECIAL.</h2>
-            <p class="text-[#899078] mb-12">Desayunos • Tardes de café • Reuniones familiares • Celebraciones • Regalos especiales</p>
-            
-            <h2 class="text-3xl font-bold text-[#A87853] mb-8 mt-16">CADA DETALLE CUENTA.</h2>
-            <p class="text-[#899078]">Productos elaborados por encargo, con atención personalizada y disponibilidad sujeta a confirmación.</p>
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Para compartir y celebrar</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#563B30] mb-4">HAY MOMENTOS QUE MERECEN UN SABOR ESPECIAL.</h2>
+                <p class="text-[#899078]">Un desayuno sin apuros, una tarde de café, una reunión en familia o una celebración especial: acompáñalos con algo preparado especialmente para la ocasión.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">☕</span><h3 class="font-serif text-2xl text-[#563B30]">Tardes de café</h3><p class="text-sm text-[#563B30]/75 mt-2">Una pausa para disfrutar algo delicioso.</p></article>
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">☀</span><h3 class="font-serif text-2xl text-[#563B30]">Desayunos</h3><p class="text-sm text-[#563B30]/75 mt-2">Comienza el día con un sabor especial.</p></article>
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">♡</span><h3 class="font-serif text-2xl text-[#563B30]">Reuniones</h3><p class="text-sm text-[#563B30]/75 mt-2">Detalles para compartir con quienes quieres.</p></article>
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">✦</span><h3 class="font-serif text-2xl text-[#563B30]">Celebraciones</h3><p class="text-sm text-[#563B30]/75 mt-2">Tortas y dulces para hacer memorable la ocasión.</p></article>
+            </div>
+            <div class="text-center mt-16 border-t border-[#A87853]/15 pt-12">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">La experiencia Tasty Pastries</p>
+                <h2 class="text-3xl font-bold text-[#563B30] mb-4">CADA DETALLE CUENTA.</h2>
+                <p class="text-[#899078] max-w-2xl mx-auto mb-6">Cada pedido se prepara por encargo, con atención personalizada y cuidado en cada etapa. Si ya disfrutaste nuestros productos, nos encantará conocer tu experiencia.</p>
+                <a href="https://wa.me/58424294992?text=Hola%2C%20quiero%20compartir%20mi%20experiencia%20con%20Tasty%20Pastries." target="_blank" rel="noopener noreferrer" class="inline-block border border-[#A87853] text-[#A87853] px-6 py-3 rounded-xl font-bold hover:bg-[#A87853] hover:text-white transition">Compartir mi experiencia</a>
+            </div>
         </div>
     </section>
 
@@ -364,6 +388,30 @@
             } catch (_) { return ''; }
         }
 
+        function renderDestacados() {
+            const grid = document.getElementById('grid-destacados');
+            if (!grid) return;
+            const patrones = [/lim[oó]n/i, /apple/i, /brazo.*chocolate/i, /cumplea[nñ]os|torta/i];
+            const activos = productos.filter(p => p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
+            const seleccion = patrones.map(regex => activos.find(p => regex.test(String(p.nombre || '')))).filter(Boolean);
+            const unicos = [...new Map(seleccion.map(p => [String(p.id), p])).values()].slice(0,4);
+            grid.replaceChildren();
+            if (!unicos.length) {
+                const msg = document.createElement('p'); msg.className = 'text-[#899078] text-sm col-span-full text-center'; msg.textContent = 'Descubre todas nuestras categorías en el catálogo.'; grid.appendChild(msg); return;
+            }
+            unicos.forEach(p => {
+                const card = document.createElement('article'); card.className = 'bg-white rounded-2xl overflow-hidden border border-[#A87853]/15 shadow-sm flex flex-col';
+                const imgUrl = safeImageURL(p.img);
+                if (imgUrl) { const img = document.createElement('img'); img.src = imgUrl; img.alt = String(p.nombre || 'Producto Tasty Pastries'); img.loading = 'lazy'; img.className = 'w-full h-52 object-cover'; card.appendChild(img); }
+                else { const blank = document.createElement('div'); blank.className = 'h-52 bg-[#F4EBDD] flex items-center justify-center text-[#A87853]'; blank.textContent = 'Tasty Pastries'; card.appendChild(blank); }
+                const body = document.createElement('div'); body.className = 'p-5 flex flex-col flex-1';
+                const name = document.createElement('h3'); name.className = 'font-serif text-xl font-bold text-[#563B30]'; name.textContent = p.nombre || 'Producto';
+                const desc = document.createElement('p'); desc.className = 'text-sm text-[#899078] mt-2 flex-1'; desc.textContent = p.desc || '';
+                const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'mt-4 text-sm font-bold text-[#A87853] text-left'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
+                body.append(name, desc, btn); card.appendChild(body); grid.appendChild(card);
+            });
+        }
+
         function renderProductos() {
             const grids = {
                 'ponques': document.getElementById('grid-ponques'),
@@ -372,6 +420,7 @@
                 'cheesecakes': document.getElementById('grid-cheesecakes'),
                 'tortas': document.getElementById('grid-tortas')
             };
+            renderDestacados();
             Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
             productos.forEach(p => {
                 const estaActivo = (p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
@@ -538,6 +587,17 @@
             } else {
                 document.getElementById('txt-total-bs').innerText = 'Bs. --';
             }
+        }
+
+        function toggleMenuMovil(force) {
+            const menu = document.getElementById('menu-movil');
+            const btn = document.getElementById('btn-menu-movil');
+            if (!menu || !btn) return;
+            const abrir = typeof force === 'boolean' ? force : menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', !abrir);
+            btn.setAttribute('aria-expanded', String(abrir));
+            btn.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+            btn.textContent = abrir ? '✕' : '☰';
         }
 
         function toggleCarrito() {
