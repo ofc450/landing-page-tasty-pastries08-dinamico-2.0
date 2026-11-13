@@ -315,6 +315,14 @@
                 <button onclick="enviarWhatsApp()" class="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold hover:bg-[#20ba5a] transition flex items-center justify-center gap-2 shadow-md uppercase tracking-wide">
                     Enviar pedido por WhatsApp
                 </button>
+                <div id="confirmacion-pedido-whatsapp" class="hidden mt-4 p-4 rounded-xl border border-[#899078]/40 bg-[#F4EBDD]" role="status" aria-live="polite">
+                    <p class="font-bold text-[#563B30] text-sm">¿Ya enviaste tu pedido?</p>
+                    <p class="text-xs text-[#899078] mt-1 mb-3">Si ya enviaste el mensaje desde WhatsApp, puedes limpiar el carrito. Si aún no lo has enviado, consérvalo.</p>
+                    <div class="flex flex-col gap-2">
+                        <button type="button" onclick="confirmarPedidoEnviado()" class="w-full bg-[#899078] text-white py-3 rounded-lg font-bold text-sm hover:bg-[#6c725e] transition">Sí, ya envié mi pedido. Limpiar carrito</button>
+                        <button type="button" onclick="conservarCarrito()" class="w-full border border-[#A87853]/40 text-[#563B30] py-2 rounded-lg font-bold text-sm">Todavía no. Conservar carrito</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -523,6 +531,33 @@
             actualizarCarritoUI();
         }
 
+        // Confirmación manual: la página no puede verificar si el mensaje fue enviado en WhatsApp.
+        function mostrarConfirmacionPedido() {
+            const aviso = document.getElementById('confirmacion-pedido-whatsapp');
+            if (aviso) aviso.classList.remove('hidden');
+        }
+
+        function ocultarConfirmacionPedido() {
+            const aviso = document.getElementById('confirmacion-pedido-whatsapp');
+            if (aviso) aviso.classList.add('hidden');
+        }
+
+        function confirmarPedidoEnviado() {
+            vaciarCarrito();
+            localStorage.removeItem('pedido_whatsapp_pendiente');
+            ocultarConfirmacionPedido();
+            document.getElementById('cliente-nombre').value = '';
+            document.getElementById('cliente-fecha').value = '';
+            document.getElementById('cliente-obs').value = '';
+            document.getElementById('panel-carrito').classList.remove('hidden');
+            alert('Carrito limpiado. ¡Gracias por tu pedido! Tasty Pastries confirmará la disponibilidad por WhatsApp.');
+        }
+
+        function conservarCarrito() {
+            localStorage.removeItem('pedido_whatsapp_pendiente');
+            ocultarConfirmacionPedido();
+        }
+
         function actualizarCarritoUI() {
             const lista = document.getElementById('lista-carrito-items');
             const contador = document.getElementById('nav-contador-carrito');
@@ -646,8 +681,14 @@
             lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil.');
             if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
             const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
-            window.open(url, '_blank', 'noopener');
-            // Se conserva el carrito para evitar perder el pedido si WhatsApp no llega a abrirse.
+            const ventanaWhatsApp = window.open(url, '_blank', 'noopener');
+            if (ventanaWhatsApp) {
+                localStorage.setItem('pedido_whatsapp_pendiente', 'true');
+                mostrarConfirmacionPedido();
+            } else {
+                alert('No se pudo abrir WhatsApp. Revisa si tu navegador bloqueó la ventana emergente. Tu carrito se conserva.');
+            }
+            // El carrito solo se limpia cuando el cliente confirma manualmente que ya envió el pedido.
         }
 
         window.onload = function() {
@@ -656,6 +697,9 @@
             const manana = new Date(Date.now() + 24 * 60 * 60 * 1000);
             fechaInput.min = `${manana.getFullYear()}-${String(manana.getMonth()+1).padStart(2,'0')}-${String(manana.getDate()).padStart(2,'0')}`;
             cargarCarritoGuardado();
+            if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
+                mostrarConfirmacionPedido();
+            }
             cargarProductosSheets();
             obtenerTasaBCV();
         };
