@@ -245,9 +245,6 @@
                 <p id="modal-desc" class="text-[#899078] text-sm mb-4">Descripción</p>
 
                 
-                <label class="block text-xs font-bold text-[#A87853] uppercase mb-1">Personalización / Notas (Opcional):</label>
-                <input type="text" id="modal-notas" placeholder="Ej: Vegano (+$2), Queso crema (+$3)" class="w-full border p-2 rounded-lg text-sm mb-4 bg-gray-50 focus:outline-none focus:border-[#A87853]">
-                
                 <div class="flex justify-between items-center mt-2 border-t pt-4">
                     <span id="modal-precio" class="text-2xl font-bold text-[#A87853]">$0</span>
                     <button id="btn-modal-agregar" class="bg-[#563B30] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#3a2720] transition">Añadir al carrito</button>
@@ -273,7 +270,7 @@
                     <div>
                         <label class="block text-xs font-bold uppercase text-[#A87853] mb-1">Modalidad de Entrega</label>
                         <select id="tipo-entrega" onchange="actualizarCarritoUI()" class="w-full p-2 border rounded-lg bg-white text-sm outline-none">
-                            <option value="delivery" selected>Delivery (hasta 18 km — USD 4)</option>
+                            <option value="delivery" selected>Delivery preliminar (hasta 18 km — USD 4)</option>
                             <option value="pickup">Pick-up (retiro coordinado)</option>
                         </select>
                     </div>
@@ -295,12 +292,13 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-[#A87853] mb-1">Observaciones (Opcional)</label>
-                        <input type="text" id="cliente-obs" placeholder="Detalles de entrega, alergias, etc." class="w-full p-2 border rounded-lg text-sm bg-white outline-none">
+                        <input type="text" id="cliente-obs" placeholder="Indicaciones para la entrega (opcional)" class="w-full p-2 border rounded-lg text-sm bg-white outline-none">
                     </div>
 
                     <div class="border-t border-[#A87853]/20 pt-4 space-y-2 text-sm">
                         <div class="flex justify-between text-[#563B30]"><span>Subtotal Productos:</span><span id="txt-subtotal">$0</span></div>
-                        <div class="flex justify-between text-[#899078]" id="fila-delivery"><span>Delivery (hasta 18 km):</span><span>$4</span></div>
+                        <div class="flex justify-between text-[#899078]" id="fila-delivery"><span>Delivery preliminar (hasta 18 km):</span><span>$4</span></div>
+                        <p class="text-xs text-[#899078]" id="aviso-delivery">USD 4 es una tarifa preliminar para ubicaciones dentro de un radio de 18 km. Comparte tu ubicación de Google Maps por WhatsApp para confirmar el costo final. Si corresponde, el monto se ajustará antes de confirmar el pedido.</p>
                         <div class="flex justify-between font-bold text-lg text-[#563B30] border-t border-[#A87853]/20 pt-2">
                             <span>TOTAL ESTIMADO (USD):</span><span id="txt-total">$0</span>
                         </div>
@@ -340,7 +338,26 @@
         // Persistencia (LocalStorage)
         function cargarCarritoGuardado() {
             const guardado = localStorage.getItem('carrito_tastypastries');
-            if (guardado) { try { carrito = JSON.parse(guardado) || {}; } catch (_) { carrito = {}; localStorage.removeItem('carrito_tastypastries'); } }
+            if (guardado) {
+                try {
+                    const anterior = JSON.parse(guardado) || {};
+                    carrito = {};
+                    Object.values(anterior).forEach(item => {
+                        if (!item || !item.idBase) return;
+                        const id = String(item.idBase);
+                        if (!carrito[id]) carrito[id] = {
+                            idBase: item.idBase,
+                            nombre: item.nombre,
+                            precio: Number(item.precio) || 0,
+                            cantidad: 0
+                        };
+                        carrito[id].cantidad += Math.max(1, Number(item.cantidad) || 1);
+                    });
+                } catch (_) {
+                    carrito = {};
+                    localStorage.removeItem('carrito_tastypastries');
+                }
+            }
             actualizarCarritoUI();
         }
         function guardarCarrito() {
@@ -476,8 +493,7 @@
             if (img) { const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto'); image.className = 'w-full h-full object-cover'; imageContainer.appendChild(image); }
             document.getElementById('modal-nombre').innerText = p.nombre;
             document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-precio').innerText = `$${parseFloat(p.precio) || 0}`;
-            document.getElementById('modal-notas').value = '';
+            document.getElementById('modal-precio').innerText = `${(parseFloat(p.precio) || 0).toFixed(2).replace(/\\.00$/, '')}`;
             
             document.getElementById('btn-modal-agregar').onclick = () => agregarAlCarritoDesdeModal();
             document.getElementById('modal-producto').classList.remove('hidden');
@@ -491,9 +507,7 @@
         function agregarAlCarritoDesdeModal() {
             if(!productoSeleccionadoTemporal) return;
             const p = productoSeleccionadoTemporal;
-            const notas = document.getElementById('modal-notas').value.trim();
-            
-            const cartId = p.id + "_" + (notas.replace(/\s+/g, '').toLowerCase() || 'std');
+            const cartId = String(p.id);
             
             if (carrito[cartId]) {
                 carrito[cartId].cantidad++;
@@ -502,8 +516,7 @@
                     idBase: p.id, 
                     nombre: p.nombre, 
                     precio: parseFloat(p.precio) || 0, 
-                    cantidad: 1,
-                    personalizacion: notas 
+                    cantidad: 1
                 };
             }
             guardarCarrito();
@@ -575,14 +588,11 @@
                     totalItems += item.cantidad;
                     subtotal += item.precio * item.cantidad;
                     
-                    const notasHTML = item.personalizacion ? `<p class="text-xs text-[#A87853] mt-1 italic">Nota: ${escapeHTML(item.personalizacion)}</p>` : '';
-
                     lista.innerHTML += `
                         <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-[#A87853]/20 shadow-sm">
                             <div class="pr-2 flex-1">
                                 <h4 class="font-bold text-sm text-[#563B30] font-serif">${escapeHTML(item.nombre)}</h4>
-                                <span class="text-xs text-[#899078] font-bold">$${item.precio} c/u</span>
-                                ${notasHTML}
+                                <span class="text-xs text-[#899078] font-bold">${Number(item.precio).toFixed(2).replace(/\\.00$/, '')} c/u</span>
                             </div>
                             <div class="flex items-center gap-2 bg-[#F4EBDD] rounded-lg p-1">
                                 <button data-cart-id="${escapeHTML(cartId)}" data-delta="-1" class="w-6 h-6 bg-white rounded font-bold text-[#563B30] flex items-center justify-center hover:bg-gray-100">-</button>
@@ -613,8 +623,8 @@
             const totalUsd = subtotal + costoDelivery;
 
             contador.innerText = totalItems;
-            document.getElementById('txt-subtotal').innerText = `$${subtotal}`;
-            document.getElementById('txt-total').innerText = `$${totalUsd}`;
+            document.getElementById('txt-subtotal').innerText = `${subtotal.toFixed(2)}`;
+            document.getElementById('txt-total').innerText = `${totalUsd.toFixed(2)}`;
 
             if (tasaBcv > 0) {
                 const totalBs = totalUsd * tasaBcv;
@@ -650,10 +660,11 @@
             const tipoEntrega = document.getElementById('tipo-entrega').value;
 
             if (fecha) {
-                const [y, m, d] = fecha.split('-').map(Number);
-                const elegida = new Date(y, m - 1, d, 0, 0, 0);
                 const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
-                if (elegida < minimo) { alert('La fecha indicada debe tener al menos 24 horas de anticipación. También puedes dejarla en blanco y coordinarla por WhatsApp.'); return; }
+                const [y, m, d] = fecha.split('-').map(Number);
+                const elegida = new Date(y, m - 1, d);
+                const minimoFecha = new Date(minimo.getFullYear(), minimo.getMonth(), minimo.getDate());
+                if (elegida < minimoFecha) { alert('La fecha indicada debe ser con al menos 24 horas de anticipación. También puedes dejarla en blanco y coordinarla por WhatsApp.'); return; }
             }
 
             let subtotal = 0;
@@ -663,14 +674,16 @@
             lineas.push('', '*PRODUCTOS:*');
             ids.forEach(cartId => {
                 const item = carrito[cartId]; const totalItem = Number(item.precio) * Number(item.cantidad); subtotal += totalItem;
-                let linea = `• ${item.cantidad} × ${item.nombre}: USD ${totalItem.toFixed(2)}`;
-                if (item.personalizacion) linea += ` (Nota: ${item.personalizacion})`;
+                const linea = `• ${item.cantidad} × ${item.nombre}: USD ${totalItem.toFixed(2)}`;
                 lineas.push(linea);
             });
             lineas.push('', `Subtotal productos: USD ${subtotal.toFixed(2)}`);
             const costoDelivery = tipoEntrega === 'delivery' ? 4 : 0;
-            if (tipoEntrega === 'delivery') lineas.push('Delivery (cobertura estándar hasta 18 km): USD 4.00');
-            else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
+            if (tipoEntrega === 'delivery') {
+                lineas.push('Delivery preliminar (hasta 18 km): USD 4.00');
+                lineas.push('Comparte tu ubicación de Google Maps por este chat para confirmar el costo final del delivery. La tarifa podrá ajustarse según la ubicación antes de confirmar el pedido.');
+                lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
+            } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
             const totalFinal = subtotal + costoDelivery;
             lineas.push('', `*TOTAL ESTIMADO: USD ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
             if (tasaBcv > 0) {
@@ -695,8 +708,8 @@
         window.onload = function() {
             document.getElementById('tipo-entrega').value = 'delivery';
             const fechaInput = document.getElementById('cliente-fecha');
-            const manana = new Date(Date.now() + 24 * 60 * 60 * 1000);
-            fechaInput.min = `${manana.getFullYear()}-${String(manana.getMonth()+1).padStart(2,'0')}-${String(manana.getDate()).padStart(2,'0')}`;
+            const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            fechaInput.min = `${minimo.getFullYear()}-${String(minimo.getMonth()+1).padStart(2,'0')}-${String(minimo.getDate()).padStart(2,'0')}`;
             cargarCarritoGuardado();
             if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
                 mostrarConfirmacionPedido();
