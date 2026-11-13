@@ -623,8 +623,8 @@
             const totalUsd = subtotal + costoDelivery;
 
             contador.innerText = totalItems;
-            document.getElementById('txt-subtotal').innerText = `${subtotal.toFixed(2)}`;
-            document.getElementById('txt-total').innerText = `${totalUsd.toFixed(2)}`;
+            document.getElementById('txt-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('txt-total').innerText = `$${totalUsd.toFixed(2)}`;
 
             if (tasaBcv > 0) {
                 const totalBs = totalUsd * tasaBcv;
