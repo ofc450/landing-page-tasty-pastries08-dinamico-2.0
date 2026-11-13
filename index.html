@@ -681,8 +681,9 @@
             lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil.');
             if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
             const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
-            const ventanaWhatsApp = window.open(url, '_blank', 'noopener');
+            const ventanaWhatsApp = window.open(url, '_blank');
             if (ventanaWhatsApp) {
+                ventanaWhatsApp.opener = null;
                 localStorage.setItem('pedido_whatsapp_pendiente', 'true');
                 mostrarConfirmacionPedido();
             } else {
