@@ -493,7 +493,7 @@
             if (img) { const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto'); image.className = 'w-full h-full object-cover'; imageContainer.appendChild(image); }
             document.getElementById('modal-nombre').innerText = p.nombre;
             document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-precio').innerText = `${(parseFloat(p.precio) || 0).toFixed(2).replace(/\\.00$/, '')}`;
+            document.getElementById('modal-precio').innerText = `${(parseFloat(p.precio) || 0).toFixed(2).replace(/\.00$/, '')}`;
             
             document.getElementById('btn-modal-agregar').onclick = () => agregarAlCarritoDesdeModal();
             document.getElementById('modal-producto').classList.remove('hidden');
@@ -592,7 +592,7 @@
                         <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-[#A87853]/20 shadow-sm">
                             <div class="pr-2 flex-1">
                                 <h4 class="font-bold text-sm text-[#563B30] font-serif">${escapeHTML(item.nombre)}</h4>
-                                <span class="text-xs text-[#899078] font-bold">${Number(item.precio).toFixed(2).replace(/\\.00$/, '')} c/u</span>
+                                <span class="text-xs text-[#899078] font-bold">${Number(item.precio).toFixed(2).replace(/\.00$/, '')} c/u</span>
                             </div>
                             <div class="flex items-center gap-2 bg-[#F4EBDD] rounded-lg p-1">
                                 <button data-cart-id="${escapeHTML(cartId)}" data-delta="-1" class="w-6 h-6 bg-white rounded font-bold text-[#563B30] flex items-center justify-center hover:bg-gray-100">-</button>
