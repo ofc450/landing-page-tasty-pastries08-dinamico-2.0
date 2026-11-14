@@ -416,10 +416,23 @@
         function renderDestacados() {
             const grid = document.getElementById('grid-destacados');
             if (!grid) return;
-            const patrones = [/lim[oó]n/i, /apple/i, /brazo.*chocolate/i, /cumplea[nñ]os|torta/i];
-            const activos = productos.filter(p => p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
-            const seleccion = patrones.map(regex => activos.find(p => regex.test(String(p.nombre || '')))).filter(Boolean);
-            const unicos = [...new Map(seleccion.map(p => [String(p.id), p])).values()].slice(0,4);
+
+            const esVerdadero = valor =>
+                valor === true || ['TRUE', '1', 'SI', 'SÍ', 'YES']
+                    .includes(String(valor ?? '').trim().toUpperCase());
+
+            const unicos = [...new Map(
+                productos
+                    .filter(p => esVerdadero(p.activo) && esVerdadero(p.destacado))
+                    .sort((a, b) => {
+                        const ordenA = Number(a.orden_destacado);
+                        const ordenB = Number(b.orden_destacado);
+                        return (Number.isFinite(ordenA) && ordenA > 0 ? ordenA : 999) -
+                               (Number.isFinite(ordenB) && ordenB > 0 ? ordenB : 999);
+                    })
+                    .map(p => [String(p.id), p])
+            ).values()].slice(0, 4);
+
             grid.replaceChildren();
             if (!unicos.length) {
                 const msg = document.createElement('p'); msg.className = 'text-[#899078] text-sm col-span-full text-center'; msg.textContent = 'Descubre todas nuestras categorías en el catálogo.'; grid.appendChild(msg); return;
