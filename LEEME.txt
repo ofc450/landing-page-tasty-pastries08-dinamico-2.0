@@ -1,0 +1,22 @@
+TASTY PASTRIES — IMÁGENES PARA LAS 5 TARJETAS
+
+Archivos WebP optimizados, proporción 3:2.
+
+01_explora.webp       → Tarjeta 1: Explora
+02_selecciona.webp    → Tarjeta 2: Selecciona
+03_envia_pedido.webp  → Tarjeta 3: Envía tu pedido
+04_coordinamos.webp   → Tarjeta 4: Coordinamos (imagen generada para esta tarjeta)
+05_disfruta.webp      → Tarjeta 5: Disfruta
+
+INSTRUCCIONES PARA GITHUB
+1. En el repositorio, abre la rama mejora-experiencia-marca.
+2. Crea una carpeta llamada assets si todavía no existe.
+3. Sube los cinco archivos .webp dentro de assets.
+4. Luego hay que actualizar los src de las cinco tarjetas para que apunten a:
+   assets/01_explora.webp
+   assets/02_selecciona.webp
+   assets/03_envia_pedido.webp
+   assets/04_coordinamos.webp
+   assets/05_disfruta.webp
+
+No reemplazar las fotografías del catálogo de productos. Estas cinco imágenes corresponden únicamente a las tarjetas del proceso de compra.
