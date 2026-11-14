@@ -603,7 +603,7 @@
                 const desc = document.createElement('p'); desc.className = 'product-card-description line-clamp-2'; desc.textContent = p.desc || '';
                 body.append(title, desc);
                 const footer = document.createElement('div'); footer.className = 'product-card-footer';
-                const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `${precioNum.toFixed(2).replace(/\.00$/, '')}`;
+                const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `$${precioNum.toFixed(2).replace(/\.00$/, '')}`;
                 const action = document.createElement('span'); action.className = 'product-card-action'; action.textContent = 'Ver opciones';
                 footer.append(price, action); card.append(media, body, footer);
                 card.addEventListener('click', () => abrirModal(p.id));
