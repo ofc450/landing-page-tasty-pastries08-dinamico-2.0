@@ -109,6 +109,20 @@
         .moment-card:nth-child(2n) { background:linear-gradient(145deg,rgba(137,144,120,.14),rgba(168,120,83,.2)); }
         .mobile-menu a { display:block; padding:.8rem 0; border-top:1px solid rgba(168,120,83,.16); }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .card:hover { transform:none; } * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+        .philosophy-section { background:linear-gradient(180deg,#fff 0%,#fbf7f0 100%); padding:clamp(4rem,7vw,6.5rem) 1rem; }
+        .philosophy-inner { max-width:72rem; margin:0 auto; display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(2.5rem,6vw,5.5rem); align-items:center; }
+        .philosophy-intro { max-width:31rem; }
+        .philosophy-title { color:#563B30; font-size:clamp(2rem,3.4vw,3.15rem); line-height:1.12; letter-spacing:-.035em; font-weight:700; }
+        .philosophy-lead { color:#A87853; font-family:'Playfair Display',serif; font-size:clamp(1.15rem,1.7vw,1.4rem); line-height:1.55; margin-top:1.35rem; }
+        .philosophy-note { color:#899078; font-size:.94rem; line-height:1.8; margin-top:1rem; max-width:28rem; }
+        .philosophy-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+        .philosophy-card { min-height:11.5rem; padding:1.5rem; border:1px solid rgba(168,120,83,.18); border-radius:1.15rem; background:rgba(255,255,255,.82); display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem; box-shadow:0 8px 24px rgba(86,59,48,.045); transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease; }
+        .philosophy-card:hover { transform:translateY(-3px); border-color:rgba(168,120,83,.42); box-shadow:0 14px 28px rgba(86,59,48,.08); }
+        .philosophy-index { color:#A87853; font-size:.72rem; font-weight:700; letter-spacing:.18em; }
+        .philosophy-card h3 { color:#563B30; font-family:'Playfair Display',serif; font-size:1.35rem; line-height:1.2; margin-bottom:.5rem; }
+        .philosophy-card p { color:#899078; font-size:.83rem; line-height:1.65; }
+        @media(max-width:767px) { .philosophy-inner { grid-template-columns:1fr; gap:2rem; } .philosophy-intro { max-width:38rem; margin:0 auto; text-align:center; } .philosophy-note { margin-inline:auto; } .philosophy-grid { gap:.75rem; } .philosophy-card { min-height:10.5rem; padding:1.1rem; } .philosophy-card h3 { font-size:1.18rem; } .philosophy-card p { font-size:.78rem; } }
+        @media(max-width:390px) { .philosophy-grid { grid-template-columns:1fr; } .philosophy-card { min-height:auto; } }
     </style>
     <!-- Meta Pixel y Google Analytics se instalarán al final, con identificadores reales. -->
 </head>
@@ -168,28 +182,31 @@
     <div class="bg-white/70 border-y border-[#A87853]/10"><div class="max-w-6xl mx-auto px-4 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-xs md:text-sm font-bold uppercase tracking-wide text-[#563B30]"><span>Sin azúcar</span><span>Sin gluten</span><span>Sin harina de trigo</span><span>Sin conservantes</span></div></div>
 
     <!-- SECCIÓN 3: FILOSOFÍA Y PROPUESTA DE VALOR -->
-    <section id="filosofia" class="bg-white py-16 px-4">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#A87853] mb-4">CREEMOS QUE CUIDARTE TAMBIÉN PUEDE SER DELICIOSO.</h2>
-            <p class="text-base md:text-lg text-[#899078] max-w-2xl mx-auto mb-12">Disfrutar de un buen postre y prestar atención a los ingredientes pueden ir de la mano.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin azúcar</h3>
-                    <p class="text-sm text-[#899078]">Sistemas de endulzado basados en formulaciones propias y seguras.</p>
-                </div>
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin gluten</h3>
-                    <p class="text-sm text-[#899078]">Propuestas formuladas sin ingredientes que contienen gluten. Consulta los detalles de cada producto.</p>
-                </div>
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin harina de trigo</h3>
-                    <p class="text-sm text-[#899078]">Utilización de harinas alternativas seleccionadas de alta calidad.</p>
-                </div>
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin conservantes</h3>
-                    <p class="text-sm text-[#899078]">Elaboraciones totalmente frescas que no incorporan aditivos.</p>
-                </div>
+    <section id="filosofia" class="philosophy-section">
+        <div class="philosophy-inner">
+            <div class="philosophy-intro">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-4">Nuestra manera de entender la repostería</p>
+                <h2 class="philosophy-title">CREEMOS QUE CUIDARTE TAMBIÉN PUEDE SER DELICIOSO.</h2>
+                <p class="philosophy-lead">Disfrutar de un buen postre y prestar atención a los ingredientes pueden ir de la mano.</p>
+                <p class="philosophy-note">En Tasty Pastries buscamos ese equilibrio en cada receta: sabor, ingredientes seleccionados y una elaboración hecha con intención.</p>
+            </div>
+            <div class="philosophy-grid">
+                <article class="philosophy-card">
+                    <span class="philosophy-index">01</span>
+                    <div><h3>Sin azúcar</h3><p>Recetas endulzadas con alternativas al azúcar, sin renunciar al placer de cada bocado.</p></div>
+                </article>
+                <article class="philosophy-card">
+                    <span class="philosophy-index">02</span>
+                    <div><h3>Sin gluten</h3><p>Propuestas formuladas sin ingredientes que contienen gluten. Consulta los detalles de cada producto.</p></div>
+                </article>
+                <article class="philosophy-card">
+                    <span class="philosophy-index">03</span>
+                    <div><h3>Sin harina de trigo</h3><p>Trabajamos con harinas alternativas cuidadosamente seleccionadas para cada preparación.</p></div>
+                </article>
+                <article class="philosophy-card">
+                    <span class="philosophy-index">04</span>
+                    <div><h3>Sin conservantes</h3><p>Cada pedido se elabora especialmente para ti, sin incorporar conservantes.</p></div>
+                </article>
             </div>
         </div>
     </section>
