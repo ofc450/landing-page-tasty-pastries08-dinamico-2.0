@@ -123,6 +123,23 @@
         .philosophy-card p { color:#899078; font-size:.83rem; line-height:1.65; }
         @media(max-width:767px) { .philosophy-inner { grid-template-columns:1fr; gap:2rem; } .philosophy-intro { max-width:38rem; margin:0 auto; text-align:center; } .philosophy-note { margin-inline:auto; } .philosophy-grid { gap:.75rem; } .philosophy-card { min-height:10.5rem; padding:1.1rem; } .philosophy-card h3 { font-size:1.18rem; } .philosophy-card p { font-size:.78rem; } }
         @media(max-width:390px) { .philosophy-grid { grid-template-columns:1fr; } .philosophy-card { min-height:auto; } }
+        .philosophy-card { position:relative; display:block; min-height:19rem; overflow:hidden; isolation:isolate; padding:0; cursor:pointer; text-align:left; border:1px solid rgba(168,120,83,.22); border-radius:1.15rem; background:#563B30; box-shadow:0 8px 24px rgba(86,59,48,.07); transition:transform .25s ease,box-shadow .25s ease; }
+        .philosophy-card:hover,.philosophy-card:focus-visible,.philosophy-card.is-open { transform:translateY(-3px); box-shadow:0 16px 32px rgba(86,59,48,.16); outline:none; }
+        .philosophy-image { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; transition:transform .45s ease; }
+        .philosophy-card:hover .philosophy-image,.philosophy-card:focus-visible .philosophy-image,.philosophy-card.is-open .philosophy-image { transform:scale(1.06); }
+        .philosophy-card::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(38,27,22,.12) 5%,rgba(38,27,22,.82) 100%); }
+        .philosophy-front,.philosophy-detail { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:1.35rem; color:#fff; transition:opacity .25s ease,transform .25s ease; }
+        .philosophy-front .philosophy-index,.philosophy-detail .philosophy-index { color:#F4EBDD; font-size:.72rem; letter-spacing:.18em; margin-bottom:.6rem; }
+        .philosophy-front h3,.philosophy-detail h3 { color:#fff; font-family:'Playfair Display',serif; font-size:1.55rem; line-height:1.15; margin-bottom:.65rem; }
+        .philosophy-hint { color:#F4EBDD; font-size:.75rem; letter-spacing:.04em; }
+        .philosophy-detail { justify-content:center; background:rgba(65,43,33,.94); opacity:0; transform:translateY(8px); }
+        .philosophy-detail h3 { font-size:1.4rem; }
+        .philosophy-detail p { color:rgba(255,255,255,.88); font-size:.88rem; line-height:1.7; }
+        .philosophy-card:hover .philosophy-front,.philosophy-card:focus-visible .philosophy-front,.philosophy-card.is-open .philosophy-front { opacity:0; transform:translateY(-8px); }
+        .philosophy-card:hover .philosophy-detail,.philosophy-card:focus-visible .philosophy-detail,.philosophy-card.is-open .philosophy-detail { opacity:1; transform:translateY(0); }
+        .philosophy-footnote { color:#899078; font-size:.78rem; text-align:center; margin-top:1.15rem; }
+        @media(max-width:767px) { .philosophy-card { min-height:17rem; } .philosophy-front,.philosophy-detail { padding:1.1rem; } .philosophy-detail p { font-size:.82rem; } }
+        @media(prefers-reduced-motion:reduce) { .philosophy-card,.philosophy-image,.philosophy-front,.philosophy-detail { transition:none; } }
     </style>
     <!-- Meta Pixel y Google Analytics se instalarán al final, con identificadores reales. -->
 </head>
@@ -191,23 +208,28 @@
                 <p class="philosophy-note">En Tasty Pastries buscamos ese equilibrio en cada receta: sabor, ingredientes seleccionados y una elaboración hecha con intención.</p>
             </div>
             <div class="philosophy-grid">
-                <article class="philosophy-card">
-                    <span class="philosophy-index">01</span>
-                    <div><h3>Sin azúcar</h3><p>Recetas endulzadas con alternativas al azúcar, sin renunciar al placer de cada bocado.</p></div>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestras recetas sin azúcar">
+                    <img class="philosophy-image" src="https://images.unsplash.com/photo-1503810473512-f64b56827964?auto=format&fit=crop&w=900&q=85" alt="Ingredientes naturales dispuestos para una preparación artesanal" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">01</span><h3>Sin azúcar</h3><span class="philosophy-hint">Descubre nuestro enfoque <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">01 / NUESTRAS RECETAS</span><h3>Endulzar de otra manera</h3><p>Utilizamos alternativas al azúcar, como estevia, según la formulación de cada producto. Así buscamos un dulzor equilibrado sin incorporar azúcar convencional.</p></div>
                 </article>
-                <article class="philosophy-card">
-                    <span class="philosophy-index">02</span>
-                    <div><h3>Sin gluten</h3><p>Propuestas formuladas sin ingredientes que contienen gluten. Consulta los detalles de cada producto.</p></div>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestras propuestas sin gluten">
+                    <img class="philosophy-image" src="https://images.unsplash.com/photo-1510776478953-fa4dc5de04ca?auto=format&fit=crop&w=900&q=85" alt="Avena y otros ingredientes para repostería" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">02</span><h3>Sin gluten</h3><span class="philosophy-hint">Conoce los ingredientes <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">02 / CUIDADO EN LA SELECCIÓN</span><h3>Ingredientes seleccionados</h3><p>Formulamos nuestras propuestas sin ingredientes que contienen gluten. La composición puede variar según el producto; consulta su ficha antes de realizar tu pedido.</p></div>
                 </article>
-                <article class="philosophy-card">
-                    <span class="philosophy-index">03</span>
-                    <div><h3>Sin harina de trigo</h3><p>Trabajamos con harinas alternativas cuidadosamente seleccionadas para cada preparación.</p></div>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestras harinas alternativas">
+                    <img class="philosophy-image" src="https://images.unsplash.com/photo-1430163393927-3dab9af7ea38?auto=format&fit=crop&w=900&q=85" alt="Almendras utilizadas como ingrediente de repostería" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">03</span><h3>Sin harina de trigo</h3><span class="philosophy-hint">Conoce nuestras harinas <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">03 / HARINAS ALTERNATIVAS</span><h3>Avena o almendra con coco</h3><p>Trabajamos principalmente con harina de avena. También ofrecemos formulaciones con harina de almendra y harina de coco, según el producto y la opción solicitada.</p></div>
                 </article>
-                <article class="philosophy-card">
-                    <span class="philosophy-index">04</span>
-                    <div><h3>Sin conservantes</h3><p>Cada pedido se elabora especialmente para ti, sin incorporar conservantes.</p></div>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestra elaboración sin conservantes">
+                    <img class="philosophy-image" src="https://images.unsplash.com/photo-1588413333412-82148535db53?auto=format&fit=crop&w=900&q=85" alt="Ingrediente natural en recipiente de cocina" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">04</span><h3>Sin conservantes</h3><span class="philosophy-hint">Así elaboramos <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">04 / HECHO POR ENCARGO</span><h3>Fresco y preparado para ti</h3><p>No trabajamos con producción en serie: cada pedido se elabora especialmente para cada cliente y no incorporamos conservantes.</p></div>
                 </article>
             </div>
+            <p class="philosophy-footnote">Toca o pasa el cursor sobre cada imagen para descubrir más. Consulta siempre los ingredientes específicos de cada producto.</p>
         </div>
     </section>
 
@@ -786,10 +808,10 @@
             lineas.push('', '*PRODUCTOS:*');
             ids.forEach(cartId => {
                 const item = carrito[cartId]; const totalItem = Number(item.precio) * Number(item.cantidad); subtotal += totalItem;
-                const linea = `• ${item.cantidad} × ${item.nombre}: USD ${totalItem.toFixed(2)}`;
+                const linea = `• ${item.cantidad} × ${item.nombre}: $ ${totalItem.toFixed(2)}`;
                 lineas.push(linea);
             });
-            lineas.push('', `Subtotal productos: USD ${subtotal.toFixed(2)}`);
+            lineas.push('', `Subtotal productos: $ ${subtotal.toFixed(2)}`);
             const costoDelivery = tipoEntrega === 'delivery' ? 4 : 0;
             if (tipoEntrega === 'delivery') {
                 lineas.push('Delivery preliminar (hasta 18 km): USD 4.00');
@@ -797,7 +819,7 @@
                 lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
             } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
             const totalFinal = subtotal + costoDelivery;
-            lineas.push('', `*TOTAL ESTIMADO: USD ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
+            lineas.push('', `*TOTAL ESTIMADO: $ ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
             if (tasaBcv > 0) {
                 const totalBs = totalFinal * tasaBcv;
                 lineas.push(`Referencia BCV informativa: Bs. ${totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
