@@ -1,14 +1,22 @@
-TASTY PASTRIES — IMÁGENES DE NUESTRA ESENCIA
+TASTY PASTRIES — RECURSOS VISUALES DE LA LANDING PAGE
 
-Archivos:
-06_sin_azucar.webp
-07_sin_gluten.webp
-08_sin_harina_de_trigo.webp
-09_sin_conservantes.webp
+Imágenes WebP optimizadas, proporción 3:2:
 
-Subir los cuatro archivos a la misma carpeta donde se encuentran las cinco imágenes anteriores
-(o a /assets si se decide centralizarlas allí). Después hay que actualizar las rutas en index.html.
+01_explora.webp                 Tarjeta de experiencia: Explora
+02_selecciona.webp              Tarjeta de experiencia: Selecciona
+03_envia_pedido.webp            Tarjeta de experiencia: Envía tu pedido
+04_coordinamos.webp             Tarjeta de experiencia: Coordinamos
+05_disfruta.webp                Tarjeta de experiencia: Disfruta
+06_sin_azucar.webp              Atributo de marca: Sin azúcar
+07_sin_gluten.webp              Atributo de marca: Sin gluten
+08_sin_harina_de_trigo.webp     Atributo de marca: Sin harina de trigo
+09_sin_conservantes.webp        Atributo de marca: Sin conservantes
 
-Nota: las imágenes son piezas gráficas ilustrativas. Antes de publicar, confirmar que las
-afirmaciones de producto (especialmente sin gluten) coincidan con los controles reales
-de elaboración y manipulación.
+Las imágenes corresponden a la identidad visual y a las secciones informativas de la landing.
+No reemplazar con ellas las fotografías dinámicas del catálogo de productos.
+
+Nota importante: las imágenes de atributos son piezas gráficas ilustrativas. Antes de publicar,
+confirmar que las afirmaciones de producto (especialmente «sin gluten») coincidan con los
+ingredientes, controles reales de elaboración y manipulación.
+
+Las fotografías adicionales del catálogo que se encuentren en el repositorio deben conservarse.

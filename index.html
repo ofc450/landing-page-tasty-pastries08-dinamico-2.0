@@ -23,8 +23,165 @@
         .bg-oliva { background-color: #899078; }
         
         .card:hover { transform: translateY(-4px); transition: all 0.3s ease; box-shadow: 0 10px 15px -3px rgba(86, 59, 48, 0.1); }
+        /* Tarjetas de producto: presentación uniforme y acabado editorial */
+        .product-card, .featured-card {
+            background:#fff; border:1px solid rgba(168,120,83,.16); border-radius:1.25rem;
+            overflow:hidden; display:flex; flex-direction:column;
+            box-shadow:0 3px 14px rgba(86,59,48,.055);
+            transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+        .product-card:hover, .featured-card:hover {
+            transform:translateY(-5px); border-color:rgba(168,120,83,.38);
+            box-shadow:0 14px 28px rgba(86,59,48,.12);
+        }
+        .product-card:focus-visible { outline:3px solid #A87853; outline-offset:3px; }
+        .product-card-media, .featured-media {
+            aspect-ratio:3 / 2; width:100%; overflow:hidden; background:#F4EBDD;
+        }
+        .product-card-media img, .featured-media img {
+            display:block; width:100%; height:100%; object-fit:cover;
+            transition:transform .55s ease;
+        }
+        .product-card:hover .product-card-media img,
+        .featured-card:hover .featured-media img { transform:scale(1.035); }
+        .product-card-placeholder, .featured-placeholder {
+            width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+            color:#899078; background:#F4EBDD; font-size:.9rem;
+        }
+        .product-card-body { padding:1.15rem 1.25rem .65rem; flex:1; }
+        .product-card-title { font-size:1.18rem; line-height:1.35; margin-bottom:.5rem; }
+        .product-card-description { color:#899078; font-size:.875rem; line-height:1.55; }
+        .product-card-footer {
+            padding:.65rem 1.25rem 1.25rem; display:flex; align-items:center;
+            justify-content:space-between; gap:.75rem;
+        }
+        .product-card-price { color:#A87853; font-size:1.35rem; font-weight:700; white-space:nowrap; }
+        .product-card-action, .featured-action {
+            display:inline-flex; align-items:center; justify-content:center;
+            background:#F4EBDD; color:#563B30; border:1px solid rgba(168,120,83,.25);
+            border-radius:.75rem; padding:.65rem .9rem; font-size:.82rem;
+            font-weight:700; white-space:nowrap; transition:background .2s ease,color .2s ease;
+        }
+        .product-card:hover .product-card-action,
+        .featured-card:hover .featured-action { background:#563B30; color:#F4EBDD; }
+        .featured-body { padding:1.1rem 1.15rem 1.2rem; display:flex; flex-direction:column; flex:1; }
+        .featured-title { font-size:1.12rem; line-height:1.35; }
+        .featured-description { color:#899078; font-size:.85rem; line-height:1.5; margin-top:.45rem; flex:1; }
+        .featured-action { border:0; background:transparent; color:#A87853; padding:.55rem 0 0; justify-content:flex-start; }
+        @media (max-width: 420px) {
+            .product-card-footer { padding-left:1rem; padding-right:1rem; }
+            .product-card-price { font-size:1.22rem; }
+            .product-card-action { padding:.6rem .7rem; font-size:.78rem; }
+        }
         .modal-enter { animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+        .hero-panel { background: radial-gradient(circle at 78% 24%, rgba(168,120,83,.25), transparent 27%), linear-gradient(145deg,#fffaf2 0%,#ead9c5 100%); }
+        .hero-orbit { border: 1px solid rgba(168,120,83,.35); border-radius: 9999px; position:absolute; inset:9%; transform:rotate(-18deg); }
+        .hero-section { padding-top:clamp(2.5rem,6vw,5.25rem); padding-bottom:clamp(2.5rem,6vw,5.25rem); }
+        .hero-copy { max-width:35rem; }
+        .hero-eyebrow { display:inline-flex; align-items:center; gap:.65rem; letter-spacing:.19em; }
+        .hero-eyebrow::before { content:""; width:1.8rem; height:1px; background:#A87853; }
+        .hero-title { font-size:clamp(2.45rem,5vw,4.35rem); line-height:1.06; letter-spacing:-.035em; }
+        .hero-description { max-width:33rem; font-size:clamp(1rem,1.45vw,1.16rem); line-height:1.8; }
+        .hero-promise { border-left:2px solid #A87853; padding-left:1rem; }
+        .hero-primary, .hero-secondary { min-height:3.25rem; display:inline-flex; align-items:center; justify-content:center; gap:.55rem; border-radius:.85rem; padding:.85rem 1.25rem; font-size:.82rem; letter-spacing:.055em; font-weight:700; transition:all .22s ease; }
+        .hero-primary { background:#563B30; color:#F4EBDD; box-shadow:0 7px 16px rgba(86,59,48,.14); }
+        .hero-primary:hover { background:#3a2720; transform:translateY(-2px); box-shadow:0 10px 20px rgba(86,59,48,.2); }
+        .hero-secondary { border:1px solid rgba(168,120,83,.65); color:#8b6042; background:rgba(255,255,255,.28); }
+        .hero-secondary:hover { background:#A87853; color:white; transform:translateY(-2px); }
+        .hero-panel { min-height:clamp(22rem,39vw,31rem); border:1px solid rgba(168,120,83,.2); box-shadow:0 18px 45px rgba(86,59,48,.09); }
+        .hero-panel::before { content:""; position:absolute; width:15rem; height:15rem; border:1px solid rgba(168,120,83,.22); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
+        .hero-panel::after { content:""; position:absolute; width:19rem; height:19rem; border:1px solid rgba(168,120,83,.13); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
+        .hero-panel-content { z-index:1; }
+        .hero-panel-title { font-size:clamp(3.2rem,5.2vw,4.6rem); line-height:1.02; letter-spacing:-.035em; }
+        .hero-panel-note { max-width:19rem; margin-inline:auto; line-height:1.75; }
+        .hero-corner { z-index:2; opacity:.8; }
+        @media (max-width:767px) {
+            .hero-copy { margin-inline:auto; }
+            .hero-title { max-width:35rem; margin-inline:auto; }
+            .hero-description { margin-inline:auto; }
+            .hero-promise { max-width:29rem; margin-inline:auto; text-align:left; }
+            .hero-panel { min-height:21rem; }
+        }
+        .editorial-kicker { letter-spacing:.22em; }
+        .moment-card { min-height:230px; background:linear-gradient(145deg,rgba(86,59,48,.08),rgba(168,120,83,.2)); }
+        .moment-card:nth-child(2n) { background:linear-gradient(145deg,rgba(137,144,120,.14),rgba(168,120,83,.2)); }
+        .mobile-menu a { display:block; padding:.8rem 0; border-top:1px solid rgba(168,120,83,.16); }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .card:hover { transform:none; } * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+        /* Experiencia de compra: tarjetas visuales con expansión */
+        .experience-section { padding:clamp(4rem,7vw,6rem) 1rem; background:#F4EBDD; }
+        .experience-heading,.faq-heading { max-width:43rem; margin:0 auto 2.8rem; text-align:center; }
+        .experience-title,.faq-title { color:#563B30; font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); line-height:1.12; letter-spacing:-.025em; }
+        .experience-intro { color:#899078; max-width:38rem; margin:1rem auto 0; line-height:1.8; }
+        .experience-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; align-items:start; }
+        .experience-step { position:relative; z-index:0; min-width:0; min-height:23rem; padding:0 0 1.25rem; overflow:hidden; background:#fff; border:1px solid rgba(168,120,83,.2); border-radius:1.15rem; box-shadow:0 7px 22px rgba(86,59,48,.055); cursor:pointer; outline:none; transform:translateY(0) scale(1); transform-origin:center top; transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease,min-height .28s ease; }
+        .experience-step:hover,.experience-step:focus-visible,.experience-step.is-expanded { z-index:8; min-height:27rem; transform:translateY(-5px) scale(1.045); border-color:rgba(168,120,83,.55); box-shadow:0 18px 38px rgba(86,59,48,.17); }
+        .experience-photo { position:relative; height:10.5rem; overflow:hidden; background:#e8ddce; }
+        .experience-photo img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .55s ease; }
+        .experience-step:hover .experience-photo img,.experience-step:focus-visible .experience-photo img,.experience-step.is-expanded .experience-photo img { transform:scale(1.09); }
+        .experience-photo::after { content:''; position:absolute; inset:35% 0 0; background:linear-gradient(180deg,transparent,rgba(42,29,23,.55)); pointer-events:none; }
+        .experience-number { position:absolute; z-index:1; top:.85rem; left:.9rem; display:grid; place-items:center; width:2.35rem; height:2.35rem; border-radius:50%; background:rgba(244,235,221,.95); color:#563B30; font-size:.72rem; font-weight:800; letter-spacing:.08em; box-shadow:0 3px 12px rgba(0,0,0,.12); }
+        .experience-copy { padding:1.1rem 1.1rem 0; }
+        .experience-step h3 { color:#563B30; font-family:'Playfair Display',serif; font-size:1.24rem; line-height:1.2; margin-bottom:.5rem; }
+        .experience-step p { color:#899078; font-size:.82rem; line-height:1.65; }
+        .experience-extra { max-height:0; opacity:0; overflow:hidden; margin-top:0; color:#6f665c; font-size:.79rem; line-height:1.65; transition:max-height .3s ease,opacity .25s ease,margin .3s ease; }
+        .experience-step:hover .experience-extra,.experience-step:focus-visible .experience-extra,.experience-step.is-expanded .experience-extra { max-height:9rem; opacity:1; margin-top:.75rem; }
+        .experience-hint { display:block; margin-top:.8rem; color:#A87853; font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+        .experience-step:hover .experience-hint,.experience-step:focus-visible .experience-hint,.experience-step.is-expanded .experience-hint { display:none; }
+        .experience-notice { display:flex; align-items:flex-start; gap:.9rem; max-width:54rem; margin:2rem auto 0; padding:1.15rem 1.35rem; border:1px solid rgba(168,120,83,.24); border-radius:1rem; background:rgba(255,255,255,.58); color:#899078; font-size:.88rem; line-height:1.7; }
+        .experience-notice span { color:#A87853; font-size:1.2rem; }
+        .experience-notice strong { color:#563B30; }
+        .experience-cta { text-align:center; margin-top:1.8rem; }
+        .experience-link,.faq-contact a { display:inline-flex; align-items:center; gap:.6rem; padding:.85rem 1.25rem; border-radius:.8rem; background:#563B30; color:#F4EBDD; font-size:.84rem; font-weight:700; transition:background .2s ease,transform .2s ease; }
+        .experience-link:hover,.faq-contact a:hover { background:#3a2720; transform:translateY(-2px); }
+        .faq-section { padding:clamp(4rem,7vw,6rem) 1rem; background:#fff; border-top:1px solid rgba(168,120,83,.12); }
+        .faq-heading { margin-bottom:2.2rem; }
+        .faq-list { display:grid; gap:.75rem; }
+        .faq-item { border:1px solid rgba(168,120,83,.2); border-radius:.9rem; background:#FBF8F2; overflow:hidden; }
+        .faq-item summary { position:relative; cursor:pointer; list-style:none; padding:1.15rem 3.2rem 1.15rem 1.25rem; color:#563B30; font-weight:700; line-height:1.5; }
+        .faq-item summary::-webkit-details-marker { display:none; }
+        .faq-item summary::after { content:'+'; position:absolute; right:1.25rem; top:50%; transform:translateY(-50%); color:#A87853; font-size:1.45rem; font-weight:400; }
+        .faq-item[open] summary::after { content:'−'; }
+        .faq-item summary:focus-visible { outline:3px solid #A87853; outline-offset:-3px; border-radius:.9rem; }
+        .faq-item p { padding:0 1.25rem 1.2rem; color:#899078; font-size:.9rem; line-height:1.75; max-width:56rem; }
+        .faq-contact { margin-top:2rem; padding:1.7rem; text-align:center; border-radius:1rem; background:#F4EBDD; }
+        .faq-contact p { color:#563B30; font-family:'Playfair Display',serif; font-size:1.25rem; margin-bottom:1rem; }
+        @media(max-width:1100px) { .experience-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        @media(max-width:650px) { .experience-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; } .experience-step { min-height:22rem; } .experience-photo { height:9rem; } .experience-copy { padding:.95rem .9rem 0; } .experience-step h3 { font-size:1.12rem; } .experience-step p { font-size:.78rem; } .experience-step:hover,.experience-step:focus-visible,.experience-step.is-expanded { min-height:26rem; transform:translateY(-3px) scale(1.025); } .experience-notice { padding:1rem; font-size:.82rem; } .faq-item summary { padding:1rem 2.8rem 1rem 1rem; font-size:.92rem; } .faq-item p { padding:0 1rem 1rem; font-size:.86rem; } }
+        @media(max-width:380px) { .experience-grid { grid-template-columns:1fr; } .experience-step { min-height:20rem; } .experience-photo { height:11rem; } }
+        @media(prefers-reduced-motion:reduce) { .experience-step,.experience-photo img,.experience-extra,.experience-link,.faq-contact a { transition:none; } }
+        .philosophy-section { background:linear-gradient(180deg,#fff 0%,#fbf7f0 100%); padding:clamp(4rem,7vw,6.5rem) 1rem; }
+        .philosophy-inner { max-width:72rem; margin:0 auto; display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(2.5rem,6vw,5.5rem); align-items:center; }
+        .philosophy-intro { max-width:31rem; }
+        .philosophy-title { color:#563B30; font-size:clamp(2rem,3.4vw,3.15rem); line-height:1.12; letter-spacing:-.035em; font-weight:700; }
+        .philosophy-lead { color:#A87853; font-family:'Playfair Display',serif; font-size:clamp(1.15rem,1.7vw,1.4rem); line-height:1.55; margin-top:1.35rem; }
+        .philosophy-note { color:#899078; font-size:.94rem; line-height:1.8; margin-top:1rem; max-width:28rem; }
+        .philosophy-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+        .philosophy-card { min-height:11.5rem; padding:1.5rem; border:1px solid rgba(168,120,83,.18); border-radius:1.15rem; background:rgba(255,255,255,.82); display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem; box-shadow:0 8px 24px rgba(86,59,48,.045); transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease; }
+        .philosophy-card:hover { transform:translateY(-3px); border-color:rgba(168,120,83,.42); box-shadow:0 14px 28px rgba(86,59,48,.08); }
+        .philosophy-index { color:#A87853; font-size:.72rem; font-weight:700; letter-spacing:.18em; }
+        .philosophy-card h3 { color:#563B30; font-family:'Playfair Display',serif; font-size:1.35rem; line-height:1.2; margin-bottom:.5rem; }
+        .philosophy-card p { color:#899078; font-size:.83rem; line-height:1.65; }
+        @media(max-width:767px) { .philosophy-inner { grid-template-columns:1fr; gap:2rem; } .philosophy-intro { max-width:38rem; margin:0 auto; text-align:center; } .philosophy-note { margin-inline:auto; } .philosophy-grid { gap:.75rem; } .philosophy-card { min-height:10.5rem; padding:1.1rem; } .philosophy-card h3 { font-size:1.18rem; } .philosophy-card p { font-size:.78rem; } }
+        @media(max-width:390px) { .philosophy-grid { grid-template-columns:1fr; } .philosophy-card { min-height:auto; } }
+        .philosophy-card { position:relative; display:block; min-height:19rem; overflow:hidden; isolation:isolate; padding:0; cursor:pointer; text-align:left; border:1px solid rgba(168,120,83,.22); border-radius:1.15rem; background:#563B30; box-shadow:0 8px 24px rgba(86,59,48,.07); transition:transform .25s ease,box-shadow .25s ease; }
+        .philosophy-card:hover,.philosophy-card:focus-visible,.philosophy-card.is-open { transform:translateY(-3px); box-shadow:0 16px 32px rgba(86,59,48,.16); outline:none; }
+        .philosophy-image { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; transition:transform .45s ease; }
+        .philosophy-card:hover .philosophy-image,.philosophy-card:focus-visible .philosophy-image,.philosophy-card.is-open .philosophy-image { transform:scale(1.06); }
+        .philosophy-card::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(38,27,22,.12) 5%,rgba(38,27,22,.82) 100%); }
+        .philosophy-front,.philosophy-detail { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:1.35rem; color:#fff; transition:opacity .25s ease,transform .25s ease; }
+        .philosophy-front .philosophy-index,.philosophy-detail .philosophy-index { color:#F4EBDD; font-size:.72rem; letter-spacing:.18em; margin-bottom:.6rem; }
+        .philosophy-front h3,.philosophy-detail h3 { color:#fff; font-family:'Playfair Display',serif; font-size:1.55rem; line-height:1.15; margin-bottom:.65rem; }
+        .philosophy-hint { color:#F4EBDD; font-size:.75rem; letter-spacing:.04em; }
+        .philosophy-detail { justify-content:center; background:rgba(65,43,33,.94); opacity:0; transform:translateY(8px); }
+        .philosophy-detail h3 { font-size:1.4rem; }
+        .philosophy-detail p { color:rgba(255,255,255,.88); font-size:.88rem; line-height:1.7; }
+        .philosophy-card:hover .philosophy-front,.philosophy-card:focus-visible .philosophy-front,.philosophy-card.is-open .philosophy-front { opacity:0; transform:translateY(-8px); }
+        .philosophy-card:hover .philosophy-detail,.philosophy-card:focus-visible .philosophy-detail,.philosophy-card.is-open .philosophy-detail { opacity:1; transform:translateY(0); }
+        .philosophy-footnote { color:#899078; font-size:.78rem; text-align:center; margin-top:1.15rem; }
+        @media(max-width:767px) { .philosophy-card { min-height:17rem; } .philosophy-front,.philosophy-detail { padding:1.1rem; } .philosophy-detail p { font-size:.82rem; } }
+        @media(prefers-reduced-motion:reduce) { .philosophy-card,.philosophy-image,.philosophy-front,.philosophy-detail { transition:none; } }
     </style>
     <!-- Meta Pixel y Google Analytics se instalarán al final, con identificadores reales. -->
 </head>
@@ -32,16 +189,18 @@
 
     <!-- SECCIÓN 1: NAVEGACIÓN -->
     <nav class="bg-[#F4EBDD] border-b border-[#A87853]/20 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="font-serif font-bold text-2xl text-[#563B30]">Tasty Pastries</div>
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
+            <a href="#" class="font-serif font-bold text-2xl text-[#563B30]" aria-label="Tasty Pastries, inicio">Tasty Pastries</a>
             <div class="hidden md:flex gap-6 text-sm font-bold text-[#899078] uppercase tracking-wide">
-                <a href="#catalogo" class="hover:text-[#A87853] transition">Catálogo</a>
-                <a href="#filosofia" class="hover:text-[#A87853] transition">Filosofía</a>
-                <a href="#contacto" class="hover:text-[#A87853] transition">Contacto</a>
+                <a href="#catalogo" class="hover:text-[#A87853] transition">Catálogo</a><a href="#filosofia" class="hover:text-[#A87853] transition">Nuestra esencia</a><a href="#elaboracion" class="hover:text-[#A87853] transition">Elaboración</a><a href="#momentos" class="hover:text-[#A87853] transition">Momentos</a><a href="#preguntas-frecuentes" class="hover:text-[#A87853] transition">Preguntas frecuentes</a><a href="#contacto" class="hover:text-[#A87853] transition">Contacto</a>
             </div>
-            <button onclick="toggleCarrito()" class="flex items-center gap-2 bg-[#899078] text-white px-4 py-2 rounded-full hover:bg-[#6c725e] transition">
-                <span>🛒</span> <span id="nav-contador-carrito" class="font-bold">0</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleMenuMovil()" aria-expanded="false" aria-controls="menu-movil" id="btn-menu-movil" class="md:hidden border border-[#A87853]/40 text-[#563B30] w-10 h-10 rounded-full" aria-label="Abrir menú">☰</button>
+                <button onclick="toggleCarrito()" class="flex items-center gap-2 bg-[#899078] text-white px-4 py-2 rounded-full hover:bg-[#6c725e] transition"><span>🛒</span> <span id="nav-contador-carrito" class="font-bold">0</span></button>
+            </div>
+        </div>
+        <div id="menu-movil" class="mobile-menu hidden md:hidden px-6 pb-4 text-sm font-bold text-[#563B30] uppercase tracking-wide">
+            <a href="#catalogo" onclick="toggleMenuMovil(false)">Catálogo</a><a href="#filosofia" onclick="toggleMenuMovil(false)">Nuestra esencia</a><a href="#elaboracion" onclick="toggleMenuMovil(false)">Elaboración</a><a href="#momentos" onclick="toggleMenuMovil(false)">Momentos especiales</a><a href="#preguntas-frecuentes" onclick="toggleMenuMovil(false)">Preguntas frecuentes</a><a href="#contacto" onclick="toggleMenuMovil(false)">Contacto</a>
         </div>
     </nav>
 
@@ -53,46 +212,82 @@
     </div>
 
     <!-- SECCIÓN 2: PORTADA PRINCIPAL (HERO) -->
-    <header class="py-16 md:py-24 px-4 text-center max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-[#563B30] leading-tight">EL PLACER DE DISFRUTAR SIN RENUNCIAR A CUIDARTE.</h1>
-        <p class="text-lg md:text-xl text-[#899078] mb-8 max-w-2xl mx-auto">
-            En Tasty Pastries elaboramos deliciosos productos de repostería sin azúcar, sin gluten y sin harina de trigo, con ingredientes seleccionados y sin conservantes.<br><br>
-            <span class="font-bold text-[#A87853]">Cada pedido se prepara especialmente para ti.</span>
-        </p>
-        <div class="flex flex-col md:flex-row justify-center gap-4">
-            <a href="#catalogo" class="bg-[#563B30] text-[#F4EBDD] px-8 py-3 rounded-xl font-bold uppercase tracking-wide hover:bg-[#3a2720] transition">Ver Nuestros Productos</a>
-            <a href="https://wa.me/58424294992" target="_blank" class="border-2 border-[#A87853] text-[#A87853] px-8 py-3 rounded-xl font-bold uppercase tracking-wide hover:bg-[#A87853] hover:text-white transition">Hacer mi pedido directo</a>
-        </div>
-    </header>
-
-    <!-- SECCIÓN 3: FILOSOFÍA Y PROPUESTA DE VALOR -->
-    <section id="filosofia" class="bg-white py-16 px-4">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#A87853] mb-4">CREEMOS QUE CUIDARTE TAMBIÉN PUEDE SER DELICIOSO.</h2>
-            <p class="text-base md:text-lg text-[#899078] max-w-2xl mx-auto mb-12">Disfrutar de un buen postre y prestar atención a los ingredientes pueden ir de la mano.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin azúcar</h3>
-                    <p class="text-sm text-[#899078]">Sistemas de endulzado basados en formulaciones propias y seguras.</p>
-                </div>
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin gluten</h3>
-                    <p class="text-sm text-[#899078]">Elaborado sin ingredientes que contienen gluten bajo estrictos controles.</p>
-                </div>
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin harina de trigo</h3>
-                    <p class="text-sm text-[#899078]">Utilización de harinas alternativas seleccionadas de alta calidad.</p>
-                </div>
-                <div class="p-6 bg-[#F4EBDD]/50 rounded-2xl">
-                    <h3 class="font-bold text-xl text-[#563B30] mb-2">Sin conservantes</h3>
-                    <p class="text-sm text-[#899078]">Elaboraciones totalmente frescas que no incorporan aditivos.</p>
+    <header class="hero-section px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div class="hero-copy text-center md:text-left">
+                <p class="hero-eyebrow editorial-kicker text-[11px] md:text-xs font-bold uppercase text-[#A87853] mb-6">Repostería artesanal · Caracas</p>
+                <h1 class="hero-title font-bold mb-6 text-[#563B30]">EL PLACER DE DISFRUTAR <span class="text-[#A87853]">SIN RENUNCIAR</span> A CUIDARTE.</h1>
+                <p class="hero-description text-[#899078] mb-6">Repostería artesanal sin azúcar, sin gluten, sin harina de trigo y sin conservantes. Sabores que se disfrutan, elaborados especialmente para cada pedido.</p>
+                <p class="hero-promise text-sm md:text-base font-bold text-[#563B30] mb-8">No producimos en serie. Cada pedido se prepara para ti.</p>
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-3">
+                    <a href="#catalogo" class="hero-primary">Descubrir el catálogo <span aria-hidden="true">→</span></a>
+                    <a href="https://wa.me/584242942992" target="_blank" rel="noopener noreferrer" class="hero-secondary">Consultar por WhatsApp</a>
                 </div>
             </div>
+            <div class="hero-panel relative rounded-[2rem] overflow-hidden flex items-center justify-center p-8 md:p-10">
+                <div class="hero-orbit"></div>
+                <div class="hero-panel-content relative text-center max-w-sm">
+                    <span class="inline-flex items-center bg-white/80 text-[#A87853] text-[10px] md:text-xs font-bold tracking-[.18em] uppercase px-4 py-2 rounded-full mb-7">Hecho por encargo</span>
+                    <div class="hero-panel-title font-serif text-[#563B30]">Sabor con<br><em class="text-[#A87853]">intención.</em></div>
+                    <div class="w-16 h-px bg-[#A87853] mx-auto my-6"></div>
+                    <p class="hero-panel-note text-sm md:text-base text-[#563B30]/80">Ingredientes seleccionados. Elaboración cuidada. Un momento delicioso para compartir.</p>
+                    <span class="inline-block mt-6 text-3xl text-[#A87853]" aria-hidden="true">✧</span>
+                </div>
+                <span class="hero-corner absolute top-8 left-8 text-[#A87853] text-2xl" aria-hidden="true">✦</span>
+                <span class="hero-corner absolute bottom-8 right-8 text-[#899078] text-3xl" aria-hidden="true">✧</span>
+            </div>
+        </div>
+    </header>
+    <div class="bg-white/70 border-y border-[#A87853]/10"><div class="max-w-6xl mx-auto px-4 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-xs md:text-sm font-bold uppercase tracking-wide text-[#563B30]"><span>Sin azúcar</span><span>Sin gluten</span><span>Sin harina de trigo</span><span>Sin conservantes</span></div></div>
+
+    <!-- SECCIÓN 3: FILOSOFÍA Y PROPUESTA DE VALOR -->
+    <section id="filosofia" class="philosophy-section">
+        <div class="philosophy-inner">
+            <div class="philosophy-intro">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-4">Nuestra manera de entender la repostería</p>
+                <h2 class="philosophy-title">CREEMOS QUE CUIDARTE TAMBIÉN PUEDE SER DELICIOSO.</h2>
+                <p class="philosophy-lead">Disfrutar de un buen postre y prestar atención a los ingredientes pueden ir de la mano.</p>
+                <p class="philosophy-note">En Tasty Pastries buscamos ese equilibrio en cada receta: sabor, ingredientes seleccionados y una elaboración hecha con intención.</p>
+            </div>
+            <div class="philosophy-grid">
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestras recetas sin azúcar">
+                    <img class="philosophy-image" src="./06_sin_azucar.webp" alt="Ingredientes naturales dispuestos para una preparación artesanal" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">01</span><h3>Sin azúcar</h3><span class="philosophy-hint">Descubre nuestro enfoque <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">01 / NUESTRAS RECETAS</span><h3>Endulzar de otra manera</h3><p>Utilizamos alternativas al azúcar, como estevia, según la formulación de cada producto. Así buscamos un dulzor equilibrado sin incorporar azúcar convencional.</p></div>
+                </article>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestras propuestas sin gluten">
+                    <img class="philosophy-image" src="./07_sin_gluten.webp" alt="Avena y otros ingredientes para repostería" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">02</span><h3>Sin gluten</h3><span class="philosophy-hint">Conoce los ingredientes <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">02 / CUIDADO EN LA SELECCIÓN</span><h3>Ingredientes seleccionados</h3><p>Formulamos nuestras propuestas sin ingredientes que contienen gluten. La composición puede variar según el producto; consulta su ficha antes de realizar tu pedido.</p></div>
+                </article>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestras harinas alternativas">
+                    <img class="philosophy-image" src="./08_sin_harina_de_trigo.webp" alt="Almendras utilizadas como ingrediente de repostería" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">03</span><h3>Sin harina de trigo</h3><span class="philosophy-hint">Conoce nuestras harinas <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">03 / HARINAS ALTERNATIVAS</span><h3>Harina de avena o harinas de almendra y coco</h3><p>Trabajamos principalmente con harina de avena. También ofrecemos formulaciones con harina de almendra y harina de coco, según el producto y la opción solicitada.</p></div>
+                </article>
+                <article class="philosophy-card" tabindex="0" role="button" aria-label="Más información sobre nuestra elaboración sin conservantes">
+                    <img class="philosophy-image" src="./09_sin_conservantes.webp" alt="Ingrediente natural en recipiente de cocina" loading="lazy">
+                    <div class="philosophy-front"><span class="philosophy-index">04</span><h3>Sin conservantes</h3><span class="philosophy-hint">Así elaboramos <span aria-hidden="true">↗</span></span></div>
+                    <div class="philosophy-detail"><span class="philosophy-index">04 / HECHO POR ENCARGO</span><h3>Fresco y preparado para ti</h3><p>No trabajamos con producción en serie: cada pedido se elabora especialmente para cada cliente y no incorporamos conservantes.</p></div>
+                </article>
+            </div>
+            <p class="philosophy-footnote">Toca o pasa el cursor sobre cada imagen para descubrir más. Consulta siempre los ingredientes específicos de cada producto.</p>
         </div>
     </section>
 
-    <!-- SECCIÓN 4: CATÁLOGO DE PRODUCTOS -->
+    <!-- SECCIÓN 4: PRODUCTOS DESTACADOS -->
+    <section id="favoritos" class="max-w-6xl mx-auto px-4 pt-16">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+            <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Una invitación a descubrir</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-[#563B30] mb-4">Favoritos de la casa</h2>
+            <p class="text-[#899078]">Una selección de nuestra repostería. Explora cada propuesta y encuentra tu próximo sabor favorito.</p>
+        </div>
+        <div id="grid-destacados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <p class="text-[#899078] text-sm col-span-full text-center">Preparando nuestra selección...</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 5: CATÁLOGO DE PRODUCTOS -->
     <main id="catalogo" class="max-w-6xl mx-auto py-16 px-4">
         
         <!-- A. Ponqués -->
@@ -137,45 +332,119 @@
     </section>
 
     <!-- SECCIÓN 6: EXPERIENCIA DE COMPRA -->
-    <section id="experiencia" class="py-16 px-4">
+    <section id="experiencia" class="experience-section">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#A87853] mb-12">DISFRUTAR DE TASTY PASTRIES ES MUY SENCILLO.</h2>
-            <div class="flex flex-wrap justify-center gap-6">
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">1</div>
-                    <p class="font-bold text-[#563B30]">Explora nuestro catálogo</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">2</div>
-                    <p class="font-bold text-[#563B30]">Selecciona tus productos</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">3</div>
-                    <p class="font-bold text-[#563B30]">Agrégalos al carrito</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">4</div>
-                    <p class="font-bold text-[#563B30]">Envía tu pedido por WhatsApp</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">5</div>
-                    <p class="font-bold text-[#563B30]">Confirmamos disponibilidad</p>
-                </div>
+            <div class="experience-heading">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Tu pedido, paso a paso</p>
+                <h2 class="experience-title">DISFRUTAR DE TASTY PASTRIES ES MUY SENCILLO.</h2>
+                <p class="experience-intro">Elegir algo delicioso no debería ser complicado. Te acompañamos desde la selección hasta la coordinación de tu pedido.</p>
             </div>
-            <div class="mt-12 text-center text-sm font-bold text-[#899078] bg-white/60 p-4 rounded-xl max-w-2xl mx-auto border border-[#A87853]/20">
-                ⚠️ Pedidos con un mínimo de 24 horas de anticipación • Entregas en Caracas • Disponibilidad sujeta a confirmación
+            <div class="experience-grid">
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 1: Explora. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="./01_explora.webp" alt="Selección de repostería artesanal recién preparada" loading="lazy"></div>
+                    <span class="experience-number">01</span>
+                    <div class="experience-copy"><h3>Explora</h3><p>Descubre el catálogo y conoce nuestros sabores disponibles.</p><div class="experience-extra">Revisa las opciones, las descripciones y los precios. Cada producto muestra sus características para ayudarte a elegir.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                </article>
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 2: Selecciona. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="./02_selecciona.webp" alt="Postre artesanal servido y listo para elegir" loading="lazy"></div>
+                    <span class="experience-number">02</span>
+                    <div class="experience-copy"><h3>Selecciona</h3><p>Elige tus productos y agrégalos al carrito.</p><div class="experience-extra">Indica las cantidades que deseas y revisa tu selección en el carrito antes de continuar.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                </article>
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 3: Envía tu pedido. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="./03_envia_pedido.webp" alt="Teléfono móvil para comunicar el pedido" loading="lazy"></div>
+                    <span class="experience-number">03</span>
+                    <div class="experience-copy"><h3>Envía tu pedido</h3><p>Revisa tu selección y compártela con nosotros por WhatsApp.</p><div class="experience-extra">El carrito prepara un resumen para WhatsApp. Puedes añadir tu nombre, fecha deseada y observaciones, si lo necesitas.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                </article>
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 4: Coordinamos. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="./04_coordinamos.webp" alt="Repostería artesanal lista para coordinar su entrega" loading="lazy"></div>
+                    <span class="experience-number">04</span>
+                    <div class="experience-copy"><h3>Coordinamos</h3><p>Confirmamos disponibilidad y los detalles de entrega o retiro.</p><div class="experience-extra">Acordamos por WhatsApp la modalidad elegida, la ubicación para delivery o los detalles del retiro, y te facilitamos los datos para realizar el pago.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                </article>
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 5: Disfruta. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="./05_disfruta.webp" alt="Torta artesanal decorada para compartir" loading="lazy"></div>
+                    <span class="experience-number">05</span>
+                    <div class="experience-copy"><h3>Disfruta</h3><p>Preparamos tu pedido especialmente para ti.</p><div class="experience-extra">Una vez recibido y verificado el pago, tu pedido queda formalizado. Entonces lo elaboramos especialmente para ti, sin conservantes, y coordinamos la entrega o el retiro.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                </article>
+            </div>
+            <div class="experience-notice">
+                <span aria-hidden="true">✦</span>
+                <p><strong>Hecho por encargo:</strong> solicita con un mínimo de 24 horas de anticipación. Entregas en Caracas, con delivery o pick-up coordinado. La solicitud está sujeta a disponibilidad y el pedido se formaliza únicamente cuando recibimos y verificamos el pago.</p>
+            </div>
+            <div class="experience-cta">
+                <a href="#catalogo" class="experience-link">Elegir mis productos <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <section id="preguntas-frecuentes" class="faq-section">
+        <div class="max-w-4xl mx-auto">
+            <div class="faq-heading">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Antes de hacer tu pedido</p>
+                <h2 class="faq-title">PREGUNTAS FRECUENTES</h2>
+                <p class="text-[#899078] mt-4 leading-relaxed">Aquí encontrarás información útil para disfrutar tu experiencia con Tasty Pastries.</p>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>¿Con cuánta anticipación debo hacer mi pedido?</summary>
+                    <p>Trabajamos por encargo y solicitamos un mínimo de 24 horas de anticipación. La fecha deseada y la disponibilidad se confirman por WhatsApp.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Cómo realizo mi pedido?</summary>
+                    <p>Selecciona los productos, agrégalos al carrito y envía el resumen por WhatsApp. Revisaremos la disponibilidad, coordinaremos la entrega o el retiro y te enviaremos los datos de pago. <strong>El pedido queda formalizado únicamente cuando recibimos y verificamos el pago.</strong></p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Tienen servicio de delivery?</summary>
+                    <p>Sí, realizamos entregas en Caracas. El costo preliminar es de USD 4 para distancias de hasta 18 km. Para confirmar la tarifa, necesitaremos que compartas tu ubicación de Google Maps por WhatsApp; el costo final se coordina contigo antes de confirmar el pedido.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Puedo retirar mi pedido?</summary>
+                    <p>Sí. Puedes seleccionar pick-up (retiro coordinado) al preparar tu pedido. Por WhatsApp acordaremos los detalles del retiro.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Los productos llevan conservantes?</summary>
+                    <p>No. En Tasty Pastries elaboramos por encargo y nuestros productos no llevan ningún tipo de conservante.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Qué harinas e ingredientes utilizan?</summary>
+                    <p>Trabajamos con formulaciones sin harina de trigo y utilizamos, según cada producto, harina de avena, harina de almendra o harina de coco. Para conocer los ingredientes y características de una preparación específica, consúltanos por WhatsApp antes de realizar tu pedido.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿En qué moneda están expresados los precios?</summary>
+                    <p>Los precios se muestran en dólares estadounidenses (USD). También presentamos una referencia informativa en bolívares según la tasa BCV disponible en la página al momento de la consulta.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Cuándo queda formalizado mi pedido?</summary>
+                    <p>Primero revisamos la disponibilidad y coordinamos por WhatsApp la entrega o el retiro y los datos para pagar. <strong>El pedido queda formalizado únicamente cuando recibimos y verificamos el pago.</strong></p>
+                </details>
+            </div>
+            <div class="faq-contact">
+                <p>¿Tienes otra consulta? Estamos para ayudarte.</p>
+                <a href="https://wa.me/584242942992?text=Hola%2C%20tengo%20una%20consulta%20sobre%20Tasty%20Pastries." target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp <span aria-hidden="true">→</span></a>
             </div>
         </div>
     </section>
 
     <!-- SECCIÓN 7: MOMENTOS ESPECIALES & SECCIÓN 8: TESTIMONIOS -->
     <section id="momentos" class="bg-white py-16 px-4 border-t border-[#A87853]/10">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-[#563B30] mb-4">HAY MOMENTOS QUE MERECEN UN SABOR ESPECIAL.</h2>
-            <p class="text-[#899078] mb-12">Desayunos • Tardes de café • Reuniones familiares • Celebraciones • Regalos especiales</p>
-            
-            <h2 class="text-3xl font-bold text-[#A87853] mb-8 mt-16">CADA DETALLE CUENTA.</h2>
-            <p class="text-[#899078]">Productos elaborados por encargo, con atención personalizada y disponibilidad sujeta a confirmación.</p>
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Para compartir y celebrar</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#563B30] mb-4">HAY MOMENTOS QUE MERECEN UN SABOR ESPECIAL.</h2>
+                <p class="text-[#899078]">Un desayuno sin apuros, una tarde de café, una reunión en familia o una celebración especial: acompáñalos con algo preparado especialmente para la ocasión.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">☕</span><h3 class="font-serif text-2xl text-[#563B30]">Tardes de café</h3><p class="text-sm text-[#563B30]/75 mt-2">Una pausa para disfrutar algo delicioso.</p></article>
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">☀</span><h3 class="font-serif text-2xl text-[#563B30]">Desayunos</h3><p class="text-sm text-[#563B30]/75 mt-2">Comienza el día con un sabor especial.</p></article>
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">♡</span><h3 class="font-serif text-2xl text-[#563B30]">Reuniones</h3><p class="text-sm text-[#563B30]/75 mt-2">Detalles para compartir con quienes quieres.</p></article>
+                <article class="moment-card rounded-2xl p-7 flex flex-col justify-end"><span class="text-3xl mb-3">✦</span><h3 class="font-serif text-2xl text-[#563B30]">Celebraciones</h3><p class="text-sm text-[#563B30]/75 mt-2">Tortas y dulces para hacer memorable la ocasión.</p></article>
+            </div>
+            <div class="text-center mt-16 border-t border-[#A87853]/15 pt-12">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">La experiencia Tasty Pastries</p>
+                <h2 class="text-3xl font-bold text-[#563B30] mb-4">CADA DETALLE CUENTA.</h2>
+                <p class="text-[#899078] max-w-2xl mx-auto mb-6">Cada pedido se prepara por encargo, con atención personalizada y cuidado en cada etapa. Si ya disfrutaste nuestros productos, nos encantará conocer tu experiencia.</p>
+                <a href="https://wa.me/584242942992?text=Hola%2C%20quiero%20compartir%20mi%20experiencia%20con%20Tasty%20Pastries." target="_blank" rel="noopener noreferrer" class="inline-block border border-[#A87853] text-[#A87853] px-6 py-3 rounded-xl font-bold hover:bg-[#A87853] hover:text-white transition">Compartir mi experiencia</a>
+            </div>
         </div>
     </section>
 
@@ -199,9 +468,6 @@
                 <h3 id="modal-nombre" class="text-2xl font-bold text-[#563B30] mb-2 font-serif">Nombre</h3>
                 <p id="modal-desc" class="text-[#899078] text-sm mb-4">Descripción</p>
 
-                
-                <label class="block text-xs font-bold text-[#A87853] uppercase mb-1">Personalización / Notas (Opcional):</label>
-                <input type="text" id="modal-notas" placeholder="Ej: Vegano (+$2), Queso crema (+$3)" class="w-full border p-2 rounded-lg text-sm mb-4 bg-gray-50 focus:outline-none focus:border-[#A87853]">
                 
                 <div class="flex justify-between items-center mt-2 border-t pt-4">
                     <span id="modal-precio" class="text-2xl font-bold text-[#A87853]">$0</span>
@@ -228,7 +494,7 @@
                     <div>
                         <label class="block text-xs font-bold uppercase text-[#A87853] mb-1">Modalidad de Entrega</label>
                         <select id="tipo-entrega" onchange="actualizarCarritoUI()" class="w-full p-2 border rounded-lg bg-white text-sm outline-none">
-                            <option value="delivery" selected>Delivery (hasta 18 km — USD 4)</option>
+                            <option value="delivery" selected>Delivery preliminar (hasta 18 km — USD 4)</option>
                             <option value="pickup">Pick-up (retiro coordinado)</option>
                         </select>
                     </div>
@@ -236,7 +502,7 @@
                     <div>
                         <label class="block text-xs font-bold uppercase text-[#A87853] mb-1">Forma de pago</label>
                         <div class="w-full p-3 border rounded-lg bg-white text-sm font-bold text-[#563B30]">Pago Móvil</div>
-                        <p class="text-xs text-[#899078] mt-1">Los datos para realizar el pago se confirman por WhatsApp al validar el pedido.</p>
+                        <p class="text-xs text-[#899078] mt-1">Los datos para realizar el pago se confirman por WhatsApp al validar la disponibilidad. El pedido se formaliza cuando recibimos y verificamos el pago.</p>
                     </div>
 
                     <div>
@@ -250,12 +516,13 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-[#A87853] mb-1">Observaciones (Opcional)</label>
-                        <input type="text" id="cliente-obs" placeholder="Detalles de entrega, alergias, etc." class="w-full p-2 border rounded-lg text-sm bg-white outline-none">
+                        <input type="text" id="cliente-obs" placeholder="Indicaciones para la entrega (opcional)" class="w-full p-2 border rounded-lg text-sm bg-white outline-none">
                     </div>
 
                     <div class="border-t border-[#A87853]/20 pt-4 space-y-2 text-sm">
                         <div class="flex justify-between text-[#563B30]"><span>Subtotal Productos:</span><span id="txt-subtotal">$0</span></div>
-                        <div class="flex justify-between text-[#899078]" id="fila-delivery"><span>Delivery (hasta 18 km):</span><span>$4</span></div>
+                        <div class="flex justify-between text-[#899078]" id="fila-delivery"><span>Delivery preliminar (hasta 18 km):</span><span>$4</span></div>
+                        <p class="text-xs text-[#899078]" id="aviso-delivery">USD 4 es una tarifa preliminar para ubicaciones dentro de un radio de 18 km. Comparte tu ubicación de Google Maps por WhatsApp para confirmar el costo final. Si corresponde, el monto se ajustará antes de confirmar el pedido.</p>
                         <div class="flex justify-between font-bold text-lg text-[#563B30] border-t border-[#A87853]/20 pt-2">
                             <span>TOTAL ESTIMADO (USD):</span><span id="txt-total">$0</span>
                         </div>
@@ -270,6 +537,14 @@
                 <button onclick="enviarWhatsApp()" class="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold hover:bg-[#20ba5a] transition flex items-center justify-center gap-2 shadow-md uppercase tracking-wide">
                     Enviar pedido por WhatsApp
                 </button>
+                <div id="confirmacion-pedido-whatsapp" class="hidden mt-4 p-4 rounded-xl border border-[#899078]/40 bg-[#F4EBDD]" role="status" aria-live="polite">
+                    <p class="font-bold text-[#563B30] text-sm">¿Ya enviaste tu pedido?</p>
+                    <p class="text-xs text-[#899078] mt-1 mb-3">Si ya enviaste el mensaje desde WhatsApp, puedes limpiar el carrito. Si aún no lo has enviado, consérvalo.</p>
+                    <div class="flex flex-col gap-2">
+                        <button type="button" onclick="confirmarPedidoEnviado()" class="w-full bg-[#899078] text-white py-3 rounded-lg font-bold text-sm hover:bg-[#6c725e] transition">Sí, ya envié mi pedido. Limpiar carrito</button>
+                        <button type="button" onclick="conservarCarrito()" class="w-full border border-[#A87853]/40 text-[#563B30] py-2 rounded-lg font-bold text-sm">Todavía no. Conservar carrito</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -277,7 +552,7 @@
     <!-- SCRIPT PRINCIPAL -->
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbzCDHvdLgeOd-bABO0q-kjaVy-62GV2cTKAd_EJ5IQOQ4Q_HrIDviBAZfjWUfJVLtrTXw/exec';
-        const NUMERO_WHATSAPP = "58424294992";
+        const NUMERO_WHATSAPP = "584242942992";
 
         let productos = [];
         let carrito = {};
@@ -287,7 +562,26 @@
         // Persistencia (LocalStorage)
         function cargarCarritoGuardado() {
             const guardado = localStorage.getItem('carrito_tastypastries');
-            if (guardado) { try { carrito = JSON.parse(guardado) || {}; } catch (_) { carrito = {}; localStorage.removeItem('carrito_tastypastries'); } }
+            if (guardado) {
+                try {
+                    const anterior = JSON.parse(guardado) || {};
+                    carrito = {};
+                    Object.values(anterior).forEach(item => {
+                        if (!item || !item.idBase) return;
+                        const id = String(item.idBase);
+                        if (!carrito[id]) carrito[id] = {
+                            idBase: item.idBase,
+                            nombre: item.nombre,
+                            precio: Number(item.precio) || 0,
+                            cantidad: 0
+                        };
+                        carrito[id].cantidad += Math.max(1, Number(item.cantidad) || 1);
+                    });
+                } catch (_) {
+                    carrito = {};
+                    localStorage.removeItem('carrito_tastypastries');
+                }
+            }
             actualizarCarritoUI();
         }
         function guardarCarrito() {
@@ -343,6 +637,44 @@
             } catch (_) { return ''; }
         }
 
+        function renderDestacados() {
+            const grid = document.getElementById('grid-destacados');
+            if (!grid) return;
+
+            const esVerdadero = valor =>
+                valor === true || ['TRUE', '1', 'SI', 'SÍ', 'YES']
+                    .includes(String(valor ?? '').trim().toUpperCase());
+
+            const unicos = [...new Map(
+                productos
+                    .filter(p => esVerdadero(p.activo) && esVerdadero(p.destacado))
+                    .sort((a, b) => {
+                        const ordenA = Number(a.orden_destacado);
+                        const ordenB = Number(b.orden_destacado);
+                        return (Number.isFinite(ordenA) && ordenA > 0 ? ordenA : 999) -
+                               (Number.isFinite(ordenB) && ordenB > 0 ? ordenB : 999);
+                    })
+                    .map(p => [String(p.id), p])
+            ).values()].slice(0, 4);
+
+            grid.replaceChildren();
+            if (!unicos.length) {
+                const msg = document.createElement('p'); msg.className = 'text-[#899078] text-sm col-span-full text-center'; msg.textContent = 'Descubre todas nuestras categorías en el catálogo.'; grid.appendChild(msg); return;
+            }
+            unicos.forEach(p => {
+                const card = document.createElement('article'); card.className = 'featured-card';
+                const media = document.createElement('div'); media.className = 'featured-media';
+                const imgUrl = safeImageURL(p.img);
+                if (imgUrl) { const img = document.createElement('img'); img.src = imgUrl; img.alt = String(p.nombre || 'Producto Tasty Pastries'); img.loading = 'lazy'; media.appendChild(img); }
+                else { const blank = document.createElement('div'); blank.className = 'featured-placeholder'; blank.textContent = 'Tasty Pastries'; media.appendChild(blank); }
+                const body = document.createElement('div'); body.className = 'featured-body';
+                const name = document.createElement('h3'); name.className = 'font-serif font-bold text-[#563B30] featured-title'; name.textContent = p.nombre || 'Producto';
+                const desc = document.createElement('p'); desc.className = 'featured-description'; desc.textContent = p.desc || '';
+                const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'featured-action'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
+                body.append(name, desc, btn); card.append(media, body); grid.appendChild(card);
+            });
+        }
+
         function renderProductos() {
             const grids = {
                 'ponques': document.getElementById('grid-ponques'),
@@ -351,6 +683,7 @@
                 'cheesecakes': document.getElementById('grid-cheesecakes'),
                 'tortas': document.getElementById('grid-tortas')
             };
+            renderDestacados();
             Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
             productos.forEach(p => {
                 const estaActivo = (p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
@@ -358,25 +691,25 @@
                 const precioNum = Number(p.precio) || 0;
                 const img = safeImageURL(p.img);
                 const card = document.createElement('article');
-                card.className = 'bg-white rounded-2xl border border-[#A87853]/10 overflow-hidden card flex flex-col justify-between cursor-pointer';
+                card.className = 'product-card card';
                 card.tabIndex = 0;
                 card.setAttribute('role', 'button');
                 card.setAttribute('aria-label', `Ver opciones de ${p.nombre || 'producto'}`);
-                const media = document.createElement('div');
+                const media = document.createElement('div'); media.className = 'product-card-media';
                 if (img) {
                     const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto Tasty Pastries');
-                    image.className = 'w-full h-64 object-cover'; image.loading = 'lazy'; media.appendChild(image);
+                    image.loading = 'lazy'; media.appendChild(image);
                 } else {
-                    const placeholder = document.createElement('div'); placeholder.className = 'w-full h-64 bg-[#F4EBDD] flex items-center justify-center text-[#899078]'; placeholder.textContent = 'Imagen pendiente'; media.appendChild(placeholder);
+                    const placeholder = document.createElement('div'); placeholder.className = 'product-card-placeholder'; placeholder.textContent = 'Imagen pendiente'; media.appendChild(placeholder);
                 }
-                const body = document.createElement('div'); body.className = 'p-6';
-                const title = document.createElement('h3'); title.className = 'text-xl font-bold mb-2 text-[#563B30] font-serif'; title.textContent = p.nombre || 'Producto';
-                const desc = document.createElement('p'); desc.className = 'text-sm text-[#899078] line-clamp-2'; desc.textContent = p.desc || '';
-                body.append(title, desc); media.appendChild(body);
-                const footer = document.createElement('div'); footer.className = 'p-6 pt-0 flex justify-between items-center';
-                const price = document.createElement('span'); price.className = 'text-2xl font-bold text-[#A87853]'; price.textContent = `$${precioNum.toFixed(2).replace(/\.00$/, '')}`;
-                const action = document.createElement('span'); action.className = 'bg-[#F4EBDD] text-[#563B30] px-4 py-2 rounded-lg text-sm font-bold border border-[#A87853]/20'; action.textContent = 'Ver opciones';
-                footer.append(price, action); card.append(media, footer);
+                const body = document.createElement('div'); body.className = 'product-card-body';
+                const title = document.createElement('h3'); title.className = 'font-bold text-[#563B30] font-serif product-card-title'; title.textContent = p.nombre || 'Producto';
+                const desc = document.createElement('p'); desc.className = 'product-card-description line-clamp-2'; desc.textContent = p.desc || '';
+                body.append(title, desc);
+                const footer = document.createElement('div'); footer.className = 'product-card-footer';
+                const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `$${precioNum.toFixed(2).replace(/\.00$/, '')}`;
+                const action = document.createElement('span'); action.className = 'product-card-action'; action.textContent = 'Ver opciones';
+                footer.append(price, action); card.append(media, body, footer);
                 card.addEventListener('click', () => abrirModal(p.id));
                 card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirModal(p.id); } });
                 const cat = String(p.categoria || '').toLowerCase().trim();
@@ -398,8 +731,7 @@
             if (img) { const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto'); image.className = 'w-full h-full object-cover'; imageContainer.appendChild(image); }
             document.getElementById('modal-nombre').innerText = p.nombre;
             document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-precio').innerText = `$${parseFloat(p.precio) || 0}`;
-            document.getElementById('modal-notas').value = '';
+            document.getElementById('modal-precio').innerText = `$${(parseFloat(p.precio) || 0).toFixed(2).replace(/\.00$/, '')}`;
             
             document.getElementById('btn-modal-agregar').onclick = () => agregarAlCarritoDesdeModal();
             document.getElementById('modal-producto').classList.remove('hidden');
@@ -413,9 +745,7 @@
         function agregarAlCarritoDesdeModal() {
             if(!productoSeleccionadoTemporal) return;
             const p = productoSeleccionadoTemporal;
-            const notas = document.getElementById('modal-notas').value.trim();
-            
-            const cartId = p.id + "_" + (notas.replace(/\s+/g, '').toLowerCase() || 'std');
+            const cartId = String(p.id);
             
             if (carrito[cartId]) {
                 carrito[cartId].cantidad++;
@@ -424,8 +754,7 @@
                     idBase: p.id, 
                     nombre: p.nombre, 
                     precio: parseFloat(p.precio) || 0, 
-                    cantidad: 1,
-                    personalizacion: notas 
+                    cantidad: 1
                 };
             }
             guardarCarrito();
@@ -453,6 +782,33 @@
             actualizarCarritoUI();
         }
 
+        // Confirmación manual: la página no puede verificar si el mensaje fue enviado en WhatsApp.
+        function mostrarConfirmacionPedido() {
+            const aviso = document.getElementById('confirmacion-pedido-whatsapp');
+            if (aviso) aviso.classList.remove('hidden');
+        }
+
+        function ocultarConfirmacionPedido() {
+            const aviso = document.getElementById('confirmacion-pedido-whatsapp');
+            if (aviso) aviso.classList.add('hidden');
+        }
+
+        function confirmarPedidoEnviado() {
+            vaciarCarrito();
+            localStorage.removeItem('pedido_whatsapp_pendiente');
+            ocultarConfirmacionPedido();
+            document.getElementById('cliente-nombre').value = '';
+            document.getElementById('cliente-fecha').value = '';
+            document.getElementById('cliente-obs').value = '';
+            document.getElementById('panel-carrito').classList.add('hidden');
+            alert('Carrito limpiado. ¡Gracias por tu pedido! Tasty Pastries confirmará la disponibilidad por WhatsApp.');
+        }
+
+        function conservarCarrito() {
+            localStorage.removeItem('pedido_whatsapp_pendiente');
+            ocultarConfirmacionPedido();
+        }
+
         function actualizarCarritoUI() {
             const lista = document.getElementById('lista-carrito-items');
             const contador = document.getElementById('nav-contador-carrito');
@@ -470,14 +826,11 @@
                     totalItems += item.cantidad;
                     subtotal += item.precio * item.cantidad;
                     
-                    const notasHTML = item.personalizacion ? `<p class="text-xs text-[#A87853] mt-1 italic">Nota: ${escapeHTML(item.personalizacion)}</p>` : '';
-
                     lista.innerHTML += `
                         <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-[#A87853]/20 shadow-sm">
                             <div class="pr-2 flex-1">
                                 <h4 class="font-bold text-sm text-[#563B30] font-serif">${escapeHTML(item.nombre)}</h4>
-                                <span class="text-xs text-[#899078] font-bold">$${item.precio} c/u</span>
-                                ${notasHTML}
+                                <span class="text-xs text-[#899078] font-bold">$${Number(item.precio).toFixed(2).replace(/\.00$/, '')} c/u</span>
                             </div>
                             <div class="flex items-center gap-2 bg-[#F4EBDD] rounded-lg p-1">
                                 <button data-cart-id="${escapeHTML(cartId)}" data-delta="-1" class="w-6 h-6 bg-white rounded font-bold text-[#563B30] flex items-center justify-center hover:bg-gray-100">-</button>
@@ -508,8 +861,8 @@
             const totalUsd = subtotal + costoDelivery;
 
             contador.innerText = totalItems;
-            document.getElementById('txt-subtotal').innerText = `$${subtotal}`;
-            document.getElementById('txt-total').innerText = `$${totalUsd}`;
+            document.getElementById('txt-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('txt-total').innerText = `$${totalUsd.toFixed(2)}`;
 
             if (tasaBcv > 0) {
                 const totalBs = totalUsd * tasaBcv;
@@ -517,6 +870,17 @@
             } else {
                 document.getElementById('txt-total-bs').innerText = 'Bs. --';
             }
+        }
+
+        function toggleMenuMovil(force) {
+            const menu = document.getElementById('menu-movil');
+            const btn = document.getElementById('btn-menu-movil');
+            if (!menu || !btn) return;
+            const abrir = typeof force === 'boolean' ? force : menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', !abrir);
+            btn.setAttribute('aria-expanded', String(abrir));
+            btn.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+            btn.textContent = abrir ? '✕' : '☰';
         }
 
         function toggleCarrito() {
@@ -534,10 +898,11 @@
             const tipoEntrega = document.getElementById('tipo-entrega').value;
 
             if (fecha) {
-                const [y, m, d] = fecha.split('-').map(Number);
-                const elegida = new Date(y, m - 1, d, 0, 0, 0);
                 const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
-                if (elegida < minimo) { alert('La fecha indicada debe tener al menos 24 horas de anticipación. También puedes dejarla en blanco y coordinarla por WhatsApp.'); return; }
+                const [y, m, d] = fecha.split('-').map(Number);
+                const elegida = new Date(y, m - 1, d);
+                const minimoFecha = new Date(minimo.getFullYear(), minimo.getMonth(), minimo.getDate());
+                if (elegida < minimoFecha) { alert('La fecha indicada debe ser con al menos 24 horas de anticipación. También puedes dejarla en blanco y coordinarla por WhatsApp.'); return; }
             }
 
             let subtotal = 0;
@@ -547,34 +912,72 @@
             lineas.push('', '*PRODUCTOS:*');
             ids.forEach(cartId => {
                 const item = carrito[cartId]; const totalItem = Number(item.precio) * Number(item.cantidad); subtotal += totalItem;
-                let linea = `• ${item.cantidad} × ${item.nombre}: USD ${totalItem.toFixed(2)}`;
-                if (item.personalizacion) linea += ` (Nota: ${item.personalizacion})`;
+                const linea = `• ${item.cantidad} × ${item.nombre}: $${totalItem.toFixed(2)}`;
                 lineas.push(linea);
             });
-            lineas.push('', `Subtotal productos: USD ${subtotal.toFixed(2)}`);
+            lineas.push('', `Subtotal productos: $${subtotal.toFixed(2)}`);
             const costoDelivery = tipoEntrega === 'delivery' ? 4 : 0;
-            if (tipoEntrega === 'delivery') lineas.push('Delivery (cobertura estándar hasta 18 km): USD 4.00');
-            else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
+            if (tipoEntrega === 'delivery') {
+                lineas.push('Delivery preliminar (hasta 18 km): USD 4.00');
+                lineas.push('Comparte tu ubicación de Google Maps por este chat para confirmar el costo final del delivery. La tarifa podrá ajustarse según la ubicación antes de confirmar el pedido.');
+                lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
+            } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
             const totalFinal = subtotal + costoDelivery;
-            lineas.push('', `*TOTAL ESTIMADO: USD ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
+            lineas.push('', `*TOTAL ESTIMADO: ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
             if (tasaBcv > 0) {
                 const totalBs = totalFinal * tasaBcv;
                 lineas.push(`Referencia BCV informativa: Bs. ${totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
             }
             if (obs) lineas.push('', `Observaciones: ${obs}`);
-            lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil.');
+            lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil. El pedido quedará formalizado una vez recibido y verificado el pago.');
             if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
             const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
-            window.open(url, '_blank', 'noopener');
-            // Se conserva el carrito para evitar perder el pedido si WhatsApp no llega a abrirse.
+            const ventanaWhatsApp = window.open(url, '_blank');
+            if (ventanaWhatsApp) {
+                ventanaWhatsApp.opener = null;
+                localStorage.setItem('pedido_whatsapp_pendiente', 'true');
+                mostrarConfirmacionPedido();
+            } else {
+                alert('No se pudo abrir WhatsApp. Revisa si tu navegador bloqueó la ventana emergente. Tu carrito se conserva.');
+            }
+            // El carrito solo se limpia cuando el cliente confirma manualmente que ya envió el pedido.
         }
 
         window.onload = function() {
             document.getElementById('tipo-entrega').value = 'delivery';
             const fechaInput = document.getElementById('cliente-fecha');
-            const manana = new Date(Date.now() + 24 * 60 * 60 * 1000);
-            fechaInput.min = `${manana.getFullYear()}-${String(manana.getMonth()+1).padStart(2,'0')}-${String(manana.getDate()).padStart(2,'0')}`;
+            const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            fechaInput.min = `${minimo.getFullYear()}-${String(minimo.getMonth()+1).padStart(2,'0')}-${String(minimo.getDate()).padStart(2,'0')}`;
+            document.querySelectorAll('.experience-step').forEach(card => {
+                const toggleDetalle = () => {
+                    const abierto = card.classList.toggle('is-expanded');
+                    card.setAttribute('aria-expanded', String(abierto));
+                };
+                card.addEventListener('click', toggleDetalle);
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleDetalle();
+                    }
+                });
+            });
+            document.querySelectorAll('.philosophy-card').forEach(card => {
+                card.setAttribute('aria-pressed', 'false');
+                card.addEventListener('click', () => {
+                    const abierto = card.classList.toggle('is-open');
+                    card.setAttribute('aria-pressed', String(abierto));
+                });
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        card.click();
+                    }
+                });
+            });
             cargarCarritoGuardado();
+            if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
+                mostrarConfirmacionPedido();
+            }
             cargarProductosSheets();
             obtenerTasaBCV();
         };
