@@ -23,6 +23,56 @@
         .bg-oliva { background-color: #899078; }
         
         .card:hover { transform: translateY(-4px); transition: all 0.3s ease; box-shadow: 0 10px 15px -3px rgba(86, 59, 48, 0.1); }
+        /* Tarjetas de producto: presentación uniforme y acabado editorial */
+        .product-card, .featured-card {
+            background:#fff; border:1px solid rgba(168,120,83,.16); border-radius:1.25rem;
+            overflow:hidden; display:flex; flex-direction:column;
+            box-shadow:0 3px 14px rgba(86,59,48,.055);
+            transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+        .product-card:hover, .featured-card:hover {
+            transform:translateY(-5px); border-color:rgba(168,120,83,.38);
+            box-shadow:0 14px 28px rgba(86,59,48,.12);
+        }
+        .product-card:focus-visible { outline:3px solid #A87853; outline-offset:3px; }
+        .product-card-media, .featured-media {
+            aspect-ratio:3 / 2; width:100%; overflow:hidden; background:#F4EBDD;
+        }
+        .product-card-media img, .featured-media img {
+            display:block; width:100%; height:100%; object-fit:cover;
+            transition:transform .55s ease;
+        }
+        .product-card:hover .product-card-media img,
+        .featured-card:hover .featured-media img { transform:scale(1.035); }
+        .product-card-placeholder, .featured-placeholder {
+            width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+            color:#899078; background:#F4EBDD; font-size:.9rem;
+        }
+        .product-card-body { padding:1.15rem 1.25rem .65rem; flex:1; }
+        .product-card-title { font-size:1.18rem; line-height:1.35; margin-bottom:.5rem; }
+        .product-card-description { color:#899078; font-size:.875rem; line-height:1.55; }
+        .product-card-footer {
+            padding:.65rem 1.25rem 1.25rem; display:flex; align-items:center;
+            justify-content:space-between; gap:.75rem;
+        }
+        .product-card-price { color:#A87853; font-size:1.35rem; font-weight:700; white-space:nowrap; }
+        .product-card-action, .featured-action {
+            display:inline-flex; align-items:center; justify-content:center;
+            background:#F4EBDD; color:#563B30; border:1px solid rgba(168,120,83,.25);
+            border-radius:.75rem; padding:.65rem .9rem; font-size:.82rem;
+            font-weight:700; white-space:nowrap; transition:background .2s ease,color .2s ease;
+        }
+        .product-card:hover .product-card-action,
+        .featured-card:hover .featured-action { background:#563B30; color:#F4EBDD; }
+        .featured-body { padding:1.1rem 1.15rem 1.2rem; display:flex; flex-direction:column; flex:1; }
+        .featured-title { font-size:1.12rem; line-height:1.35; }
+        .featured-description { color:#899078; font-size:.85rem; line-height:1.5; margin-top:.45rem; flex:1; }
+        .featured-action { border:0; background:transparent; color:#A87853; padding:.55rem 0 0; justify-content:flex-start; }
+        @media (max-width: 420px) {
+            .product-card-footer { padding-left:1rem; padding-right:1rem; }
+            .product-card-price { font-size:1.22rem; }
+            .product-card-action { padding:.6rem .7rem; font-size:.78rem; }
+        }
         .modal-enter { animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         html { scroll-behavior: smooth; scroll-padding-top: 88px; }
@@ -438,15 +488,16 @@
                 const msg = document.createElement('p'); msg.className = 'text-[#899078] text-sm col-span-full text-center'; msg.textContent = 'Descubre todas nuestras categorías en el catálogo.'; grid.appendChild(msg); return;
             }
             unicos.forEach(p => {
-                const card = document.createElement('article'); card.className = 'bg-white rounded-2xl overflow-hidden border border-[#A87853]/15 shadow-sm flex flex-col';
+                const card = document.createElement('article'); card.className = 'featured-card';
+                const media = document.createElement('div'); media.className = 'featured-media';
                 const imgUrl = safeImageURL(p.img);
-                if (imgUrl) { const img = document.createElement('img'); img.src = imgUrl; img.alt = String(p.nombre || 'Producto Tasty Pastries'); img.loading = 'lazy'; img.className = 'w-full h-52 object-cover'; card.appendChild(img); }
-                else { const blank = document.createElement('div'); blank.className = 'h-52 bg-[#F4EBDD] flex items-center justify-center text-[#A87853]'; blank.textContent = 'Tasty Pastries'; card.appendChild(blank); }
-                const body = document.createElement('div'); body.className = 'p-5 flex flex-col flex-1';
-                const name = document.createElement('h3'); name.className = 'font-serif text-xl font-bold text-[#563B30]'; name.textContent = p.nombre || 'Producto';
-                const desc = document.createElement('p'); desc.className = 'text-sm text-[#899078] mt-2 flex-1'; desc.textContent = p.desc || '';
-                const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'mt-4 text-sm font-bold text-[#A87853] text-left'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
-                body.append(name, desc, btn); card.appendChild(body); grid.appendChild(card);
+                if (imgUrl) { const img = document.createElement('img'); img.src = imgUrl; img.alt = String(p.nombre || 'Producto Tasty Pastries'); img.loading = 'lazy'; media.appendChild(img); }
+                else { const blank = document.createElement('div'); blank.className = 'featured-placeholder'; blank.textContent = 'Tasty Pastries'; media.appendChild(blank); }
+                const body = document.createElement('div'); body.className = 'featured-body';
+                const name = document.createElement('h3'); name.className = 'font-serif font-bold text-[#563B30] featured-title'; name.textContent = p.nombre || 'Producto';
+                const desc = document.createElement('p'); desc.className = 'featured-description'; desc.textContent = p.desc || '';
+                const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'featured-action'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
+                body.append(name, desc, btn); card.append(media, body); grid.appendChild(card);
             });
         }
 
@@ -466,25 +517,25 @@
                 const precioNum = Number(p.precio) || 0;
                 const img = safeImageURL(p.img);
                 const card = document.createElement('article');
-                card.className = 'bg-white rounded-2xl border border-[#A87853]/10 overflow-hidden card flex flex-col justify-between cursor-pointer';
+                card.className = 'product-card card';
                 card.tabIndex = 0;
                 card.setAttribute('role', 'button');
                 card.setAttribute('aria-label', `Ver opciones de ${p.nombre || 'producto'}`);
-                const media = document.createElement('div');
+                const media = document.createElement('div'); media.className = 'product-card-media';
                 if (img) {
                     const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto Tasty Pastries');
-                    image.className = 'w-full h-64 object-cover'; image.loading = 'lazy'; media.appendChild(image);
+                    image.loading = 'lazy'; media.appendChild(image);
                 } else {
-                    const placeholder = document.createElement('div'); placeholder.className = 'w-full h-64 bg-[#F4EBDD] flex items-center justify-center text-[#899078]'; placeholder.textContent = 'Imagen pendiente'; media.appendChild(placeholder);
+                    const placeholder = document.createElement('div'); placeholder.className = 'product-card-placeholder'; placeholder.textContent = 'Imagen pendiente'; media.appendChild(placeholder);
                 }
-                const body = document.createElement('div'); body.className = 'p-6';
-                const title = document.createElement('h3'); title.className = 'text-xl font-bold mb-2 text-[#563B30] font-serif'; title.textContent = p.nombre || 'Producto';
-                const desc = document.createElement('p'); desc.className = 'text-sm text-[#899078] line-clamp-2'; desc.textContent = p.desc || '';
-                body.append(title, desc); media.appendChild(body);
-                const footer = document.createElement('div'); footer.className = 'p-6 pt-0 flex justify-between items-center';
-                const price = document.createElement('span'); price.className = 'text-2xl font-bold text-[#A87853]'; price.textContent = `$${precioNum.toFixed(2).replace(/\.00$/, '')}`;
-                const action = document.createElement('span'); action.className = 'bg-[#F4EBDD] text-[#563B30] px-4 py-2 rounded-lg text-sm font-bold border border-[#A87853]/20'; action.textContent = 'Ver opciones';
-                footer.append(price, action); card.append(media, footer);
+                const body = document.createElement('div'); body.className = 'product-card-body';
+                const title = document.createElement('h3'); title.className = 'font-bold text-[#563B30] font-serif product-card-title'; title.textContent = p.nombre || 'Producto';
+                const desc = document.createElement('p'); desc.className = 'product-card-description line-clamp-2'; desc.textContent = p.desc || '';
+                body.append(title, desc);
+                const footer = document.createElement('div'); footer.className = 'product-card-footer';
+                const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `${precioNum.toFixed(2).replace(/\.00$/, '')}`;
+                const action = document.createElement('span'); action.className = 'product-card-action'; action.textContent = 'Ver opciones';
+                footer.append(price, action); card.append(media, body, footer);
                 card.addEventListener('click', () => abrirModal(p.id));
                 card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirModal(p.id); } });
                 const cat = String(p.categoria || '').toLowerCase().trim();
