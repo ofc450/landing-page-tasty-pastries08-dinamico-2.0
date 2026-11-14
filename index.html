@@ -844,6 +844,19 @@
             const fechaInput = document.getElementById('cliente-fecha');
             const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
             fechaInput.min = `${minimo.getFullYear()}-${String(minimo.getMonth()+1).padStart(2,'0')}-${String(minimo.getDate()).padStart(2,'0')}`;
+            document.querySelectorAll('.philosophy-card').forEach(card => {
+                card.setAttribute('aria-pressed', 'false');
+                card.addEventListener('click', () => {
+                    const abierto = card.classList.toggle('is-open');
+                    card.setAttribute('aria-pressed', String(abierto));
+                });
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        card.click();
+                    }
+                });
+            });
             cargarCarritoGuardado();
             if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
                 mostrarConfirmacionPedido();
