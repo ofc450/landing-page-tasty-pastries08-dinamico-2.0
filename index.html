@@ -109,6 +109,39 @@
         .moment-card:nth-child(2n) { background:linear-gradient(145deg,rgba(137,144,120,.14),rgba(168,120,83,.2)); }
         .mobile-menu a { display:block; padding:.8rem 0; border-top:1px solid rgba(168,120,83,.16); }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .card:hover { transform:none; } * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+        /* Experiencia de compra y preguntas frecuentes */
+        .experience-section { padding:clamp(4rem,7vw,6rem) 1rem; background:#F4EBDD; }
+        .experience-heading,.faq-heading { max-width:43rem; margin:0 auto 2.8rem; text-align:center; }
+        .experience-title,.faq-title { color:#563B30; font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); line-height:1.12; letter-spacing:-.025em; }
+        .experience-intro { color:#899078; max-width:38rem; margin:1rem auto 0; line-height:1.8; }
+        .experience-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; }
+        .experience-step { position:relative; min-height:15rem; padding:1.5rem 1.2rem; background:#fff; border:1px solid rgba(168,120,83,.18); border-radius:1.15rem; box-shadow:0 7px 22px rgba(86,59,48,.045); transition:transform .22s ease,box-shadow .22s ease; }
+        .experience-step:hover { transform:translateY(-4px); box-shadow:0 13px 28px rgba(86,59,48,.09); }
+        .experience-number { display:block; color:#A87853; font-size:.72rem; font-weight:700; letter-spacing:.18em; }
+        .experience-icon { display:flex; align-items:center; justify-content:center; width:2.8rem; height:2.8rem; margin:1.2rem 0 .9rem; border-radius:50%; background:#F4EBDD; color:#A87853; font-size:1.45rem; }
+        .experience-step h3 { color:#563B30; font-family:'Playfair Display',serif; font-size:1.28rem; margin-bottom:.45rem; }
+        .experience-step p { color:#899078; font-size:.84rem; line-height:1.65; }
+        .experience-notice { display:flex; align-items:flex-start; gap:.9rem; max-width:54rem; margin:2rem auto 0; padding:1.15rem 1.35rem; border:1px solid rgba(168,120,83,.24); border-radius:1rem; background:rgba(255,255,255,.58); color:#899078; font-size:.88rem; line-height:1.7; }
+        .experience-notice span { color:#A87853; font-size:1.2rem; }
+        .experience-notice strong { color:#563B30; }
+        .experience-cta { text-align:center; margin-top:1.8rem; }
+        .experience-link,.faq-contact a { display:inline-flex; align-items:center; gap:.6rem; padding:.85rem 1.25rem; border-radius:.8rem; background:#563B30; color:#F4EBDD; font-size:.84rem; font-weight:700; transition:background .2s ease,transform .2s ease; }
+        .experience-link:hover,.faq-contact a:hover { background:#3a2720; transform:translateY(-2px); }
+        .faq-section { padding:clamp(4rem,7vw,6rem) 1rem; background:#fff; border-top:1px solid rgba(168,120,83,.12); }
+        .faq-heading { margin-bottom:2.2rem; }
+        .faq-list { display:grid; gap:.75rem; }
+        .faq-item { border:1px solid rgba(168,120,83,.2); border-radius:.9rem; background:#FBF8F2; overflow:hidden; }
+        .faq-item summary { position:relative; cursor:pointer; list-style:none; padding:1.15rem 3.2rem 1.15rem 1.25rem; color:#563B30; font-weight:700; line-height:1.5; }
+        .faq-item summary::-webkit-details-marker { display:none; }
+        .faq-item summary::after { content:'+'; position:absolute; right:1.25rem; top:50%; transform:translateY(-50%); color:#A87853; font-size:1.45rem; font-weight:400; }
+        .faq-item[open] summary::after { content:'−'; }
+        .faq-item summary:focus-visible { outline:3px solid #A87853; outline-offset:-3px; border-radius:.9rem; }
+        .faq-item p { padding:0 1.25rem 1.2rem; color:#899078; font-size:.9rem; line-height:1.75; max-width:56rem; }
+        .faq-contact { margin-top:2rem; padding:1.7rem; text-align:center; border-radius:1rem; background:#F4EBDD; }
+        .faq-contact p { color:#563B30; font-family:'Playfair Display',serif; font-size:1.25rem; margin-bottom:1rem; }
+        @media(max-width:900px) { .experience-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        @media(max-width:600px) { .experience-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; } .experience-step { min-height:14rem; padding:1.15rem; } .experience-step:last-child { grid-column:1 / -1; min-height:auto; } .experience-icon { margin-top:.9rem; } .experience-notice { padding:1rem; font-size:.82rem; } .faq-item summary { padding:1rem 2.8rem 1rem 1rem; font-size:.92rem; } .faq-item p { padding:0 1rem 1rem; font-size:.86rem; } }
+        @media(prefers-reduced-motion:reduce) { .experience-step,.experience-link,.faq-contact a { transition:none; } }
         .philosophy-section { background:linear-gradient(180deg,#fff 0%,#fbf7f0 100%); padding:clamp(4rem,7vw,6.5rem) 1rem; }
         .philosophy-inner { max-width:72rem; margin:0 auto; display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(2.5rem,6vw,5.5rem); align-items:center; }
         .philosophy-intro { max-width:31rem; }
@@ -150,7 +183,7 @@
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
             <a href="#" class="font-serif font-bold text-2xl text-[#563B30]" aria-label="Tasty Pastries, inicio">Tasty Pastries</a>
             <div class="hidden md:flex gap-6 text-sm font-bold text-[#899078] uppercase tracking-wide">
-                <a href="#catalogo" class="hover:text-[#A87853] transition">Catálogo</a><a href="#filosofia" class="hover:text-[#A87853] transition">Nuestra esencia</a><a href="#elaboracion" class="hover:text-[#A87853] transition">Elaboración</a><a href="#momentos" class="hover:text-[#A87853] transition">Momentos</a><a href="#contacto" class="hover:text-[#A87853] transition">Contacto</a>
+                <a href="#catalogo" class="hover:text-[#A87853] transition">Catálogo</a><a href="#filosofia" class="hover:text-[#A87853] transition">Nuestra esencia</a><a href="#elaboracion" class="hover:text-[#A87853] transition">Elaboración</a><a href="#momentos" class="hover:text-[#A87853] transition">Momentos</a><a href="#preguntas-frecuentes" class="hover:text-[#A87853] transition">Preguntas frecuentes</a><a href="#contacto" class="hover:text-[#A87853] transition">Contacto</a>
             </div>
             <div class="flex items-center gap-2">
                 <button onclick="toggleMenuMovil()" aria-expanded="false" aria-controls="menu-movil" id="btn-menu-movil" class="md:hidden border border-[#A87853]/40 text-[#563B30] w-10 h-10 rounded-full" aria-label="Abrir menú">☰</button>
@@ -158,7 +191,7 @@
             </div>
         </div>
         <div id="menu-movil" class="mobile-menu hidden md:hidden px-6 pb-4 text-sm font-bold text-[#563B30] uppercase tracking-wide">
-            <a href="#catalogo" onclick="toggleMenuMovil(false)">Catálogo</a><a href="#filosofia" onclick="toggleMenuMovil(false)">Nuestra esencia</a><a href="#elaboracion" onclick="toggleMenuMovil(false)">Elaboración</a><a href="#momentos" onclick="toggleMenuMovil(false)">Momentos especiales</a><a href="#contacto" onclick="toggleMenuMovil(false)">Contacto</a>
+            <a href="#catalogo" onclick="toggleMenuMovil(false)">Catálogo</a><a href="#filosofia" onclick="toggleMenuMovil(false)">Nuestra esencia</a><a href="#elaboracion" onclick="toggleMenuMovil(false)">Elaboración</a><a href="#momentos" onclick="toggleMenuMovil(false)">Momentos especiales</a><a href="#preguntas-frecuentes" onclick="toggleMenuMovil(false)">Preguntas frecuentes</a><a href="#contacto" onclick="toggleMenuMovil(false)">Contacto</a>
         </div>
     </nav>
 
@@ -290,33 +323,100 @@
     </section>
 
     <!-- SECCIÓN 6: EXPERIENCIA DE COMPRA -->
-    <section id="experiencia" class="py-16 px-4">
+    <section id="experiencia" class="experience-section">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#A87853] mb-12">DISFRUTAR DE TASTY PASTRIES ES MUY SENCILLO.</h2>
-            <div class="flex flex-wrap justify-center gap-6">
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">1</div>
-                    <p class="font-bold text-[#563B30]">Explora nuestro catálogo</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">2</div>
-                    <p class="font-bold text-[#563B30]">Selecciona tus productos</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">3</div>
-                    <p class="font-bold text-[#563B30]">Agrégalos al carrito</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">4</div>
-                    <p class="font-bold text-[#563B30]">Envía tu pedido por WhatsApp</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl w-full md:w-48 text-center shadow-sm">
-                    <div class="text-4xl mb-2 text-[#899078]">5</div>
-                    <p class="font-bold text-[#563B30]">Confirmamos disponibilidad</p>
-                </div>
+            <div class="experience-heading">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Tu pedido, paso a paso</p>
+                <h2 class="experience-title">DISFRUTAR DE TASTY PASTRIES ES MUY SENCILLO.</h2>
+                <p class="experience-intro">Elegir algo delicioso no debería ser complicado. Te acompañamos desde la selección hasta la coordinación de tu pedido.</p>
             </div>
-            <div class="mt-12 text-center text-sm font-bold text-[#899078] bg-white/60 p-4 rounded-xl max-w-2xl mx-auto border border-[#A87853]/20">
-                ⚠️ Pedidos con un mínimo de 24 horas de anticipación • Entregas en Caracas • Disponibilidad sujeta a confirmación
+            <div class="experience-grid">
+                <article class="experience-step">
+                    <span class="experience-number">01</span>
+                    <span class="experience-icon" aria-hidden="true">⌕</span>
+                    <h3>Explora</h3>
+                    <p>Descubre el catálogo y conoce nuestros sabores disponibles.</p>
+                </article>
+                <article class="experience-step">
+                    <span class="experience-number">02</span>
+                    <span class="experience-icon" aria-hidden="true">♡</span>
+                    <h3>Selecciona</h3>
+                    <p>Elige tus productos y agrégalos al carrito.</p>
+                </article>
+                <article class="experience-step">
+                    <span class="experience-number">03</span>
+                    <span class="experience-icon" aria-hidden="true">▤</span>
+                    <h3>Envía tu pedido</h3>
+                    <p>Revisa tu selección y compártela con nosotros por WhatsApp.</p>
+                </article>
+                <article class="experience-step">
+                    <span class="experience-number">04</span>
+                    <span class="experience-icon" aria-hidden="true">↗</span>
+                    <h3>Coordinamos</h3>
+                    <p>Confirmamos disponibilidad y los detalles de entrega o retiro.</p>
+                </article>
+                <article class="experience-step">
+                    <span class="experience-number">05</span>
+                    <span class="experience-icon" aria-hidden="true">✧</span>
+                    <h3>Disfruta</h3>
+                    <p>Preparamos tu pedido especialmente para ti.</p>
+                </article>
+            </div>
+            <div class="experience-notice">
+                <span aria-hidden="true">✦</span>
+                <p><strong>Hecho por encargo:</strong> solicita con un mínimo de 24 horas de anticipación. Entregas en Caracas, con delivery o pick-up coordinado. Todo pedido está sujeto a confirmación de disponibilidad.</p>
+            </div>
+            <div class="experience-cta">
+                <a href="#catalogo" class="experience-link">Elegir mis productos <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <section id="preguntas-frecuentes" class="faq-section">
+        <div class="max-w-4xl mx-auto">
+            <div class="faq-heading">
+                <p class="editorial-kicker text-xs font-bold uppercase text-[#A87853] mb-3">Antes de hacer tu pedido</p>
+                <h2 class="faq-title">PREGUNTAS FRECUENTES</h2>
+                <p class="text-[#899078] mt-4 leading-relaxed">Aquí encontrarás información útil para disfrutar tu experiencia con Tasty Pastries.</p>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>¿Con cuánta anticipación debo hacer mi pedido?</summary>
+                    <p>Trabajamos por encargo y solicitamos un mínimo de 24 horas de anticipación. La fecha deseada y la disponibilidad se confirman por WhatsApp.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Cómo realizo mi pedido?</summary>
+                    <p>Selecciona los productos, agrégalos al carrito y envía el resumen por WhatsApp. Nuestro equipo revisará tu solicitud y confirmará la disponibilidad antes de dar el pedido por confirmado.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Tienen servicio de delivery?</summary>
+                    <p>Sí, realizamos entregas en Caracas. El costo preliminar es de USD 4 para distancias de hasta 18 km. Para confirmar la tarifa, necesitaremos que compartas tu ubicación de Google Maps por WhatsApp; el costo final se coordina contigo antes de confirmar el pedido.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Puedo retirar mi pedido?</summary>
+                    <p>Sí. Puedes seleccionar pick-up (retiro coordinado) al preparar tu pedido. Por WhatsApp acordaremos los detalles del retiro.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Los productos llevan conservantes?</summary>
+                    <p>No. En Tasty Pastries elaboramos por encargo y nuestros productos no llevan ningún tipo de conservante.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Qué harinas e ingredientes utilizan?</summary>
+                    <p>Trabajamos con formulaciones sin harina de trigo y utilizamos, según cada producto, harina de avena, harina de almendra o harina de coco. Para conocer los ingredientes y características de una preparación específica, consúltanos por WhatsApp antes de realizar tu pedido.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿En qué moneda están expresados los precios?</summary>
+                    <p>Los precios se muestran en dólares estadounidenses (USD). También presentamos una referencia informativa en bolívares según la tasa BCV disponible en la página al momento de la consulta.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Cuándo queda confirmado mi pedido?</summary>
+                    <p>Cuando revisemos tu solicitud y confirmemos por WhatsApp la disponibilidad, la modalidad de entrega o retiro y los detalles de pago.</p>
+                </details>
+            </div>
+            <div class="faq-contact">
+                <p>¿Tienes otra consulta? Estamos para ayudarte.</p>
+                <a href="https://wa.me/584242942992?text=Hola%2C%20tengo%20una%20consulta%20sobre%20Tasty%20Pastries." target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp <span aria-hidden="true">→</span></a>
             </div>
         </div>
     </section>
