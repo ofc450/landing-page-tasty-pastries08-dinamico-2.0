@@ -358,17 +358,17 @@
                 <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 4: Coordinamos. Toca para ver más detalles.">
                     <div class="experience-photo"><img src="./04_coordinamos.webp" alt="Repostería artesanal lista para coordinar su entrega" loading="lazy"></div>
                     <span class="experience-number">04</span>
-                    <div class="experience-copy"><h3>Coordinamos</h3><p>Confirmamos disponibilidad y los detalles de entrega o retiro.</p><div class="experience-extra">Acordamos por WhatsApp la modalidad elegida, la ubicación para delivery o los detalles del retiro coordinado.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                    <div class="experience-copy"><h3>Coordinamos</h3><p>Confirmamos disponibilidad y los detalles de entrega o retiro.</p><div class="experience-extra">Acordamos por WhatsApp la modalidad elegida, la ubicación para delivery o los detalles del retiro, y te facilitamos los datos para realizar el pago.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
                 <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 5: Disfruta. Toca para ver más detalles.">
                     <div class="experience-photo"><img src="./05_disfruta.webp" alt="Torta artesanal decorada para compartir" loading="lazy"></div>
                     <span class="experience-number">05</span>
-                    <div class="experience-copy"><h3>Disfruta</h3><p>Preparamos tu pedido especialmente para ti.</p><div class="experience-extra">Elaboramos por encargo, sin conservantes, y coordinamos contigo la entrega o el retiro una vez confirmado el pedido.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
+                    <div class="experience-copy"><h3>Disfruta</h3><p>Preparamos tu pedido especialmente para ti.</p><div class="experience-extra">Una vez recibido y verificado el pago, tu pedido queda formalizado. Entonces lo elaboramos especialmente para ti, sin conservantes, y coordinamos la entrega o el retiro.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
             </div>
             <div class="experience-notice">
                 <span aria-hidden="true">✦</span>
-                <p><strong>Hecho por encargo:</strong> solicita con un mínimo de 24 horas de anticipación. Entregas en Caracas, con delivery o pick-up coordinado. Todo pedido está sujeto a confirmación de disponibilidad.</p>
+                <p><strong>Hecho por encargo:</strong> solicita con un mínimo de 24 horas de anticipación. Entregas en Caracas, con delivery o pick-up coordinado. La solicitud está sujeta a disponibilidad y el pedido se formaliza únicamente cuando recibimos y verificamos el pago.</p>
             </div>
             <div class="experience-cta">
                 <a href="#catalogo" class="experience-link">Elegir mis productos <span aria-hidden="true">→</span></a>
@@ -391,7 +391,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>¿Cómo realizo mi pedido?</summary>
-                    <p>Selecciona los productos, agrégalos al carrito y envía el resumen por WhatsApp. Nuestro equipo revisará tu solicitud y confirmará la disponibilidad antes de dar el pedido por confirmado.</p>
+                    <p>Selecciona los productos, agrégalos al carrito y envía el resumen por WhatsApp. Revisaremos la disponibilidad, coordinaremos la entrega o el retiro y te enviaremos los datos de pago. <strong>El pedido queda formalizado únicamente cuando recibimos y verificamos el pago.</strong></p>
                 </details>
                 <details class="faq-item">
                     <summary>¿Tienen servicio de delivery?</summary>
@@ -414,8 +414,8 @@
                     <p>Los precios se muestran en dólares estadounidenses (USD). También presentamos una referencia informativa en bolívares según la tasa BCV disponible en la página al momento de la consulta.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>¿Cuándo queda confirmado mi pedido?</summary>
-                    <p>Cuando revisemos tu solicitud y confirmemos por WhatsApp la disponibilidad, la modalidad de entrega o retiro y los detalles de pago.</p>
+                    <summary>¿Cuándo queda formalizado mi pedido?</summary>
+                    <p>Primero revisamos la disponibilidad y coordinamos por WhatsApp la entrega o el retiro y los datos para pagar. <strong>El pedido queda formalizado únicamente cuando recibimos y verificamos el pago.</strong></p>
                 </details>
             </div>
             <div class="faq-contact">
@@ -502,7 +502,7 @@
                     <div>
                         <label class="block text-xs font-bold uppercase text-[#A87853] mb-1">Forma de pago</label>
                         <div class="w-full p-3 border rounded-lg bg-white text-sm font-bold text-[#563B30]">Pago Móvil</div>
-                        <p class="text-xs text-[#899078] mt-1">Los datos para realizar el pago se confirman por WhatsApp al validar el pedido.</p>
+                        <p class="text-xs text-[#899078] mt-1">Los datos para realizar el pago se confirman por WhatsApp al validar la disponibilidad. El pedido se formaliza cuando recibimos y verificamos el pago.</p>
                     </div>
 
                     <div>
@@ -929,7 +929,7 @@
                 lineas.push(`Referencia BCV informativa: Bs. ${totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
             }
             if (obs) lineas.push('', `Observaciones: ${obs}`);
-            lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil.');
+            lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil. El pedido quedará formalizado una vez recibido y verificado el pago.');
             if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
             const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
             const ventanaWhatsApp = window.open(url, '_blank');
