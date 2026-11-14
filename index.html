@@ -603,7 +603,7 @@
                 const desc = document.createElement('p'); desc.className = 'product-card-description line-clamp-2'; desc.textContent = p.desc || '';
                 body.append(title, desc);
                 const footer = document.createElement('div'); footer.className = 'product-card-footer';
-                const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `${precioNum.toFixed(2).replace(/\.00$/, '')}`;
+                const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `$${precioNum}.toFixed(2).replace(/\.00$/, '')}`;
                 const action = document.createElement('span'); action.className = 'product-card-action'; action.textContent = 'Ver opciones';
                 footer.append(price, action); card.append(media, body, footer);
                 card.addEventListener('click', () => abrirModal(p.id));
@@ -627,7 +627,7 @@
             if (img) { const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto'); image.className = 'w-full h-full object-cover'; imageContainer.appendChild(image); }
             document.getElementById('modal-nombre').innerText = p.nombre;
             document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-precio').innerText = `${(parseFloat(p.precio) || 0).toFixed(2).replace(/\.00$/, '')}`;
+            document.getElementById('modal-precio').innerText = `$${(parseFloat(p.precio) || 0).toFixed(2).replace(/\.00$/, '')}`;
             
             document.getElementById('btn-modal-agregar').onclick = () => agregarAlCarritoDesdeModal();
             document.getElementById('modal-producto').classList.remove('hidden');
@@ -726,7 +726,7 @@
                         <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-[#A87853]/20 shadow-sm">
                             <div class="pr-2 flex-1">
                                 <h4 class="font-bold text-sm text-[#563B30] font-serif">${escapeHTML(item.nombre)}</h4>
-                                <span class="text-xs text-[#899078] font-bold">${Number(item.precio).toFixed(2).replace(/\.00$/, '')} c/u</span>
+                                <span class="text-xs text-[#899078] font-bold">$${Number(item.precio).toFixed(2).replace(/\.00$/, '')} c/u</span>
                             </div>
                             <div class="flex items-center gap-2 bg-[#F4EBDD] rounded-lg p-1">
                                 <button data-cart-id="${escapeHTML(cartId)}" data-delta="-1" class="w-6 h-6 bg-white rounded font-bold text-[#563B30] flex items-center justify-center hover:bg-gray-100">-</button>
@@ -808,10 +808,10 @@
             lineas.push('', '*PRODUCTOS:*');
             ids.forEach(cartId => {
                 const item = carrito[cartId]; const totalItem = Number(item.precio) * Number(item.cantidad); subtotal += totalItem;
-                const linea = `• ${item.cantidad} × ${item.nombre}: ${totalItem.toFixed(2)}`;
+                const linea = `• ${item.cantidad} × ${item.nombre}: $${totalItem.toFixed(2)}`;
                 lineas.push(linea);
             });
-            lineas.push('', `Subtotal productos: ${subtotal.toFixed(2)}`);
+            lineas.push('', `Subtotal productos: $${subtotal.toFixed(2)}`);
             const costoDelivery = tipoEntrega === 'delivery' ? 4 : 0;
             if (tipoEntrega === 'delivery') {
                 lineas.push('Delivery preliminar (hasta 18 km): USD 4.00');
