@@ -109,18 +109,26 @@
         .moment-card:nth-child(2n) { background:linear-gradient(145deg,rgba(137,144,120,.14),rgba(168,120,83,.2)); }
         .mobile-menu a { display:block; padding:.8rem 0; border-top:1px solid rgba(168,120,83,.16); }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .card:hover { transform:none; } * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
-        /* Experiencia de compra y preguntas frecuentes */
+        /* Experiencia de compra: tarjetas visuales con expansión */
         .experience-section { padding:clamp(4rem,7vw,6rem) 1rem; background:#F4EBDD; }
         .experience-heading,.faq-heading { max-width:43rem; margin:0 auto 2.8rem; text-align:center; }
         .experience-title,.faq-title { color:#563B30; font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); line-height:1.12; letter-spacing:-.025em; }
         .experience-intro { color:#899078; max-width:38rem; margin:1rem auto 0; line-height:1.8; }
-        .experience-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; }
-        .experience-step { position:relative; min-height:15rem; padding:1.5rem 1.2rem; background:#fff; border:1px solid rgba(168,120,83,.18); border-radius:1.15rem; box-shadow:0 7px 22px rgba(86,59,48,.045); transition:transform .22s ease,box-shadow .22s ease; }
-        .experience-step:hover { transform:translateY(-4px); box-shadow:0 13px 28px rgba(86,59,48,.09); }
-        .experience-number { display:block; color:#A87853; font-size:.72rem; font-weight:700; letter-spacing:.18em; }
-        .experience-icon { display:flex; align-items:center; justify-content:center; width:2.8rem; height:2.8rem; margin:1.2rem 0 .9rem; border-radius:50%; background:#F4EBDD; color:#A87853; font-size:1.45rem; }
-        .experience-step h3 { color:#563B30; font-family:'Playfair Display',serif; font-size:1.28rem; margin-bottom:.45rem; }
-        .experience-step p { color:#899078; font-size:.84rem; line-height:1.65; }
+        .experience-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; align-items:start; }
+        .experience-step { position:relative; z-index:0; min-width:0; min-height:23rem; padding:0 0 1.25rem; overflow:hidden; background:#fff; border:1px solid rgba(168,120,83,.2); border-radius:1.15rem; box-shadow:0 7px 22px rgba(86,59,48,.055); cursor:pointer; outline:none; transform:translateY(0) scale(1); transform-origin:center top; transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease,min-height .28s ease; }
+        .experience-step:hover,.experience-step:focus-visible,.experience-step.is-expanded { z-index:8; min-height:27rem; transform:translateY(-5px) scale(1.045); border-color:rgba(168,120,83,.55); box-shadow:0 18px 38px rgba(86,59,48,.17); }
+        .experience-photo { position:relative; height:10.5rem; overflow:hidden; background:#e8ddce; }
+        .experience-photo img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .55s ease; }
+        .experience-step:hover .experience-photo img,.experience-step:focus-visible .experience-photo img,.experience-step.is-expanded .experience-photo img { transform:scale(1.09); }
+        .experience-photo::after { content:''; position:absolute; inset:35% 0 0; background:linear-gradient(180deg,transparent,rgba(42,29,23,.55)); pointer-events:none; }
+        .experience-number { position:absolute; z-index:1; top:.85rem; left:.9rem; display:grid; place-items:center; width:2.35rem; height:2.35rem; border-radius:50%; background:rgba(244,235,221,.95); color:#563B30; font-size:.72rem; font-weight:800; letter-spacing:.08em; box-shadow:0 3px 12px rgba(0,0,0,.12); }
+        .experience-copy { padding:1.1rem 1.1rem 0; }
+        .experience-step h3 { color:#563B30; font-family:'Playfair Display',serif; font-size:1.24rem; line-height:1.2; margin-bottom:.5rem; }
+        .experience-step p { color:#899078; font-size:.82rem; line-height:1.65; }
+        .experience-extra { max-height:0; opacity:0; overflow:hidden; margin-top:0; color:#6f665c; font-size:.79rem; line-height:1.65; transition:max-height .3s ease,opacity .25s ease,margin .3s ease; }
+        .experience-step:hover .experience-extra,.experience-step:focus-visible .experience-extra,.experience-step.is-expanded .experience-extra { max-height:9rem; opacity:1; margin-top:.75rem; }
+        .experience-hint { display:block; margin-top:.8rem; color:#A87853; font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+        .experience-step:hover .experience-hint,.experience-step:focus-visible .experience-hint,.experience-step.is-expanded .experience-hint { display:none; }
         .experience-notice { display:flex; align-items:flex-start; gap:.9rem; max-width:54rem; margin:2rem auto 0; padding:1.15rem 1.35rem; border:1px solid rgba(168,120,83,.24); border-radius:1rem; background:rgba(255,255,255,.58); color:#899078; font-size:.88rem; line-height:1.7; }
         .experience-notice span { color:#A87853; font-size:1.2rem; }
         .experience-notice strong { color:#563B30; }
@@ -139,9 +147,10 @@
         .faq-item p { padding:0 1.25rem 1.2rem; color:#899078; font-size:.9rem; line-height:1.75; max-width:56rem; }
         .faq-contact { margin-top:2rem; padding:1.7rem; text-align:center; border-radius:1rem; background:#F4EBDD; }
         .faq-contact p { color:#563B30; font-family:'Playfair Display',serif; font-size:1.25rem; margin-bottom:1rem; }
-        @media(max-width:900px) { .experience-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-        @media(max-width:600px) { .experience-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; } .experience-step { min-height:14rem; padding:1.15rem; } .experience-step:last-child { grid-column:1 / -1; min-height:auto; } .experience-icon { margin-top:.9rem; } .experience-notice { padding:1rem; font-size:.82rem; } .faq-item summary { padding:1rem 2.8rem 1rem 1rem; font-size:.92rem; } .faq-item p { padding:0 1rem 1rem; font-size:.86rem; } }
-        @media(prefers-reduced-motion:reduce) { .experience-step,.experience-link,.faq-contact a { transition:none; } }
+        @media(max-width:1100px) { .experience-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        @media(max-width:650px) { .experience-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; } .experience-step { min-height:22rem; } .experience-photo { height:9rem; } .experience-copy { padding:.95rem .9rem 0; } .experience-step h3 { font-size:1.12rem; } .experience-step p { font-size:.78rem; } .experience-step:hover,.experience-step:focus-visible,.experience-step.is-expanded { min-height:26rem; transform:translateY(-3px) scale(1.025); } .experience-notice { padding:1rem; font-size:.82rem; } .faq-item summary { padding:1rem 2.8rem 1rem 1rem; font-size:.92rem; } .faq-item p { padding:0 1rem 1rem; font-size:.86rem; } }
+        @media(max-width:380px) { .experience-grid { grid-template-columns:1fr; } .experience-step { min-height:20rem; } .experience-photo { height:11rem; } }
+        @media(prefers-reduced-motion:reduce) { .experience-step,.experience-photo img,.experience-extra,.experience-link,.faq-contact a { transition:none; } }
         .philosophy-section { background:linear-gradient(180deg,#fff 0%,#fbf7f0 100%); padding:clamp(4rem,7vw,6.5rem) 1rem; }
         .philosophy-inner { max-width:72rem; margin:0 auto; display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(2.5rem,6vw,5.5rem); align-items:center; }
         .philosophy-intro { max-width:31rem; }
@@ -331,35 +340,30 @@
                 <p class="experience-intro">Elegir algo delicioso no debería ser complicado. Te acompañamos desde la selección hasta la coordinación de tu pedido.</p>
             </div>
             <div class="experience-grid">
-                <article class="experience-step">
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 1: Explora. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=720&q=85" alt="Selección de repostería artesanal recién preparada" loading="lazy"></div>
                     <span class="experience-number">01</span>
-                    <span class="experience-icon" aria-hidden="true">⌕</span>
-                    <h3>Explora</h3>
-                    <p>Descubre el catálogo y conoce nuestros sabores disponibles.</p>
+                    <div class="experience-copy"><h3>Explora</h3><p>Descubre el catálogo y conoce nuestros sabores disponibles.</p><div class="experience-extra">Revisa las opciones, las descripciones y los precios. Cada producto muestra sus características para ayudarte a elegir.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
-                <article class="experience-step">
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 2: Selecciona. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=720&q=85" alt="Postre artesanal servido y listo para elegir" loading="lazy"></div>
                     <span class="experience-number">02</span>
-                    <span class="experience-icon" aria-hidden="true">♡</span>
-                    <h3>Selecciona</h3>
-                    <p>Elige tus productos y agrégalos al carrito.</p>
+                    <div class="experience-copy"><h3>Selecciona</h3><p>Elige tus productos y agrégalos al carrito.</p><div class="experience-extra">Indica las cantidades que deseas y revisa tu selección en el carrito antes de continuar.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
-                <article class="experience-step">
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 3: Envía tu pedido. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=720&q=85" alt="Teléfono móvil para comunicar el pedido" loading="lazy"></div>
                     <span class="experience-number">03</span>
-                    <span class="experience-icon" aria-hidden="true">▤</span>
-                    <h3>Envía tu pedido</h3>
-                    <p>Revisa tu selección y compártela con nosotros por WhatsApp.</p>
+                    <div class="experience-copy"><h3>Envía tu pedido</h3><p>Revisa tu selección y compártela con nosotros por WhatsApp.</p><div class="experience-extra">El carrito prepara un resumen para WhatsApp. Puedes añadir tu nombre, fecha deseada y observaciones, si lo necesitas.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
-                <article class="experience-step">
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 4: Coordinamos. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="https://images.unsplash.com/photo-1608198093002-ad4e0054841c?auto=format&fit=crop&w=720&q=85" alt="Preparación y empaque de productos de panadería" loading="lazy"></div>
                     <span class="experience-number">04</span>
-                    <span class="experience-icon" aria-hidden="true">↗</span>
-                    <h3>Coordinamos</h3>
-                    <p>Confirmamos disponibilidad y los detalles de entrega o retiro.</p>
+                    <div class="experience-copy"><h3>Coordinamos</h3><p>Confirmamos disponibilidad y los detalles de entrega o retiro.</p><div class="experience-extra">Acordamos por WhatsApp la modalidad elegida, la ubicación para delivery o los detalles del retiro coordinado.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
-                <article class="experience-step">
+                <article class="experience-step" tabindex="0" role="button" aria-expanded="false" aria-label="Paso 5: Disfruta. Toca para ver más detalles.">
+                    <div class="experience-photo"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=720&q=85" alt="Torta artesanal decorada para compartir" loading="lazy"></div>
                     <span class="experience-number">05</span>
-                    <span class="experience-icon" aria-hidden="true">✧</span>
-                    <h3>Disfruta</h3>
-                    <p>Preparamos tu pedido especialmente para ti.</p>
+                    <div class="experience-copy"><h3>Disfruta</h3><p>Preparamos tu pedido especialmente para ti.</p><div class="experience-extra">Elaboramos por encargo, sin conservantes, y coordinamos contigo la entrega o el retiro una vez confirmado el pedido.</div><span class="experience-hint">Pasa o toca para ampliar</span></div>
                 </article>
             </div>
             <div class="experience-notice">
@@ -944,6 +948,19 @@
             const fechaInput = document.getElementById('cliente-fecha');
             const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
             fechaInput.min = `${minimo.getFullYear()}-${String(minimo.getMonth()+1).padStart(2,'0')}-${String(minimo.getDate()).padStart(2,'0')}`;
+            document.querySelectorAll('.experience-step').forEach(card => {
+                const toggleDetalle = () => {
+                    const abierto = card.classList.toggle('is-expanded');
+                    card.setAttribute('aria-expanded', String(abierto));
+                };
+                card.addEventListener('click', toggleDetalle);
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleDetalle();
+                    }
+                });
+            });
             document.querySelectorAll('.philosophy-card').forEach(card => {
                 card.setAttribute('aria-pressed', 'false');
                 card.addEventListener('click', () => {
