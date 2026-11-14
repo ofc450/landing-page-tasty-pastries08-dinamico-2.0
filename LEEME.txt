@@ -1,0 +1,14 @@
+TASTY PASTRIES — IMÁGENES DE NUESTRA ESENCIA
+
+Archivos:
+06_sin_azucar.webp
+07_sin_gluten.webp
+08_sin_harina_de_trigo.webp
+09_sin_conservantes.webp
+
+Subir los cuatro archivos a la misma carpeta donde se encuentran las cinco imágenes anteriores
+(o a /assets si se decide centralizarlas allí). Después hay que actualizar las rutas en index.html.
+
+Nota: las imágenes son piezas gráficas ilustrativas. Antes de publicar, confirmar que las
+afirmaciones de producto (especialmente sin gluten) coincidan con los controles reales
+de elaboración y manipulación.
