@@ -342,6 +342,18 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="grid-tortas">
             <p class="text-[#899078] text-sm col-span-full">Cargando catálogo...</p>
         </div>
+
+        <!-- F. Galletas -->
+        <h2 class="text-3xl font-bold mb-8 border-b border-[#A87853]/30 pb-3 text-[#563B30]">Galletas</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="grid-galletas">
+            <p class="text-[#899078] text-sm col-span-full">Cargando catálogo...</p>
+        </div>
+
+        <!-- G. Navideños -->
+        <h2 class="text-3xl font-bold mb-8 border-b border-[#A87853]/30 pb-3 text-[#563B30]">Navideños</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="grid-navidenos">
+            <p class="text-[#899078] text-sm col-span-full">Cargando catálogo...</p>
+        </div>
     </main>
 
     <!-- SECCIÓN 5: ELABORACIÓN PERSONALIZADA -->
@@ -704,7 +716,9 @@
                 'coffeecakes': document.getElementById('grid-coffeecakes'),
                 'brazosgitanos': document.getElementById('grid-brazosgitanos'),
                 'cheesecakes': document.getElementById('grid-cheesecakes'),
-                'tortas': document.getElementById('grid-tortas')
+                'tortas': document.getElementById('grid-tortas'),
+                'galletas': document.getElementById('grid-galletas'),
+                'navidenos': document.getElementById('grid-navidenos')
             };
             renderDestacados();
             Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
