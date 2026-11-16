@@ -183,9 +183,32 @@
         @media(max-width:767px) { .philosophy-card { min-height:17rem; } .philosophy-front,.philosophy-detail { padding:1.1rem; } .philosophy-detail p { font-size:.82rem; } }
         @media(prefers-reduced-motion:reduce) { .philosophy-card,.philosophy-image,.philosophy-front,.philosophy-detail { transition:none; } }
     </style>
-    <!-- Meta Pixel y Google Analytics se instalarán al final, con identificadores reales. -->
+    <!-- Google Analytics 4: Tasty Pastries -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5E12088DEN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5E12088DEN');
+    </script>
+    <!-- Meta Pixel: Tasty Pastries -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+    s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1142579158088783');
+    fbq('track', 'PageView');
+    </script>
+
 </head>
 <body class="pb-28">
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1142579158088783&ev=PageView&noscript=1"
+    alt=""></noscript>
 
     <!-- SECCIÓN 1: NAVEGACIÓN -->
     <nav class="bg-[#F4EBDD] border-b border-[#A87853]/20 sticky top-0 z-40 shadow-sm">
@@ -724,6 +747,17 @@
             const p = productos.find(x => x.id == id);
             if(!p) return;
             productoSeleccionadoTemporal = p;
+            if (typeof fbq === 'function') fbq('track', 'ViewContent', {content_name: String(p.nombre || 'Producto')});
+            if (typeof gtag === 'function') gtag('event', 'view_item', {
+                currency: 'USD',
+                value: Number(p.precio) || 0,
+                items: [{
+                    item_id: String(p.id),
+                    item_name: String(p.nombre || 'Producto'),
+                    price: Number(p.precio) || 0,
+                    quantity: 1
+                }]
+            });
             
             const img = safeImageURL(p.img);
             const imageContainer = document.getElementById('modal-img-container');
@@ -745,6 +779,17 @@
         function agregarAlCarritoDesdeModal() {
             if(!productoSeleccionadoTemporal) return;
             const p = productoSeleccionadoTemporal;
+            if (typeof fbq === 'function') fbq('track', 'AddToCart', {content_name: String(p.nombre || 'Producto'), quantity: 1, value: Number(p.precio) || 0, currency: 'USD'});
+            if (typeof gtag === 'function') gtag('event', 'add_to_cart', {
+                currency: 'USD',
+                value: Number(p.precio) || 0,
+                items: [{
+                    item_id: String(p.id),
+                    item_name: String(p.nombre || 'Producto'),
+                    price: Number(p.precio) || 0,
+                    quantity: 1
+                }]
+            });
             const cartId = String(p.id);
             
             if (carrito[cartId]) {
@@ -887,6 +932,19 @@
             const panel = document.getElementById('panel-carrito');
             panel.classList.toggle('hidden');
             if(typeof fbq === 'function') fbq('track', 'ViewCart');
+            if (!panel.classList.contains('hidden') && typeof gtag === 'function') {
+                const itemsGA4 = Object.keys(carrito).map(cartId => {
+                    const item = carrito[cartId];
+                    return {
+                        item_id: String(item.idBase || cartId),
+                        item_name: String(item.nombre || 'Producto'),
+                        price: Number(item.precio) || 0,
+                        quantity: Number(item.cantidad) || 1
+                    };
+                });
+                const valueGA4 = itemsGA4.reduce((total, item) => total + item.price * item.quantity, 0);
+                gtag('event', 'view_cart', {currency: 'USD', value: valueGA4, items: itemsGA4});
+            }
         }
 
         function enviarWhatsApp() {
@@ -930,10 +988,31 @@
             }
             if (obs) lineas.push('', `Observaciones: ${obs}`);
             lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil. El pedido quedará formalizado una vez recibido y verificado el pago.');
+            const itemsGA4 = ids.map(cartId => {
+                const item = carrito[cartId];
+                return {
+                    item_id: String(item.idBase || cartId),
+                    item_name: String(item.nombre || 'Producto'),
+                    price: Number(item.precio) || 0,
+                    quantity: Number(item.cantidad) || 1
+                };
+            });
+            if (typeof gtag === 'function') gtag('event', 'begin_checkout', {
+                currency: 'USD',
+                value: totalFinal,
+                items: itemsGA4
+            });
             if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
             const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
             const ventanaWhatsApp = window.open(url, '_blank');
             if (ventanaWhatsApp) {
+                if (typeof fbq === 'function') fbq('trackCustom', 'WhatsAppContact');
+                if (typeof gtag === 'function') gtag('event', 'whatsapp_contact', {
+                    method: 'WhatsApp',
+                    currency: 'USD',
+                    value: totalFinal,
+                    items: itemsGA4
+                });
                 ventanaWhatsApp.opener = null;
                 localStorage.setItem('pedido_whatsapp_pendiente', 'true');
                 mostrarConfirmacionPedido();
