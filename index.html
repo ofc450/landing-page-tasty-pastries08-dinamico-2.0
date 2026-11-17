@@ -1265,10 +1265,11 @@
                 lineas.push(promo.titulo);
                 if (promo.detalle) lineas.push(promo.detalle);
                 if (promo.subtotalElegible > 0 && promo.subtotalElegible < subtotal) {
-                    lineas.push('Subtotal de productos participantes: 
-                if (promo.deliveryGratis) lineas.push('Beneficio: delivery gratis');
-                if (promo.productoPrueba) lineas.push(`Producto de prueba: ${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`);
-                if (promo.condiciones) lineas.push(`Condiciones: ${promo.condiciones}`);
+                    lineas.push('Subtotal de productos participantes: $' + promo.subtotalElegible.toFixed(2));
+                }
+                if (promo.descuento > 0) lineas.push('Descuento aplicado: -$' + promo.descuento.toFixed(2));
+                if (promo.deliveryGratis) lineas.push('Beneficio aplicado: delivery gratis');
+                if (promo.productoPrueba) lineas.push('Producto de regalo: ' + promo.cantidadPrueba + ' × ' + promo.productoPrueba + ' — GRATIS');
             }
             if (tipoEntrega === 'delivery') {
                 lineas.push(promo.deliveryGratis ? 'Delivery: GRATIS (promoción aplicada)' : 'Delivery preliminar (hasta 18 km): USD 4.00');
