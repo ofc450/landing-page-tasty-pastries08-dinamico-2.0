@@ -736,10 +736,10 @@
                     ? `Obtén ${valor}% de descuento en: ${productos.join(', ')}.`
                     : `Obtén ${valor}% de descuento en tu compra.`;
             } else if (tipo === 'DESCUENTO_FIJO' && valor > 0) {
-                titulo = `¡Ahorra ${valor.toFixed(2)} en tu compra!`;
+                titulo = `¡Ahorra $${valor.toFixed(2)} en tu compra!`;
                 mensaje = alcance === 'ESPECIFICOS' && productos.length
-                    ? `Descuento de ${valor.toFixed(2)} en: ${productos.join(', ')}.`
-                    : `Descuento de ${valor.toFixed(2)} en tu compra.`;
+                    ? `Descuento de $${valor.toFixed(2)} en: ${productos.join(', ')}.`
+                    : `Descuento de $${valor.toFixed(2)} en tu compra.`;
             } else if (tipo === 'DELIVERY_FREE') {
                 titulo = '¡Tu delivery va por nuestra cuenta!';
                 mensaje = 'Disfruta de delivery gratis con esta promoción.';
@@ -749,7 +749,7 @@
                 mensaje = `Recibe ${cantidad} × ${String(p.producto_promocional).trim()} GRATIS con tu compra.`;
             }
 
-            if (minimo > 0) mensaje += ` Compra mínima: ${minimo.toFixed(2)}.`;
+            if (minimo > 0) mensaje += ` Compra mínima: $${minimo.toFixed(2)}.`;
             if (alcance === 'ESPECIFICOS' && tipo !== 'DESCUENTO_PCT' && tipo !== 'DESCUENTO_FIJO' && productos.length) {
                 mensaje += ` Productos participantes: ${productos.join(', ')}.`;
             }
