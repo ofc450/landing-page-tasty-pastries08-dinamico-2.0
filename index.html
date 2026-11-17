@@ -182,6 +182,25 @@
         .philosophy-footnote { color:#899078; font-size:.78rem; text-align:center; margin-top:1.15rem; }
         @media(max-width:767px) { .philosophy-card { min-height:17rem; } .philosophy-front,.philosophy-detail { padding:1.1rem; } .philosophy-detail p { font-size:.82rem; } }
         @media(prefers-reduced-motion:reduce) { .philosophy-card,.philosophy-image,.philosophy-front,.philosophy-detail { transition:none; } }
+    
+        /* Popup promocional administrado desde Google Sheets */
+        .promo-overlay { position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:1rem; background:rgba(35,25,20,.68); backdrop-filter:blur(5px); }
+        .promo-overlay[hidden] { display:none !important; }
+        .promo-dialog { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); width:min(100%,56rem); max-height:min(88vh,48rem); overflow:auto; border-radius:1.35rem; background:#fffaf2; box-shadow:0 25px 80px rgba(0,0,0,.3); animation:promoIn .28s ease-out; }
+        .promo-photo { min-height:24rem; background:#ead9c5; }
+        .promo-photo img { width:100%; height:100%; min-height:24rem; display:block; object-fit:cover; }
+        .promo-copy { position:relative; display:flex; flex-direction:column; justify-content:center; padding:clamp(1.5rem,4vw,3rem); }
+        .promo-eyebrow { color:#A87853; font-size:.68rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; }
+        .promo-title { margin-top:.8rem; color:#563B30; font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.2vw,2.8rem); line-height:1.12; }
+        .promo-message { margin-top:1rem; color:#76685d; font-size:.95rem; line-height:1.8; white-space:pre-line; }
+        .promo-action { display:inline-flex; align-items:center; justify-content:center; align-self:flex-start; margin-top:1.6rem; min-height:3rem; padding:.85rem 1.25rem; border-radius:.8rem; background:#563B30; color:#F4EBDD; font-size:.82rem; font-weight:700; transition:background .2s ease,transform .2s ease; }
+        .promo-action:hover { background:#3a2720; transform:translateY(-2px); }
+        .promo-close { position:absolute; z-index:2; top:.8rem; right:.8rem; display:grid; place-items:center; width:2.5rem; height:2.5rem; border:1px solid rgba(86,59,48,.14); border-radius:50%; background:rgba(255,250,242,.94); color:#563B30; font-size:1.35rem; cursor:pointer; }
+        .promo-close:focus-visible,.promo-action:focus-visible { outline:3px solid #A87853; outline-offset:3px; }
+        @keyframes promoIn { from { opacity:0; transform:translateY(12px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+        @media(max-width:650px) { .promo-dialog { grid-template-columns:1fr; width:min(100%,28rem); max-height:88vh; } .promo-photo,.promo-photo img { min-height:0; height:12rem; } .promo-copy { padding:1.5rem; } .promo-title { font-size:1.9rem; } .promo-message { font-size:.88rem; } }
+        @media(prefers-reduced-motion:reduce) { .promo-dialog { animation:none; } .promo-action { transition:none; } }
+
     </style>
     <!-- Google Analytics 4: Tasty Pastries -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5E12088DEN"></script>
@@ -209,6 +228,21 @@
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1142579158088783&ev=PageView&noscript=1"
     alt=""></noscript>
+
+
+    <!-- Ventana promocional administrada desde Google Sheets -->
+    <div id="promo-overlay" class="promo-overlay" hidden aria-hidden="true">
+        <section id="promo-dialog" class="promo-dialog" role="dialog" aria-modal="true" aria-labelledby="promo-title">
+            <button type="button" id="promo-close" class="promo-close" aria-label="Cerrar promoción">×</button>
+            <div id="promo-photo" class="promo-photo" hidden><img id="promo-image" src="" alt=""></div>
+            <div class="promo-copy">
+                <span class="promo-eyebrow">Una invitación especial</span>
+                <h2 id="promo-title" class="promo-title"></h2>
+                <p id="promo-message" class="promo-message"></p>
+                <a id="promo-action" class="promo-action" href="#" hidden></a>
+            </div>
+        </section>
+    </div>
 
     <!-- SECCIÓN 1: NAVEGACIÓN -->
     <nav class="bg-[#F4EBDD] border-b border-[#A87853]/20 sticky top-0 z-40 shadow-sm">
@@ -586,7 +620,7 @@
 
     <!-- SCRIPT PRINCIPAL -->
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzCDHvdLgeOd-bABO0q-kjaVy-62GV2cTKAd_EJ5IQOQ4Q_HrIDviBAZfjWUfJVLtrTXw/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyOzttx9tU879gFRsTbzhAJtefP1jlcM4HmekzfALidDPBOv-oDDMpsbt8IoPqKFLCYTg/exec';
         const NUMERO_WHATSAPP = "584242942992";
 
         let productos = [];
@@ -671,6 +705,106 @@
                 return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
             } catch (_) { return ''; }
         }
+
+
+        // Popup promocional: contenido y calendario administrados en la pestaña "Popup".
+        function cerrarPopupPromocional() {
+            const overlay = document.getElementById('promo-overlay');
+            if (!overlay) return;
+            overlay.hidden = true;
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        function mostrarPopupPromocional(p) {
+            const overlay = document.getElementById('promo-overlay');
+            const imagenURL = safeImageURL(p.imagen);
+            const foto = document.getElementById('promo-photo');
+            const imagen = document.getElementById('promo-image');
+            const boton = document.getElementById('promo-action');
+
+            document.getElementById('promo-title').textContent = String(p.titulo || 'Una novedad de Tasty Pastries');
+            document.getElementById('promo-message').textContent = String(p.mensaje || '');
+
+            if (imagenURL) {
+                imagen.src = imagenURL;
+                imagen.alt = String(p.titulo || 'Promoción Tasty Pastries');
+                foto.hidden = false;
+            } else {
+                imagen.removeAttribute('src');
+                foto.hidden = true;
+            }
+
+            const accion = String(p.accion || '').trim().toLowerCase();
+            const destino = String(p.url_destino || '').trim();
+            let href = '';
+
+            if (accion === 'catalogo') {
+                href = '#catalogo';
+            } else if (accion === 'whatsapp') {
+                const texto = destino || 'Hola, quisiera información sobre la promoción que vi en Tasty Pastries.';
+                href = 'https://wa.me/' + NUMERO_WHATSAPP + '?text=' + encodeURIComponent(texto);
+            } else if (accion === 'url') {
+                try {
+                    const url = new URL(destino);
+                    if (url.protocol === 'https:' || url.protocol === 'http:') href = url.href;
+                } catch (_) {}
+            }
+
+            if (href) {
+                boton.textContent = String(p.texto_boton || 'Conocer más');
+                boton.href = href;
+                boton.hidden = false;
+                boton.target = accion === 'url' || accion === 'whatsapp' ? '_blank' : '_self';
+                boton.rel = 'noopener noreferrer';
+            } else {
+                boton.hidden = true;
+                boton.removeAttribute('href');
+            }
+
+            overlay.hidden = false;
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('promo-close').focus();
+        }
+
+        async function cargarPopupPromocional() {
+            try {
+                const respuesta = await fetch(API_URL + '?tipo=popup', { cache: 'no-store' });
+                if (!respuesta.ok) return;
+                const p = await respuesta.json();
+                if (!p || p.error) return;
+
+                const frecuencia = String(p.frecuencia || 'sesion').trim().toLowerCase();
+                const identificador = String(p.id || p.titulo || 'promocion').trim().toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'promocion';
+                const clave = 'tasty_popup_' + identificador;
+
+                if (frecuencia === 'una_vez' || frecuencia === 'una vez') {
+                    if (localStorage.getItem(clave) === 'visto') return;
+                    localStorage.setItem(clave, 'visto');
+                } else if (frecuencia !== 'siempre') {
+                    if (sessionStorage.getItem(clave) === 'visto') return;
+                    sessionStorage.setItem(clave, 'visto');
+                }
+
+                mostrarPopupPromocional(p);
+            } catch (error) {
+                console.warn('No se pudo cargar la promoción:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cerrar = document.getElementById('promo-close');
+            const overlay = document.getElementById('promo-overlay');
+            if (cerrar) cerrar.addEventListener('click', cerrarPopupPromocional);
+            if (overlay) overlay.addEventListener('click', event => {
+                if (event.target === overlay) cerrarPopupPromocional();
+            });
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && overlay && !overlay.hidden) cerrarPopupPromocional();
+            });
+        });
 
         function renderDestacados() {
             const grid = document.getElementById('grid-destacados');
@@ -1073,6 +1207,7 @@
             }
             cargarProductosSheets();
             obtenerTasaBCV();
+            cargarPopupPromocional();
         };
     </script>
 </body>
