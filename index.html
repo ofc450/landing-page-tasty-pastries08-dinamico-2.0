@@ -218,40 +218,58 @@
         @media(prefers-reduced-motion:reduce) { .promo-dialog { animation:none; } .promo-action { transition:none; } }
 
 
-        /* Corrección global de centrado y desbordamiento horizontal en móviles */
+        /* Contención horizontal y centrado de ventanas sobre el viewport */
         html, body {
-            width:100%;
-            max-width:100%;
-            overflow-x:clip;
+            width:100% !important;
+            max-width:100% !important;
+            overflow-x:hidden !important;
         }
-        body { position:relative; }
-        /* Los dos diálogos se anclan al viewport, no al ancho desplazado del documento */
-        #promo-overlay,
-        #modal-producto {
+        /* Mantener el popup promocional tal como ya fue validado */
+        #promo-overlay {
             position:fixed !important;
             inset:0 !important;
             width:100% !important;
             height:100vh !important;
             height:100dvh !important;
-            min-height:0 !important;
             box-sizing:border-box !important;
             display:grid !important;
             place-items:center !important;
-            padding: max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)) !important;
             overflow-x:hidden !important;
             overflow-y:auto !important;
             overscroll-behavior:contain;
         }
-        #promo-overlay[hidden],
-        #modal-producto.hidden { display:none !important; }
+        #promo-overlay[hidden] { display:none !important; }
         #promo-dialog {
             width:min(100%,56rem) !important;
             max-height:calc(100dvh - 1.5rem) !important;
             margin:auto !important;
             min-width:0 !important;
         }
+
+        /* Ficha de producto: centrado explícito con flex, independiente de Tailwind */
+        #modal-producto {
+            position:fixed !important;
+            top:0 !important;
+            right:0 !important;
+            bottom:0 !important;
+            left:0 !important;
+            width:100% !important;
+            height:100vh !important;
+            height:100dvh !important;
+            box-sizing:border-box !important;
+            display:flex !important;
+            align-items:center !important;
+            justify-content:center !important;
+            padding:max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)) !important;
+            overflow-x:hidden !important;
+            overflow-y:auto !important;
+            overscroll-behavior:contain;
+        }
+        #modal-producto.hidden { display:none !important; }
         #modal-producto > div {
-            width:min(100%,28rem) !important;
+            position:relative !important;
+            flex:0 1 28rem !important;
+            width:100% !important;
             max-width:28rem !important;
             max-height:calc(100dvh - 1.5rem) !important;
             height:auto !important;
@@ -263,7 +281,7 @@
         @media(max-width:650px) {
             #promo-dialog { width:100% !important; max-width:28rem !important; }
             #modal-producto { padding:.75rem !important; }
-            #modal-producto > div { width:100% !important; max-width:28rem !important; }
+            #modal-producto > div { flex-basis:100% !important; max-width:28rem !important; }
         }
     </style>
     <!-- Google Analytics 4: Tasty Pastries -->
