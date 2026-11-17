@@ -590,7 +590,9 @@
 
                     <div class="border-t border-[#A87853]/20 pt-4 space-y-2 text-sm">
                         <div class="flex justify-between text-[#563B30]"><span>Subtotal Productos:</span><span id="txt-subtotal">$0</span></div>
-                        <div class="flex justify-between text-[#899078]" id="fila-delivery"><span>Delivery preliminar (hasta 18 km):</span><span>$4</span></div>
+                        <div class="flex justify-between text-[#899078]" id="fila-promocion" style="display:none"><span id="txt-promocion-label">Descuento promocional:</span><span id="txt-promocion">-$0</span></div>
+                        <div class="flex justify-between text-[#899078]" id="fila-producto-prueba" style="display:none"><span>Producto de prueba:</span><span id="txt-producto-prueba"></span></div>
+                        <div class="flex justify-between text-[#899078]" id="fila-delivery"><span>Delivery preliminar (hasta 18 km):</span><span id="txt-delivery">$4</span></div>
                         <p class="text-xs text-[#899078]" id="aviso-delivery">USD 4 es una tarifa preliminar para ubicaciones dentro de un radio de 18 km. Comparte tu ubicación de Google Maps por WhatsApp para confirmar el costo final. Si corresponde, el monto se ajustará antes de confirmar el pedido.</p>
                         <div class="flex justify-between font-bold text-lg text-[#563B30] border-t border-[#A87853]/20 pt-2">
                             <span>TOTAL ESTIMADO (USD):</span><span id="txt-total">$0</span>
@@ -627,6 +629,7 @@
         let carrito = {};
         let tasaBcv = 0;
         let productoSeleccionadoTemporal = null;
+        let promocionActiva = null;
 
         // Persistencia (LocalStorage)
         function cargarCarritoGuardado() {
@@ -788,6 +791,8 @@
                 if (!respuesta.ok) return;
                 const p = await respuesta.json();
                 if (!p || p.error) return;
+                promocionActiva = p;
+                actualizarCarritoUI();
 
                 const frecuencia = String(p.frecuencia || 'sesion').trim().toLowerCase();
                 const identificador = String(p.id || p.titulo || 'promocion').trim().toLowerCase()
@@ -1017,6 +1022,61 @@
             ocultarConfirmacionPedido();
         }
 
+        // Calcula la única promoción activa. producto_aplica admite TODOS o ESPECIFICOS.
+        function calcularPromocion(subtotal, tipoEntrega) {
+            const p = promocionActiva;
+            const resultado = {
+                aplicada: false, tipo: '', descuento: 0, deliveryGratis: false,
+                productoPrueba: '', cantidadPrueba: 0, titulo: '', codigo: '',
+                condiciones: '', subtotalElegible: 0
+            };
+            if (!p) return resultado;
+
+            const normalizar = valor => String(valor || '').trim().toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const tipo = normalizar(p.tipo_promocion).toUpperCase()
+                .replace(/[\s-]+/g, '_');
+            const alcance = normalizar(p.producto_aplica || 'TODOS').toUpperCase();
+            const nombresIncluidos = String(p.productos_incluidos || '')
+                .split(/[;,\n]/).map(normalizar).filter(Boolean);
+            const items = Object.values(carrito);
+            const elegibles = alcance === 'ESPECIFICOS'
+                ? items.filter(item => nombresIncluidos.includes(normalizar(item.nombre)))
+                : items;
+            const subtotalElegible = elegibles.reduce((suma, item) =>
+                suma + (Number(item.precio) || 0) * (Number(item.cantidad) || 0), 0);
+            const compraMinima = Math.max(0, Number(p.compra_minima) || 0);
+
+            if (!elegibles.length || subtotalElegible <= 0 || subtotalElegible < compraMinima) return resultado;
+
+            resultado.tipo = tipo;
+            resultado.titulo = String(p.titulo || 'Promoción Tasty Pastries').trim();
+            resultado.codigo = String(p.codigo_promocional || '').trim();
+            resultado.condiciones = String(p.condiciones || '').trim();
+            resultado.subtotalElegible = subtotalElegible;
+
+            if (tipo === 'DESCUENTO_PCT') {
+                const porcentaje = Math.min(100, Math.max(0, Number(p.valor_promocion) || 0));
+                resultado.descuento = subtotalElegible * porcentaje / 100;
+            } else if (tipo === 'DESCUENTO_FIJO') {
+                resultado.descuento = Math.min(subtotalElegible, Math.max(0, Number(p.valor_promocion) || 0));
+            } else if (tipo === 'DELIVERY_FREE') {
+                resultado.deliveryGratis = tipoEntrega === 'delivery';
+            } else if (tipo === 'PRODUCTO_PRUEBA') {
+                resultado.productoPrueba = String(p.producto_promocional || '').trim();
+                resultado.cantidadPrueba = Math.max(1, Math.floor(Number(p.cantidad_promocional) || 1));
+                if (!resultado.productoPrueba) return {
+                    ...resultado, aplicada: false, productoPrueba: '', cantidadPrueba: 0
+                };
+            } else {
+                return resultado;
+            }
+
+            resultado.aplicada = resultado.descuento > 0 || resultado.deliveryGratis ||
+                (tipo === 'PRODUCTO_PRUEBA' && Boolean(resultado.productoPrueba));
+            return resultado;
+        }
+
         function actualizarCarritoUI() {
             const lista = document.getElementById('lista-carrito-items');
             const contador = document.getElementById('nav-contador-carrito');
@@ -1053,20 +1113,35 @@
                 });
             }
 
-            // Cálculo de delivery
+            // Promoción activa y cálculo de delivery
             const tipoEntregaSelect = document.getElementById('tipo-entrega');
             const tipoEntrega = tipoEntregaSelect ? tipoEntregaSelect.value : 'delivery';
+            const promo = calcularPromocion(subtotal, tipoEntrega);
+            const costoDelivery = tipoEntrega === 'delivery' ? (promo.deliveryGratis ? 0 : 4) : 0;
             const filaDelivery = document.getElementById('fila-delivery');
-            
-            let costoDelivery = 0;
-            if (tipoEntrega === 'delivery') {
-                costoDelivery = 4;
-                if(filaDelivery) filaDelivery.style.display = 'flex';
-            } else {
-                if(filaDelivery) filaDelivery.style.display = 'none';
+            const txtDelivery = document.getElementById('txt-delivery');
+            if (filaDelivery) filaDelivery.style.display = tipoEntrega === 'delivery' ? 'flex' : 'none';
+            if (txtDelivery) txtDelivery.textContent = `${costoDelivery.toFixed(2)}`;
+            const avisoDelivery = document.getElementById('aviso-delivery');
+            if (avisoDelivery) {
+                avisoDelivery.textContent = promo.deliveryGratis
+                    ? '¡Tu promoción incluye delivery gratis! La ubicación se confirmará por WhatsApp.'
+                    : 'USD 4 es una tarifa preliminar para ubicaciones dentro de un radio de 18 km. Comparte tu ubicación de Google Maps por WhatsApp para confirmar el costo final. Si corresponde, el monto se ajustará antes de confirmar el pedido.';
+                avisoDelivery.style.display = tipoEntrega === 'delivery' ? 'block' : 'none';
             }
 
-            const totalUsd = subtotal + costoDelivery;
+            const filaPromocion = document.getElementById('fila-promocion');
+            const txtPromocion = document.getElementById('txt-promocion');
+            const txtPromocionLabel = document.getElementById('txt-promocion-label');
+            if (filaPromocion) filaPromocion.style.display = promo.aplicada && promo.descuento > 0 ? 'flex' : 'none';
+            if (txtPromocion) txtPromocion.textContent = `-${promo.descuento.toFixed(2)}`;
+            if (txtPromocionLabel) txtPromocionLabel.textContent = promo.titulo || 'Descuento promocional';
+            const filaProductoPrueba = document.getElementById('fila-producto-prueba');
+            const txtProductoPrueba = document.getElementById('txt-producto-prueba');
+            if (filaProductoPrueba) filaProductoPrueba.style.display = promo.aplicada && promo.productoPrueba ? 'flex' : 'none';
+            if (txtProductoPrueba) txtProductoPrueba.textContent = `${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`;
+
+            const totalUsd = Math.max(0, subtotal - promo.descuento + costoDelivery);
 
             contador.innerText = totalItems;
             document.getElementById('txt-subtotal').innerText = `$${subtotal.toFixed(2)}`;
@@ -1137,13 +1212,23 @@
                 lineas.push(linea);
             });
             lineas.push('', `Subtotal productos: $${subtotal.toFixed(2)}`);
-            const costoDelivery = tipoEntrega === 'delivery' ? 4 : 0;
+            const promo = calcularPromocion(subtotal, tipoEntrega);
+            const costoDelivery = tipoEntrega === 'delivery' ? (promo.deliveryGratis ? 0 : 4) : 0;
+            if (promo.aplicada) {
+                lineas.push('', '*PROMOCIÓN APLICADA:*');
+                lineas.push(promo.titulo);
+                if (promo.codigo) lineas.push(`Código: ${promo.codigo}`);
+                if (promo.descuento > 0) lineas.push(`Descuento: -${promo.descuento.toFixed(2)}`);
+                if (promo.deliveryGratis) lineas.push('Beneficio: delivery gratis');
+                if (promo.productoPrueba) lineas.push(`Producto de prueba: ${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`);
+                if (promo.condiciones) lineas.push(`Condiciones: ${promo.condiciones}`);
+            }
             if (tipoEntrega === 'delivery') {
-                lineas.push('Delivery preliminar (hasta 18 km): USD 4.00');
+                lineas.push(promo.deliveryGratis ? 'Delivery: GRATIS (promoción aplicada)' : 'Delivery preliminar (hasta 18 km): USD 4.00');
                 lineas.push('Comparte tu ubicación de Google Maps por este chat para confirmar el costo final del delivery. La tarifa podrá ajustarse según la ubicación antes de confirmar el pedido.');
                 lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
             } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
-            const totalFinal = subtotal + costoDelivery;
+            const totalFinal = Math.max(0, subtotal - promo.descuento + costoDelivery);
             lineas.push('', `*TOTAL ESTIMADO: ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
             if (tasaBcv > 0) {
                 const totalBs = totalFinal * tasaBcv;
