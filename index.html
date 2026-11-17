@@ -721,11 +721,11 @@
 
         function generarContenidoPromocion(p) {
             const normalizar = valor => String(valor || '').trim().toLowerCase()
-                .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
-            const tipo = normalizar(p.tipo_promocion).toUpperCase().replace(/[\\s-]+/g, '_');
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const tipo = normalizar(p.tipo_promocion).toUpperCase().replace(/[\s-]+/g, '_');
             const alcance = normalizar(p.producto_aplica || 'TODOS').toUpperCase();
             const valor = Math.max(0, Number(p.valor_promocion) || 0);
-            const productos = String(p.productos_incluidos || '').split(/[;,\\n]/).map(x => x.trim()).filter(Boolean);
+            const productos = String(p.productos_incluidos || '').split(/[;,\n]/).map(x => x.trim()).filter(Boolean);
             const minimo = Math.max(0, Number(p.compra_minima) || 0);
             let titulo = '';
             let mensaje = '';
