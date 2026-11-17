@@ -1121,7 +1121,7 @@
             const filaDelivery = document.getElementById('fila-delivery');
             const txtDelivery = document.getElementById('txt-delivery');
             if (filaDelivery) filaDelivery.style.display = tipoEntrega === 'delivery' ? 'flex' : 'none';
-            if (txtDelivery) txtDelivery.textContent = `${costoDelivery.toFixed(2)}`;
+            if (txtDelivery) txtDelivery.textContent = '$' + costoDelivery.toFixed(2);
             const avisoDelivery = document.getElementById('aviso-delivery');
             if (avisoDelivery) {
                 avisoDelivery.textContent = promo.deliveryGratis
@@ -1134,7 +1134,7 @@
             const txtPromocion = document.getElementById('txt-promocion');
             const txtPromocionLabel = document.getElementById('txt-promocion-label');
             if (filaPromocion) filaPromocion.style.display = promo.aplicada && promo.descuento > 0 ? 'flex' : 'none';
-            if (txtPromocion) txtPromocion.textContent = `-${promo.descuento.toFixed(2)}`;
+            if (txtPromocion) txtPromocion.textContent = '-$' + promo.descuento.toFixed(2);
             if (txtPromocionLabel) txtPromocionLabel.textContent = promo.titulo || 'Descuento promocional';
             const filaProductoPrueba = document.getElementById('fila-producto-prueba');
             const txtProductoPrueba = document.getElementById('txt-producto-prueba');
@@ -1218,7 +1218,7 @@
                 lineas.push('', '*PROMOCIÓN APLICADA:*');
                 lineas.push(promo.titulo);
                 if (promo.codigo) lineas.push(`Código: ${promo.codigo}`);
-                if (promo.descuento > 0) lineas.push(`Descuento: -${promo.descuento.toFixed(2)}`);
+                if (promo.descuento > 0) lineas.push('Descuento: -$' + promo.descuento.toFixed(2));
                 if (promo.deliveryGratis) lineas.push('Beneficio: delivery gratis');
                 if (promo.productoPrueba) lineas.push(`Producto de prueba: ${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`);
                 if (promo.condiciones) lineas.push(`Condiciones: ${promo.condiciones}`);
@@ -1229,7 +1229,7 @@
                 lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
             } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
             const totalFinal = Math.max(0, subtotal - promo.descuento + costoDelivery);
-            lineas.push('', `*TOTAL ESTIMADO: ${totalFinal.toFixed(2)}*`, 'Forma de pago: Pago Móvil');
+            lineas.push('', '*TOTAL ESTIMADO: $' + totalFinal.toFixed(2) + '*', 'Forma de pago: Pago Móvil');
             if (tasaBcv > 0) {
                 const totalBs = totalFinal * tasaBcv;
                 lineas.push(`Referencia BCV informativa: Bs. ${totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
