@@ -222,7 +222,8 @@
         html, body {
             width:100% !important;
             max-width:100% !important;
-            overflow-x:hidden !important;
+            /* clip evita crear un contenedor de desplazamiento que rompa position:sticky */
+            overflow-x:clip !important;
         }
         /* Mantener el popup promocional tal como ya fue validado */
         #promo-overlay {
