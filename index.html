@@ -719,6 +719,48 @@
             document.body.style.overflow = '';
         }
 
+        function generarContenidoPromocion(p) {
+            const normalizar = valor => String(valor || '').trim().toLowerCase()
+                .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+            const tipo = normalizar(p.tipo_promocion).toUpperCase().replace(/[\\s-]+/g, '_');
+            const alcance = normalizar(p.producto_aplica || 'TODOS').toUpperCase();
+            const valor = Math.max(0, Number(p.valor_promocion) || 0);
+            const productos = String(p.productos_incluidos || '').split(/[;,\\n]/).map(x => x.trim()).filter(Boolean);
+            const minimo = Math.max(0, Number(p.compra_minima) || 0);
+            let titulo = '';
+            let mensaje = '';
+
+            if (tipo === 'DESCUENTO_PCT' && valor > 0) {
+                titulo = `¡Aprovecha ${valor}% de descuento!`;
+                mensaje = alcance === 'ESPECIFICOS' && productos.length
+                    ? `Obtén ${valor}% de descuento en: ${productos.join(', ')}.`
+                    : `Obtén ${valor}% de descuento en tu compra.`;
+            } else if (tipo === 'DESCUENTO_FIJO' && valor > 0) {
+                titulo = `¡Ahorra ${valor.toFixed(2)} en tu compra!`;
+                mensaje = alcance === 'ESPECIFICOS' && productos.length
+                    ? `Descuento de ${valor.toFixed(2)} en: ${productos.join(', ')}.`
+                    : `Descuento de ${valor.toFixed(2)} en tu compra.`;
+            } else if (tipo === 'DELIVERY_FREE') {
+                titulo = '¡Tu delivery va por nuestra cuenta!';
+                mensaje = 'Disfruta de delivery gratis con esta promoción.';
+            } else if (tipo === 'PRODUCTO_PRUEBA' && String(p.producto_promocional || '').trim()) {
+                const cantidad = Math.max(1, Math.floor(Number(p.cantidad_promocional) || 1));
+                titulo = '¡Tenemos un regalo para ti!';
+                mensaje = `Recibe ${cantidad} × ${String(p.producto_promocional).trim()} GRATIS con tu compra.`;
+            }
+
+            if (minimo > 0) mensaje += ` Compra mínima: ${minimo.toFixed(2)}.`;
+            if (alcance === 'ESPECIFICOS' && tipo !== 'DESCUENTO_PCT' && tipo !== 'DESCUENTO_FIJO' && productos.length) {
+                mensaje += ` Productos participantes: ${productos.join(', ')}.`;
+            }
+            const codigo = String(p.codigo_promocional || '').trim();
+            if (codigo) mensaje += ` Código promocional: ${codigo}.`;
+            const condiciones = String(p.condiciones || '').trim();
+            if (condiciones) mensaje += ` ${condiciones}`;
+
+            return { titulo, mensaje, tipo, valor, alcance, productos, minimo, codigo, condiciones };
+        }
+
         function mostrarPopupPromocional(p) {
             const overlay = document.getElementById('promo-overlay');
             const imagenURL = safeImageURL(p.imagen);
@@ -726,8 +768,9 @@
             const imagen = document.getElementById('promo-image');
             const boton = document.getElementById('promo-action');
 
-            document.getElementById('promo-title').textContent = String(p.titulo || 'Una novedad de Tasty Pastries');
-            document.getElementById('promo-message').textContent = String(p.mensaje || '');
+            const contenidoPromo = generarContenidoPromocion(p);
+            document.getElementById('promo-title').textContent = contenidoPromo.titulo || String(p.titulo || 'Una novedad de Tasty Pastries');
+            document.getElementById('promo-message').textContent = contenidoPromo.mensaje || String(p.mensaje || '');
 
             if (imagenURL) {
                 imagen.src = imagenURL;
@@ -1050,8 +1093,10 @@
 
             if (!elegibles.length || subtotalElegible <= 0 || subtotalElegible < compraMinima) return resultado;
 
+            const contenidoPromo = generarContenidoPromocion(p);
             resultado.tipo = tipo;
-            resultado.titulo = String(p.titulo || 'Promoción Tasty Pastries').trim();
+            resultado.titulo = contenidoPromo.titulo || String(p.titulo || 'Promoción Tasty Pastries').trim();
+            resultado.detalle = contenidoPromo.mensaje || '';
             resultado.codigo = String(p.codigo_promocional || '').trim();
             resultado.condiciones = String(p.condiciones || '').trim();
             resultado.subtotalElegible = subtotalElegible;
@@ -1218,8 +1263,198 @@
             if (promo.aplicada) {
                 lineas.push('', '*PROMOCIÓN APLICADA:*');
                 lineas.push(promo.titulo);
-                if (promo.codigo) lineas.push(`Código: ${promo.codigo}`);
-                if (promo.descuento > 0) lineas.push('Descuento: -$' + promo.descuento.toFixed(2));
+                if (promo.detalle) lineas.push(promo.detalle);
+                if (promo.subtotalElegible > 0 && promo.subtotalElegible < subtotal) {
+                    lineas.push('Subtotal de productos participantes: 
+                if (promo.deliveryGratis) lineas.push('Beneficio: delivery gratis');
+                if (promo.productoPrueba) lineas.push(`Producto de prueba: ${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`);
+                if (promo.condiciones) lineas.push(`Condiciones: ${promo.condiciones}`);
+            }
+            if (tipoEntrega === 'delivery') {
+                lineas.push(promo.deliveryGratis ? 'Delivery: GRATIS (promoción aplicada)' : 'Delivery preliminar (hasta 18 km): USD 4.00');
+                lineas.push('Comparte tu ubicación de Google Maps por este chat para confirmar el costo final del delivery. La tarifa podrá ajustarse según la ubicación antes de confirmar el pedido.');
+                lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
+            } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
+            const totalFinal = Math.max(0, subtotal - promo.descuento + costoDelivery);
+            lineas.push('', '*TOTAL ESTIMADO: $' + totalFinal.toFixed(2) + '*', 'Forma de pago: Pago Móvil');
+            if (tasaBcv > 0) {
+                const totalBs = totalFinal * tasaBcv;
+                lineas.push(`Referencia BCV informativa: Bs. ${totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+            }
+            if (obs) lineas.push('', `Observaciones: ${obs}`);
+            lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil. El pedido quedará formalizado una vez recibido y verificado el pago.');
+            const itemsGA4 = ids.map(cartId => {
+                const item = carrito[cartId];
+                return {
+                    item_id: String(item.idBase || cartId),
+                    item_name: String(item.nombre || 'Producto'),
+                    price: Number(item.precio) || 0,
+                    quantity: Number(item.cantidad) || 1
+                };
+            });
+            if (typeof gtag === 'function') gtag('event', 'begin_checkout', {
+                currency: 'USD',
+                value: totalFinal,
+                items: itemsGA4
+            });
+            if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
+            const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
+            const ventanaWhatsApp = window.open(url, '_blank');
+            if (ventanaWhatsApp) {
+                if (typeof fbq === 'function') fbq('trackCustom', 'WhatsAppContact');
+                if (typeof gtag === 'function') gtag('event', 'whatsapp_contact', {
+                    method: 'WhatsApp',
+                    currency: 'USD',
+                    value: totalFinal,
+                    items: itemsGA4
+                });
+                ventanaWhatsApp.opener = null;
+                localStorage.setItem('pedido_whatsapp_pendiente', 'true');
+                mostrarConfirmacionPedido();
+            } else {
+                alert('No se pudo abrir WhatsApp. Revisa si tu navegador bloqueó la ventana emergente. Tu carrito se conserva.');
+            }
+            // El carrito solo se limpia cuando el cliente confirma manualmente que ya envió el pedido.
+        }
+
+        window.onload = function() {
+            document.getElementById('tipo-entrega').value = 'delivery';
+            const fechaInput = document.getElementById('cliente-fecha');
+            const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            fechaInput.min = `${minimo.getFullYear()}-${String(minimo.getMonth()+1).padStart(2,'0')}-${String(minimo.getDate()).padStart(2,'0')}`;
+            document.querySelectorAll('.experience-step').forEach(card => {
+                const toggleDetalle = () => {
+                    const abierto = card.classList.toggle('is-expanded');
+                    card.setAttribute('aria-expanded', String(abierto));
+                };
+                card.addEventListener('click', toggleDetalle);
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleDetalle();
+                    }
+                });
+            });
+            document.querySelectorAll('.philosophy-card').forEach(card => {
+                card.setAttribute('aria-pressed', 'false');
+                card.addEventListener('click', () => {
+                    const abierto = card.classList.toggle('is-open');
+                    card.setAttribute('aria-pressed', String(abierto));
+                });
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+            cargarCarritoGuardado();
+            if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
+                mostrarConfirmacionPedido();
+            }
+            cargarProductosSheets();
+            obtenerTasaBCV();
+            cargarPopupPromocional();
+        };
+    </script>
+</body>
+</html> + promo.subtotalElegible.toFixed(2));
+                }
+                if (promo.codigo) lineas.push(`Código promocional: ${promo.codigo}`);
+                if (promo.descuento > 0) lineas.push('Beneficio aplicado: ' + (promo.tipo === 'DESCUENTO_PCT' ? 'descuento porcentual' : 'descuento fijo') + ' de -
+                if (promo.deliveryGratis) lineas.push('Beneficio: delivery gratis');
+                if (promo.productoPrueba) lineas.push(`Producto de prueba: ${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`);
+                if (promo.condiciones) lineas.push(`Condiciones: ${promo.condiciones}`);
+            }
+            if (tipoEntrega === 'delivery') {
+                lineas.push(promo.deliveryGratis ? 'Delivery: GRATIS (promoción aplicada)' : 'Delivery preliminar (hasta 18 km): USD 4.00');
+                lineas.push('Comparte tu ubicación de Google Maps por este chat para confirmar el costo final del delivery. La tarifa podrá ajustarse según la ubicación antes de confirmar el pedido.');
+                lineas.push('Ubicación de entrega: pendiente de compartir por WhatsApp.');
+            } else lineas.push('Modalidad: Pick-up (retiro coordinado) — sin cargo de delivery');
+            const totalFinal = Math.max(0, subtotal - promo.descuento + costoDelivery);
+            lineas.push('', '*TOTAL ESTIMADO: $' + totalFinal.toFixed(2) + '*', 'Forma de pago: Pago Móvil');
+            if (tasaBcv > 0) {
+                const totalBs = totalFinal * tasaBcv;
+                lineas.push(`Referencia BCV informativa: Bs. ${totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+            }
+            if (obs) lineas.push('', `Observaciones: ${obs}`);
+            lineas.push('', 'Por favor confirmar disponibilidad, lugar/datos de retiro y datos para Pago Móvil. El pedido quedará formalizado una vez recibido y verificado el pago.');
+            const itemsGA4 = ids.map(cartId => {
+                const item = carrito[cartId];
+                return {
+                    item_id: String(item.idBase || cartId),
+                    item_name: String(item.nombre || 'Producto'),
+                    price: Number(item.precio) || 0,
+                    quantity: Number(item.cantidad) || 1
+                };
+            });
+            if (typeof gtag === 'function') gtag('event', 'begin_checkout', {
+                currency: 'USD',
+                value: totalFinal,
+                items: itemsGA4
+            });
+            if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
+            const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(lineas.join('\n'))}`;
+            const ventanaWhatsApp = window.open(url, '_blank');
+            if (ventanaWhatsApp) {
+                if (typeof fbq === 'function') fbq('trackCustom', 'WhatsAppContact');
+                if (typeof gtag === 'function') gtag('event', 'whatsapp_contact', {
+                    method: 'WhatsApp',
+                    currency: 'USD',
+                    value: totalFinal,
+                    items: itemsGA4
+                });
+                ventanaWhatsApp.opener = null;
+                localStorage.setItem('pedido_whatsapp_pendiente', 'true');
+                mostrarConfirmacionPedido();
+            } else {
+                alert('No se pudo abrir WhatsApp. Revisa si tu navegador bloqueó la ventana emergente. Tu carrito se conserva.');
+            }
+            // El carrito solo se limpia cuando el cliente confirma manualmente que ya envió el pedido.
+        }
+
+        window.onload = function() {
+            document.getElementById('tipo-entrega').value = 'delivery';
+            const fechaInput = document.getElementById('cliente-fecha');
+            const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            fechaInput.min = `${minimo.getFullYear()}-${String(minimo.getMonth()+1).padStart(2,'0')}-${String(minimo.getDate()).padStart(2,'0')}`;
+            document.querySelectorAll('.experience-step').forEach(card => {
+                const toggleDetalle = () => {
+                    const abierto = card.classList.toggle('is-expanded');
+                    card.setAttribute('aria-expanded', String(abierto));
+                };
+                card.addEventListener('click', toggleDetalle);
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleDetalle();
+                    }
+                });
+            });
+            document.querySelectorAll('.philosophy-card').forEach(card => {
+                card.setAttribute('aria-pressed', 'false');
+                card.addEventListener('click', () => {
+                    const abierto = card.classList.toggle('is-open');
+                    card.setAttribute('aria-pressed', String(abierto));
+                });
+                card.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+            cargarCarritoGuardado();
+            if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
+                mostrarConfirmacionPedido();
+            }
+            cargarProductosSheets();
+            obtenerTasaBCV();
+            cargarPopupPromocional();
+        };
+    </script>
+</body>
+</html> + promo.descuento.toFixed(2));
                 if (promo.deliveryGratis) lineas.push('Beneficio: delivery gratis');
                 if (promo.productoPrueba) lineas.push(`Producto de prueba: ${promo.cantidadPrueba} × ${promo.productoPrueba} — GRATIS`);
                 if (promo.condiciones) lineas.push(`Condiciones: ${promo.condiciones}`);
