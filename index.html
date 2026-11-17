@@ -1037,6 +1037,7 @@
             const tipo = normalizar(p.tipo_promocion).toUpperCase()
                 .replace(/[\s-]+/g, '_');
             const alcance = normalizar(p.producto_aplica || 'TODOS').toUpperCase();
+            if (!['TODOS', 'ESPECIFICOS'].includes(alcance)) return resultado;
             const nombresIncluidos = String(p.productos_incluidos || '')
                 .split(/[;,\n]/).map(normalizar).filter(Boolean);
             const items = Object.values(carrito);
