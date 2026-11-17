@@ -798,6 +798,23 @@
             const cerrar = document.getElementById('promo-close');
             const overlay = document.getElementById('promo-overlay');
             if (cerrar) cerrar.addEventListener('click', cerrarPopupPromocional);
+
+            // La navegación al catálogo se realiza después de cerrar el popup
+            // y restaurar el desplazamiento del documento.
+            const botonAccion = document.getElementById('promo-action');
+            if (botonAccion) botonAccion.addEventListener('click', event => {
+                if (botonAccion.getAttribute('href') === '#catalogo') {
+                    event.preventDefault();
+                    cerrarPopupPromocional();
+                    requestAnimationFrame(() => {
+                        document.getElementById('catalogo')?.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    });
+                }
+            });
+
             if (overlay) overlay.addEventListener('click', event => {
                 if (event.target === overlay) cerrarPopupPromocional();
             });
