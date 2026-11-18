@@ -288,30 +288,40 @@
         /* Decoración navideña temporal Tasty Pastries */
         #christmas-stars {
             position:fixed; inset:0; width:100vw; height:100vh; overflow:hidden;
-            pointer-events:none; z-index:35; contain:layout paint;
+            pointer-events:none; z-index:39; contain:layout paint;
         }
         #christmas-stars .christmas-star {
-            position:absolute; top:-8vh; color:#C69A45; line-height:1;
-            text-shadow:0 0 8px rgba(198,154,69,.35);
+            position:absolute; top:-8vh; color:#D5A43D; line-height:1;
+            text-shadow:0 0 5px rgba(213,164,61,.85),0 0 13px rgba(255,224,145,.65);
             animation:christmas-star-fall linear infinite;
             will-change:transform,opacity;
         }
+        #christmas-stars .christmas-star:nth-child(4n) { color:#FFF4D6; text-shadow:0 0 9px rgba(255,244,214,.95); }
         @keyframes christmas-star-fall {
             0% { transform:translate3d(0,-8vh,0) rotate(0deg); opacity:0; }
-            10% { opacity:.78; }
-            85% { opacity:.62; }
-            100% { transform:translate3d(18px,112vh,0) rotate(250deg); opacity:0; }
+            8% { opacity:1; }
+            88% { opacity:.9; }
+            100% { transform:translate3d(28px,112vh,0) rotate(300deg); opacity:0; }
         }
         .product-card-media,.featured-media { position:relative; }
-        .product-card:nth-child(3n + 1) .product-card-media::after,
-        .featured-card:nth-child(2) .featured-media::after {
-            content:"🎅"; position:absolute; z-index:2; top:.55rem; right:.55rem;
-            font-size:1.35rem; line-height:1;
-            filter:drop-shadow(0 2px 3px rgba(0,0,0,.28));
-            pointer-events:none;
+        .christmas-hat {
+            position:absolute; z-index:5; top:.55rem; right:.6rem;
+            width:1.75rem; height:1.55rem; pointer-events:none;
+            transform:rotate(18deg); filter:drop-shadow(0 2px 3px rgba(0,0,0,.32));
+        }
+        .christmas-hat::before {
+            content:""; position:absolute; left:.35rem; top:0;
+            width:0; height:0; border-left:.48rem solid transparent;
+            border-right:.48rem solid transparent; border-bottom:1.28rem solid #B5222D;
+            transform:rotate(24deg);
+        }
+        .christmas-hat::after {
+            content:""; position:absolute; left:.12rem; bottom:.05rem;
+            width:1.48rem; height:.32rem; border-radius:1rem;
+            background:#FFF8EA; box-shadow:1.05rem -.98rem 0 -.035rem #FFF8EA;
         }
         @media (prefers-reduced-motion: reduce) {
-            #christmas-stars .christmas-star { animation:none; top:8vh; opacity:.45; }
+            #christmas-stars .christmas-star { animation:none; top:8vh; opacity:.85; }
         }
 
     </style>
@@ -985,6 +995,14 @@
             });
         });
 
+        function agregarGorritoNavideno(media) {
+            if (!document.getElementById('christmas-stars') || !media) return;
+            const gorrito = document.createElement('span');
+            gorrito.className = 'christmas-hat';
+            gorrito.setAttribute('aria-hidden', 'true');
+            media.appendChild(gorrito);
+        }
+
         function renderDestacados() {
             const grid = document.getElementById('grid-destacados');
             if (!grid) return;
@@ -1009,7 +1027,7 @@
             if (!unicos.length) {
                 const msg = document.createElement('p'); msg.className = 'text-[#899078] text-sm col-span-full text-center'; msg.textContent = 'Descubre todas nuestras categorías en el catálogo.'; grid.appendChild(msg); return;
             }
-            unicos.forEach(p => {
+            unicos.forEach((p, indice) => {
                 const card = document.createElement('article'); card.className = 'featured-card';
                 const media = document.createElement('div'); media.className = 'featured-media';
                 const imgUrl = safeImageURL(p.img);
@@ -1019,7 +1037,9 @@
                 const name = document.createElement('h3'); name.className = 'font-serif font-bold text-[#563B30] featured-title'; name.textContent = p.nombre || 'Producto';
                 const desc = document.createElement('p'); desc.className = 'featured-description'; desc.textContent = p.desc || '';
                 const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'featured-action'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
-                body.append(name, desc, btn); card.append(media, body); grid.appendChild(card);
+                body.append(name, desc, btn); card.append(media, body);
+                if (indice % 2 === 1) agregarGorritoNavideno(media);
+                grid.appendChild(card);
             });
         }
 
@@ -1035,6 +1055,7 @@
             };
             renderDestacados();
             Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
+            let indiceTarjeta = 0;
             productos.forEach(p => {
                 const estaActivo = (p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
                 if (!estaActivo) return;
@@ -1060,6 +1081,8 @@
                 const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `$${precioNum.toFixed(2).replace(/\.00$/, '')}`;
                 const action = document.createElement('span'); action.className = 'product-card-action'; action.textContent = 'Ver opciones';
                 footer.append(price, action); card.append(media, body, footer);
+                if (indiceTarjeta % 3 === 0) agregarGorritoNavideno(media);
+                indiceTarjeta++;
                 card.addEventListener('click', () => abrirModal(p.id));
                 card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirModal(p.id); } });
                 const cat = String(p.categoria || '').toLowerCase().trim();
@@ -1445,16 +1468,16 @@
             const capa = document.createElement('div');
             capa.id = 'christmas-stars';
             capa.setAttribute('aria-hidden', 'true');
-            const cantidad = window.matchMedia('(max-width: 640px)').matches ? 18 : 30;
+            const cantidad = window.matchMedia('(max-width: 640px)').matches ? 46 : 72;
             const movimientoReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             for (let i = 0; i < cantidad; i++) {
                 const estrella = document.createElement('span');
                 estrella.className = 'christmas-star';
-                estrella.textContent = i % 4 === 0 ? '✧' : '✦';
+                estrella.textContent = i % 5 === 0 ? '✧' : (i % 3 === 0 ? '✦' : '✶');
                 estrella.style.left = (Math.random() * 100).toFixed(2) + '%';
-                estrella.style.fontSize = (8 + Math.random() * 9).toFixed(1) + 'px';
-                estrella.style.animationDuration = (12 + Math.random() * 13).toFixed(1) + 's';
+                estrella.style.fontSize = (12 + Math.random() * 10).toFixed(1) + 'px';
+                estrella.style.animationDuration = (8 + Math.random() * 7).toFixed(1) + 's';
                 estrella.style.animationDelay = movimientoReducido ? '0s' : (-Math.random() * 22).toFixed(1) + 's';
                 capa.appendChild(estrella);
             }
