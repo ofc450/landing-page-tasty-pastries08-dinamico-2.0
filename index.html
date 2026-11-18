@@ -291,12 +291,15 @@
             pointer-events:none; z-index:39; contain:layout paint;
         }
         #christmas-stars .christmas-star {
-            position:absolute; top:-8vh; color:#D5A43D; line-height:1;
-            text-shadow:0 0 5px rgba(213,164,61,.85),0 0 13px rgba(255,224,145,.65);
+            position:absolute; top:-8vh; color:#C62828; line-height:1;
+            text-shadow:0 0 5px rgba(198,40,40,.8),0 0 13px rgba(255,105,97,.55);
             animation:christmas-star-fall linear infinite;
             will-change:transform,opacity;
         }
-        #christmas-stars .christmas-star:nth-child(4n) { color:#FFF4D6; text-shadow:0 0 9px rgba(255,244,214,.95); }
+        #christmas-stars .christmas-star:nth-child(even) {
+            color:#218A4B;
+            text-shadow:0 0 5px rgba(33,138,75,.85),0 0 13px rgba(116,220,151,.65);
+        }
         @keyframes christmas-star-fall {
             0% { transform:translate3d(0,-8vh,0) rotate(0deg); opacity:0; }
             8% { opacity:1; }
