@@ -652,9 +652,9 @@
             <div class="p-6">
                 <h3 id="modal-nombre" class="text-2xl font-bold text-[#563B30] mb-2 font-serif">Nombre</h3>
                 <p id="modal-desc" class="text-[#899078] text-sm mb-4">Descripción</p>
+                <div id="modal-detalles" class="space-y-4 mb-5"></div>
 
-                
-                <div class="flex justify-between items-center mt-2 border-t pt-4">
+                <div class="flex justify-between items-center mt-2 border-t border-[#A87853]/20 pt-4 gap-3">
                     <span id="modal-precio" class="text-2xl font-bold text-[#A87853]">$0</span>
                     <button id="btn-modal-agregar" class="bg-[#563B30] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#3a2720] transition">Añadir al carrito</button>
                 </div>
@@ -1095,10 +1095,36 @@
             const imageContainer = document.getElementById('modal-img-container');
             imageContainer.replaceChildren();
             if (img) { const image = document.createElement('img'); image.src = img; image.alt = String(p.nombre || 'Producto'); image.className = 'w-full h-full object-cover'; imageContainer.appendChild(image); }
-            document.getElementById('modal-nombre').innerText = p.nombre;
-            document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-precio').innerText = `$${(parseFloat(p.precio) || 0).toFixed(2).replace(/\.00$/, '')}`;
-            
+            document.getElementById('modal-nombre').textContent = p.nombre || 'Producto';
+            document.getElementById('modal-desc').textContent = p.desc || '';
+            document.getElementById('modal-precio').textContent = `${(parseFloat(p.precio) || 0).toFixed(2).replace(/\.00$/, '')}`;
+
+            // Los detalles son opcionales y se administran desde columnas adicionales en Google Sheets.
+            const detalles = document.getElementById('modal-detalles');
+            detalles.replaceChildren();
+            const camposDetalle = [
+                ['descripcion_detallada', 'Sobre este producto'],
+                ['ingredientes', 'Ingredientes'],
+                ['caracteristicas', 'Características'],
+                ['presentacion', 'Presentación'],
+                ['personalizacion', 'Personalización']
+            ];
+            camposDetalle.forEach(([campo, titulo]) => {
+                const valor = String(p[campo] ?? '').trim();
+                if (!valor) return;
+                const seccion = document.createElement('section');
+                seccion.className = 'border-t border-[#A87853]/15 pt-3';
+                const encabezado = document.createElement('h4');
+                encabezado.className = 'text-sm font-bold text-[#563B30] mb-1';
+                encabezado.textContent = titulo;
+                const texto = document.createElement('p');
+                texto.className = 'text-sm leading-relaxed text-[#6F7564] whitespace-pre-line';
+                texto.textContent = valor;
+                seccion.append(encabezado, texto);
+                detalles.appendChild(seccion);
+            });
+            detalles.hidden = detalles.childElementCount === 0;
+
             document.getElementById('btn-modal-agregar').onclick = () => agregarAlCarritoDesdeModal();
             document.getElementById('modal-producto').classList.remove('hidden');
         }
