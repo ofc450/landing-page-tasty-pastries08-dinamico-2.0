@@ -291,14 +291,18 @@
             pointer-events:none; z-index:39; contain:layout paint;
         }
         #christmas-stars .christmas-star {
-            position:absolute; top:-8vh; color:#C62828; line-height:1;
-            text-shadow:0 0 5px rgba(198,40,40,.8),0 0 13px rgba(255,105,97,.55);
+            position:absolute; top:-8vh; line-height:1;
             animation:christmas-star-fall linear infinite;
             will-change:transform,opacity;
+            font-weight:700;
         }
-        #christmas-stars .christmas-star:nth-child(even) {
-            color:#218A4B;
-            text-shadow:0 0 5px rgba(33,138,75,.85),0 0 13px rgba(116,220,151,.65);
+        #christmas-stars .christmas-star.star-red {
+            color:#E00020 !important;
+            text-shadow:0 0 7px rgba(224,0,32,.95),0 0 16px rgba(255,95,110,.8) !important;
+        }
+        #christmas-stars .christmas-star.star-green {
+            color:#00A650 !important;
+            text-shadow:0 0 7px rgba(0,166,80,.95),0 0 16px rgba(90,255,160,.8) !important;
         }
         @keyframes christmas-star-fall {
             0% { transform:translate3d(0,-8vh,0) rotate(0deg); opacity:0; }
@@ -308,20 +312,19 @@
         }
         .product-card-media,.featured-media { position:relative; }
         .christmas-hat {
-            position:absolute; z-index:5; top:.55rem; right:.6rem;
-            width:1.75rem; height:1.55rem; pointer-events:none;
-            transform:rotate(18deg); filter:drop-shadow(0 2px 3px rgba(0,0,0,.32));
+            position:absolute !important; z-index:20 !important; top:.45rem; right:.45rem;
+            display:block; width:2.35rem; height:2rem; pointer-events:none;
+            transform:rotate(14deg); filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));
         }
         .christmas-hat::before {
-            content:""; position:absolute; left:.35rem; top:0;
-            width:0; height:0; border-left:.48rem solid transparent;
-            border-right:.48rem solid transparent; border-bottom:1.28rem solid #B5222D;
-            transform:rotate(24deg);
+            content:""; position:absolute; left:.28rem; top:0;
+            width:1.8rem; height:1.65rem; background:#E00020;
+            clip-path:polygon(48% 0,100% 94%,0 94%);
         }
         .christmas-hat::after {
-            content:""; position:absolute; left:.12rem; bottom:.05rem;
-            width:1.48rem; height:.32rem; border-radius:1rem;
-            background:#FFF8EA; box-shadow:1.05rem -.98rem 0 -.035rem #FFF8EA;
+            content:""; position:absolute; left:.08rem; bottom:.08rem;
+            width:2.15rem; height:.42rem; border-radius:1rem;
+            background:#FFFFFF; box-shadow:1.22rem -1.42rem 0 -.04rem #FFFFFF;
         }
         @media (prefers-reduced-motion: reduce) {
             #christmas-stars .christmas-star { animation:none; top:8vh; opacity:.85; }
@@ -999,7 +1002,13 @@
         });
 
         function agregarGorritoNavideno(media) {
-            if (!document.getElementById('christmas-stars') || !media) return;
+            if (!media || media.querySelector('.christmas-hat')) return;
+            const ahora = new Date();
+            const mes = ahora.getMonth();
+            const dia = ahora.getDate();
+            const temporadaActiva =
+                (mes === 10 && dia >= 15) || mes === 11 || (mes === 0 && dia <= 7);
+            if (!temporadaActiva) return;
             const gorrito = document.createElement('span');
             gorrito.className = 'christmas-hat';
             gorrito.setAttribute('aria-hidden', 'true');
@@ -1476,7 +1485,7 @@
 
             for (let i = 0; i < cantidad; i++) {
                 const estrella = document.createElement('span');
-                estrella.className = 'christmas-star';
+                estrella.className = 'christmas-star ' + (i % 2 === 0 ? 'star-red' : 'star-green');
                 estrella.textContent = i % 5 === 0 ? '✧' : (i % 3 === 0 ? '✦' : '✶');
                 estrella.style.left = (Math.random() * 100).toFixed(2) + '%';
                 estrella.style.fontSize = (12 + Math.random() * 10).toFixed(1) + 'px';
