@@ -284,6 +284,36 @@
             #modal-producto { padding:.75rem !important; }
             #modal-producto > div { flex-basis:100% !important; max-width:28rem !important; }
         }
+    
+        /* Decoración navideña temporal Tasty Pastries */
+        #christmas-stars {
+            position:fixed; inset:0; width:100vw; height:100vh; overflow:hidden;
+            pointer-events:none; z-index:35; contain:layout paint;
+        }
+        #christmas-stars .christmas-star {
+            position:absolute; top:-8vh; color:#C69A45; line-height:1;
+            text-shadow:0 0 8px rgba(198,154,69,.35);
+            animation:christmas-star-fall linear infinite;
+            will-change:transform,opacity;
+        }
+        @keyframes christmas-star-fall {
+            0% { transform:translate3d(0,-8vh,0) rotate(0deg); opacity:0; }
+            10% { opacity:.78; }
+            85% { opacity:.62; }
+            100% { transform:translate3d(18px,112vh,0) rotate(250deg); opacity:0; }
+        }
+        .product-card-media,.featured-media { position:relative; }
+        .product-card:nth-child(3n + 1) .product-card-media::after,
+        .featured-card:nth-child(2) .featured-media::after {
+            content:"🎅"; position:absolute; z-index:2; top:.55rem; right:.55rem;
+            font-size:1.35rem; line-height:1;
+            filter:drop-shadow(0 2px 3px rgba(0,0,0,.28));
+            pointer-events:none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #christmas-stars .christmas-star { animation:none; top:8vh; opacity:.45; }
+        }
+
     </style>
     <!-- Google Analytics 4: Tasty Pastries -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5E12088DEN"></script>
@@ -1404,7 +1434,35 @@
             // El carrito solo se limpia cuando el cliente confirma manualmente que ya envió el pedido.
         }
 
+        function activarDecoracionNavidena() {
+            const ahora = new Date();
+            const mes = ahora.getMonth();
+            const dia = ahora.getDate();
+            const temporadaActiva =
+                (mes === 10 && dia >= 15) || mes === 11 || (mes === 0 && dia <= 7);
+            if (!temporadaActiva || document.getElementById('christmas-stars')) return;
+
+            const capa = document.createElement('div');
+            capa.id = 'christmas-stars';
+            capa.setAttribute('aria-hidden', 'true');
+            const cantidad = window.matchMedia('(max-width: 640px)').matches ? 18 : 30;
+            const movimientoReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            for (let i = 0; i < cantidad; i++) {
+                const estrella = document.createElement('span');
+                estrella.className = 'christmas-star';
+                estrella.textContent = i % 4 === 0 ? '✧' : '✦';
+                estrella.style.left = (Math.random() * 100).toFixed(2) + '%';
+                estrella.style.fontSize = (8 + Math.random() * 9).toFixed(1) + 'px';
+                estrella.style.animationDuration = (12 + Math.random() * 13).toFixed(1) + 's';
+                estrella.style.animationDelay = movimientoReducido ? '0s' : (-Math.random() * 22).toFixed(1) + 's';
+                capa.appendChild(estrella);
+            }
+            document.body.appendChild(capa);
+        }
+
         window.onload = function() {
+            activarDecoracionNavidena();
             document.getElementById('tipo-entrega').value = 'delivery';
             const fechaInput = document.getElementById('cliente-fecha');
             const minimo = new Date(Date.now() + 24 * 60 * 60 * 1000);
