@@ -296,18 +296,18 @@
             will-change:transform,opacity;
             font-weight:700;
         }
-        #christmas-stars .christmas-star.star-red {
-            color:#D4AF37 !important;
-            text-shadow:0 0 7px rgba(212,175,55,.95),0 0 16px rgba(255,226,130,.8) !important;
+        #christmas-stars .christmas-star.star-gold {
+            color:#C6A75E !important;
+            text-shadow:0 0 3px rgba(198,167,94,.35),0 0 7px rgba(198,167,94,.18) !important;
         }
-        #christmas-stars .christmas-star.star-green {
-            color:#C0C0C0 !important;
-            text-shadow:0 0 7px rgba(192,192,192,.95),0 0 16px rgba(245,245,245,.9) !important;
+        #christmas-stars .christmas-star.star-silver {
+            color:#B8BEC6 !important;
+            text-shadow:0 0 3px rgba(184,190,198,.35),0 0 7px rgba(184,190,198,.18) !important;
         }
         @keyframes christmas-star-fall {
             0% { transform:translate3d(0,-8vh,0) rotate(0deg); opacity:0; }
-            8% { opacity:1; }
-            88% { opacity:.9; }
+            8% { opacity:.58; }
+            88% { opacity:.48; }
             100% { transform:translate3d(28px,112vh,0) rotate(300deg); opacity:0; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -1455,10 +1455,11 @@
 
             for (let i = 0; i < cantidad; i++) {
                 const estrella = document.createElement('span');
-                estrella.className = 'christmas-star ' + (i % 2 === 0 ? 'star-red' : 'star-green');
+                estrella.className = 'christmas-star ' + (i % 2 === 0 ? 'star-gold' : 'star-silver');
                 estrella.textContent = i % 5 === 0 ? '✧' : (i % 3 === 0 ? '✦' : '✶');
                 estrella.style.left = (Math.random() * 100).toFixed(2) + '%';
-                estrella.style.fontSize = (12 + Math.random() * 10).toFixed(1) + 'px';
+                estrella.style.fontSize = (11 + Math.random() * 8).toFixed(1) + 'px';
+                estrella.style.opacity = '0.58';
                 estrella.style.animationDuration = (8 + Math.random() * 7).toFixed(1) + 's';
                 estrella.style.animationDelay = movimientoReducido ? '0s' : (-Math.random() * 22).toFixed(1) + 's';
                 capa.appendChild(estrella);
