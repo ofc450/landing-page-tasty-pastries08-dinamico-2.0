@@ -749,7 +749,13 @@
                 footer.append(price, action); card.append(media, body, footer);
                 card.addEventListener('click', () => abrirModal(p.id));
                 card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirModal(p.id); } });
-                const cat = String(p.categoria || '').toLowerCase().trim();
+                // Normaliza la categoría para admitir tildes, espacios y guiones de Google Sheets.
+                const cat = String(p.categoria || '')
+                    .normalize('NFD')
+                    .replace(/[\\u0300-\\u036f]/g, '')
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[\\s_-]+/g, '');
                 if (grids[cat]) grids[cat].appendChild(card);
             });
             Object.entries(grids).forEach(([cat, grid]) => {
