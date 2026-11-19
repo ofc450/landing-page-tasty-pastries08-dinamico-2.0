@@ -985,13 +985,15 @@
             });
         });
 
+        // Acepta los formatos habituales de casillas booleanas de Google Sheets.
+        function esVerdadero(valor) {
+            return valor === true || ['TRUE', '1', 'SI', 'SÍ', 'YES']
+                .includes(String(valor ?? '').trim().toUpperCase());
+        }
+
         function renderDestacados() {
             const grid = document.getElementById('grid-destacados');
             if (!grid) return;
-
-            const esVerdadero = valor =>
-                valor === true || ['TRUE', '1', 'SI', 'SÍ', 'YES']
-                    .includes(String(valor ?? '').trim().toUpperCase());
 
             const unicos = [...new Map(
                 productos
@@ -1039,8 +1041,7 @@
             Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
             let indiceTarjeta = 0;
             productos.forEach(p => {
-                const estaActivo = (p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
-                if (!estaActivo) return;
+                if (!esVerdadero(p.activo)) return;
                 const precioNum = Number(p.precio) || 0;
                 const img = safeImageURL(p.img);
                 const card = document.createElement('article');
@@ -1067,7 +1068,13 @@
                 indiceTarjeta++;
                 card.addEventListener('click', () => abrirModal(p.id));
                 card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirModal(p.id); } });
-                const cat = String(p.categoria || '').toLowerCase().trim();
+                // Normaliza tildes, espacios y guiones: Navideños = navidenos.
+                const cat = String(p.categoria || '')
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[\s_-]+/g, '');
                 if (grids[cat]) grids[cat].appendChild(card);
             });
             Object.entries(grids).forEach(([cat, grid]) => {
