@@ -723,7 +723,7 @@
             renderDestacados();
             Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
             productos.forEach(p => {
-                const estaActivo = (p.activo === true || p.activo === 'TRUE' || p.activo === 'true');
+                const estaActivo = (p.activo === true || ['TRUE', '1', 'SI', 'SÍ', 'YES'].includes(String(p.activo ?? '').trim().toUpperCase()));
                 if (!estaActivo) return;
                 const precioNum = Number(p.precio) || 0;
                 const img = safeImageURL(p.img);
@@ -752,10 +752,10 @@
                 // Normaliza la categoría para admitir tildes, espacios y guiones de Google Sheets.
                 const cat = String(p.categoria || '')
                     .normalize('NFD')
-                    .replace(/[\\u0300-\\u036f]/g, '')
+                    .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                     .trim()
-                    .replace(/[\\s_-]+/g, '');
+                    .replace(/[\s_-]+/g, '');
                 if (grids[cat]) grids[cat].appendChild(card);
             });
             Object.entries(grids).forEach(([cat, grid]) => {
