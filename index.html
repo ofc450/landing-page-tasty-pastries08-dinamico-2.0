@@ -738,7 +738,8 @@
 
     <!-- SCRIPT PRINCIPAL -->
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzCDHvdLgeOd-bABO0q-kjaVy-62GV2cTKAd_EJ5IQOQ4Q_HrIDviBAZfjWUfJVLtrTXw/exec';;
+        const API_PRODUCTOS_URL = 'https://script.google.com/macros/s/AKfycbzCDHvdLgeOd-bABO0q-kjaVy-62GV2cTKAd_EJ5IQOQ4Q_HrIDviBAZfjWUfJVLtrTXw/exec';
+        const API_POPUP_URL = 'https://script.google.com/macros/s/AKfycbz-Bm7XKnqsYEfZOgxnTOArb34ajhv9DJ8tavgeUBvrGYVajGt103xr7CldVp98Lix75Q/exec';
         const NUMERO_WHATSAPP = "584242942992";
 
         let productos = [];
@@ -808,7 +809,7 @@
             try {
                 // Evita reutilizar una respuesta antigua de Google Sheets.
                 // El parámetro único también evita cachés intermedias.
-                const urlActualizada = `${API_URL}?_=${Date.now()}`;
+                const urlActualizada = `${API_PRODUCTOS_URL}?_=${Date.now()}`;
                 const res = await fetch(urlActualizada, { cache: 'no-store' });
 
                 if (!res.ok) {
@@ -899,8 +900,11 @@
             const boton = document.getElementById('promo-action');
 
             const contenidoPromo = generarContenidoPromocion(p);
-            document.getElementById('promo-title').textContent = contenidoPromo.titulo || String(p.titulo || 'Una novedad de Tasty Pastries');
-            document.getElementById('promo-message').textContent = contenidoPromo.mensaje || String(p.mensaje || '');
+            const tituloPersonalizado = String(p.titulo || '').trim();
+            const mensajePersonalizado = String(p.mensaje || '').trim();
+            const partesMensaje = [mensajePersonalizado, contenidoPromo.mensaje].filter(Boolean);
+            document.getElementById('promo-title').textContent = tituloPersonalizado || contenidoPromo.titulo || 'Una novedad de Tasty Pastries';
+            document.getElementById('promo-message').textContent = partesMensaje.join(' ');
 
             if (imagenURL) {
                 imagen.src = imagenURL;
@@ -960,7 +964,7 @@
 
         async function cargarPopupPromocional() {
             try {
-                const respuesta = await fetch(API_URL + '?tipo=popup', { cache: 'no-store' });
+                const respuesta = await fetch(`${API_POPUP_URL}?tipo=popup&_=${Date.now()}`, { cache: 'no-store' });
                 if (!respuesta.ok) return;
                 const p = await respuesta.json();
                 if (!p || p.error) return;
