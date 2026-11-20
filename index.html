@@ -806,11 +806,25 @@
 
         async function cargarProductosSheets() {
             try {
-                const res = await fetch(API_URL);
-                productos = await res.json();
+                // Evita reutilizar una respuesta antigua de Google Sheets.
+                // El parámetro único también evita cachés intermedias.
+                const urlActualizada = `${API_URL}?_=${Date.now()}`;
+                const res = await fetch(urlActualizada, { cache: 'no-store' });
+
+                if (!res.ok) {
+                    throw new Error(`La API respondió con estado ${res.status}`);
+                }
+
+                const datos = await res.json();
+
+                if (!Array.isArray(datos)) {
+                    throw new Error('La respuesta de la API no contiene una lista de productos.');
+                }
+
+                productos = datos;
                 renderProductos();
             } catch (error) {
-                console.error("Error al cargar productos", error);
+                console.error("Error al cargar productos desde Google Sheets", error);
             }
         }
 
