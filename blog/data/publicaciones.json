@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "descripcion": "Registro central de publicaciones del blog Tasty Pastries.",
+  "categorias": [
+    {"id":"recetas","nombre":"Recetas"},
+    {"id":"ingredientes","nombre":"Ingredientes"},
+    {"id":"tecnicas","nombre":"Técnicas"},
+    {"id":"inspiracion","nombre":"Inspiración"}
+  ],
+  "etiquetas_disponibles": [
+    "vegano",
+    "sin-azucar-anadida",
+    "sin-gluten",
+    "sin-harina-de-trigo",
+    "sin-lacteos",
+    "con-avena",
+    "con-harina-de-almendra"
+  ],
+  "publicaciones": []
+}
