@@ -103,12 +103,27 @@
       postsEl.innerHTML = filtered.map(post => {
         const image = post.imagen ? '<img src="../'+safe(post.imagen)+'" alt="'+safe(post.imagen_alt || post.titulo)+'" loading="lazy">' : '<div style="aspect-ratio:16/10;background:#eadfce"></div>';
         const href = post.ruta ? safe(post.ruta) : '#';
-        return '<article class="card">'+image+'<div class="cardbody"><span class="tag">'+safe(post.categoria_label || post.categoria)+'</span><h3>'+safe(post.titulo)+'</h3><p>'+safe(post.resumen)+'</p><a class="read" href="'+href+'">Leer artículo →</a></div></article>';
+        const absoluteUrl = new URL(href, window.location.href).href;
+        return '<article class="card">'+image+'<div class="cardbody"><span class="tag">'+safe(post.categoria_label || post.categoria)+'</span><h3>'+safe(post.titulo)+'</h3><p>'+safe(post.resumen)+'</p><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a class="read" href="'+href+'">Leer artículo →</a><button type="button" class="share-post" data-share-url="'+safe(absoluteUrl)+'" data-share-title="'+safe(post.titulo)+'" style="border:1px solid #A87853;border-radius:999px;padding:8px 13px;color:#563B30;font-weight:700;background:#fff">↗ Compartir</button></div></div></article>';
       }).join('');
       countEl.textContent = filtered.length+' de '+publications.length+' publicaciones';
       emptyEl.hidden = publications.length !== 0;
       noResultsEl.hidden = publications.length === 0 || filtered.length !== 0;
     }
+
+    async function sharePost(title, url){
+      try{
+        if(navigator.share){await navigator.share({title, text:'Mira este artículo de Tasty Pastries: '+title, url});return;}
+        if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(url);alert('Enlace copiado. Ya puedes compartirlo.');return;}
+        window.prompt('Copia este enlace para compartir:',url);
+      }catch(error){if(error && error.name!=='AbortError')window.prompt('Copia este enlace para compartir:',url);}
+    }
+    postsEl.addEventListener('click',event=>{
+      const button=event.target.closest('[data-share-url]');if(!button)return;
+      event.preventDefault();event.stopPropagation();
+      sharePost(button.dataset.shareTitle,button.dataset.shareUrl);
+    });
+
     document.getElementById('search').addEventListener('input',renderPosts);
     document.getElementById('category').addEventListener('change',renderPosts);
     document.getElementById('tag-filters').addEventListener('click',event=>{

@@ -851,6 +851,38 @@
         function escapeHTML(value) {
             return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
         }
+
+        // Compartir secciones y productos: Web Share API con alternativa de copiar enlace.
+        async function compartirContenido(titulo, texto, url) {
+            const datos = { title: titulo, text: texto, url: url };
+            try {
+                if (navigator.share) { await navigator.share(datos); return; }
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(url);
+                    alert('Enlace copiado. Ya puedes compartirlo.');
+                    return;
+                }
+                window.prompt('Copia este enlace para compartir:', url);
+            } catch (error) {
+                if (error && error.name !== 'AbortError') window.prompt('Copia este enlace para compartir:', url);
+            }
+        }
+        function urlCompartible(ruta) { return new URL(ruta, window.location.href).href; }
+        function crearBotonCompartir(texto, titulo, descripcion, ruta, clase) {
+            const boton = document.createElement('button');
+            boton.type = 'button';
+            boton.className = clase || 'inline-flex items-center justify-center gap-2 rounded-full border border-[#A87853]/50 bg-white px-3 py-2 text-xs font-bold text-[#563B30] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#F4EBDD]';
+            boton.textContent = '↗ ' + texto;
+            boton.setAttribute('aria-label', 'Compartir ' + titulo);
+            boton.addEventListener('click', event => {
+                event.preventDefault();
+                event.stopPropagation();
+                compartirContenido(titulo, descripcion || titulo, urlCompartible(ruta));
+            });
+            boton.addEventListener('keydown', event => event.stopPropagation());
+            return boton;
+        }
+
         function safeImageURL(value) {
             try {
                 const url = new URL(String(value || ''), window.location.href);
@@ -1057,7 +1089,7 @@
                 const name = document.createElement('h3'); name.className = 'font-serif font-bold text-[#563B30] featured-title'; name.textContent = p.nombre || 'Producto';
                 const desc = document.createElement('p'); desc.className = 'featured-description'; desc.textContent = p.desc || '';
                 const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'featured-action'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
-                body.append(name, desc, btn); card.append(media, body);
+                const share = crearBotonCompartir('Compartir', p.nombre || 'Producto Tasty Pastries', 'Mira este producto de Tasty Pastries: ' + (p.nombre || ''), '#producto-' + encodeURIComponent(String(p.id)), 'inline-flex items-center justify-center gap-2 rounded-full border border-[#A87853]/50 bg-white px-3 py-2 text-xs font-bold text-[#563B30] shadow-sm transition hover:bg-[#F4EBDD]'); body.append(name, desc, btn, share); card.append(media, body);
 
                 grid.appendChild(card);
             });
@@ -1082,6 +1114,7 @@
                 const img = safeImageURL(p.img);
                 const card = document.createElement('article');
                 card.className = 'product-card card';
+                card.id = 'producto-' + encodeURIComponent(String(p.id));
                 card.tabIndex = 0;
                 card.setAttribute('role', 'button');
                 card.setAttribute('aria-label', `Ver opciones de ${p.nombre || 'producto'}`);
@@ -1099,7 +1132,8 @@
                 const footer = document.createElement('div'); footer.className = 'product-card-footer';
                 const price = document.createElement('span'); price.className = 'product-card-price'; price.textContent = `$${precioNum.toFixed(2).replace(/\.00$/, '')}`;
                 const action = document.createElement('span'); action.className = 'product-card-action'; action.textContent = 'Ver opciones';
-                footer.append(price, action); card.append(media, body, footer);
+                const share = crearBotonCompartir('Compartir', p.nombre || 'Producto Tasty Pastries', 'Mira este producto de Tasty Pastries: ' + (p.nombre || ''), '#' + card.id);
+                footer.append(price, action, share); card.append(media, body, footer);
 
                 indiceTarjeta++;
                 card.addEventListener('click', () => abrirModal(p.id));
@@ -1116,6 +1150,10 @@
             Object.entries(grids).forEach(([cat, grid]) => {
                 if (grid && !grid.children.length) { const empty = document.createElement('p'); empty.className = 'text-[#899078] text-sm col-span-full'; empty.textContent = 'Próximamente'; grid.appendChild(empty); }
             });
+            if (location.hash.startsWith('#producto-')) {
+                const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+                if (target) setTimeout(() => target.scrollIntoView({behavior: 'smooth', block: 'center'}), 150);
+            }
         }
 
         function abrirModal(id) {
@@ -1572,6 +1610,21 @@
             if (localStorage.getItem('pedido_whatsapp_pendiente') === 'true' && Object.keys(carrito).length) {
                 mostrarConfirmacionPedido();
             }
+
+            // Accesos para compartir las secciones principales y categorías del catálogo.
+            document.querySelectorAll('section[id], #catalogo > h2').forEach((bloque, indice) => {
+                const titulo = bloque.matches('h2') ? bloque.textContent.trim() : (bloque.querySelector('h2')?.textContent || bloque.id);
+                if (!titulo || bloque.querySelector('.section-share-button')) return;
+                if (!bloque.id) bloque.id = 'seccion-' + indice;
+                const share = crearBotonCompartir('Compartir sección', titulo, 'Descubre esta sección de Tasty Pastries: ' + titulo, '#' + bloque.id, 'section-share-button inline-flex items-center justify-center gap-2 rounded-full border border-[#A87853]/50 bg-white px-3 py-2 text-xs font-bold text-[#563B30] shadow-sm transition hover:bg-[#F4EBDD]');
+                share.style.margin = '0 0 14px 0';
+                if (bloque.matches('h2')) bloque.insertAdjacentElement('afterend', share);
+                else {
+                    const heading = bloque.querySelector('h2');
+                    if (heading) heading.insertAdjacentElement('afterend', share);
+                }
+            });
+
             cargarProductosSheets();
             obtenerTasaBCV();
             cargarPopupPromocional();
