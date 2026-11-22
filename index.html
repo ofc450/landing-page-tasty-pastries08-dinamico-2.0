@@ -364,7 +364,7 @@
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
             <a href="#" class="font-serif font-bold text-2xl text-[#563B30]" aria-label="Tasty Pastries, inicio">Tasty Pastries</a>
             <div class="hidden md:flex gap-6 text-sm font-bold text-[#899078] uppercase tracking-wide">
-                <a href="#catalogo" class="hover:text-[#A87853] transition">Catálogo</a><a href="#filosofia" class="hover:text-[#A87853] transition">Nuestra esencia</a><a href="#elaboracion" class="hover:text-[#A87853] transition">Elaboración</a><a href="#momentos" class="hover:text-[#A87853] transition">Momentos</a><a href="#preguntas-frecuentes" class="hover:text-[#A87853] transition">Preguntas frecuentes</a><a href="#contacto" class="hover:text-[#A87853] transition">Contacto</a><a href="blog/" class="hover:text-[#A87853] transition">Blog de recetas</a>
+                <a href="#catalogo" class="hover:text-[#A87853] transition">Catálogo</a><a href="#filosofia" class="hover:text-[#A87853] transition">Nuestra esencia</a><a href="#elaboracion" class="hover:text-[#A87853] transition">Elaboración</a><a href="#momentos" class="hover:text-[#A87853] transition">Momentos</a><a href="#preguntas-frecuentes" class="hover:text-[#A87853] transition">Preguntas frecuentes</a><a href="#contacto" class="hover:text-[#A87853] transition">Contacto</a><a href="blog/" class="inline-flex items-center gap-2 rounded-full bg-[#A87853] px-4 py-2 text-white shadow-md ring-1 ring-[#8B6042]/30 transition hover:-translate-y-0.5 hover:bg-[#8B6042] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#563B30]">✦ Blog de recetas <span aria-hidden="true">↗</span></a>
             </div>
             <div class="flex items-center gap-2">
                 <button onclick="toggleMenuMovil()" aria-expanded="false" aria-controls="menu-movil" id="btn-menu-movil" class="md:hidden border border-[#A87853]/40 text-[#563B30] w-10 h-10 rounded-full" aria-label="Abrir menú">☰</button>
@@ -372,7 +372,7 @@
             </div>
         </div>
         <div id="menu-movil" class="mobile-menu hidden md:hidden px-6 pb-4 text-sm font-bold text-[#563B30] uppercase tracking-wide">
-            <a href="#catalogo" onclick="toggleMenuMovil(false)">Catálogo</a><a href="#filosofia" onclick="toggleMenuMovil(false)">Nuestra esencia</a><a href="#elaboracion" onclick="toggleMenuMovil(false)">Elaboración</a><a href="#momentos" onclick="toggleMenuMovil(false)">Momentos especiales</a><a href="#preguntas-frecuentes" onclick="toggleMenuMovil(false)">Preguntas frecuentes</a><a href="#contacto" onclick="toggleMenuMovil(false)">Contacto</a><a href="blog/" onclick="toggleMenuMovil(false)">Blog de recetas</a>
+            <a href="#catalogo" onclick="toggleMenuMovil(false)">Catálogo</a><a href="#filosofia" onclick="toggleMenuMovil(false)">Nuestra esencia</a><a href="#elaboracion" onclick="toggleMenuMovil(false)">Elaboración</a><a href="#momentos" onclick="toggleMenuMovil(false)">Momentos especiales</a><a href="#preguntas-frecuentes" onclick="toggleMenuMovil(false)">Preguntas frecuentes</a><a href="#contacto" onclick="toggleMenuMovil(false)">Contacto</a><a href="blog/" onclick="toggleMenuMovil(false)" class="!my-2 !rounded-xl !border-0 !bg-[#A87853] !px-4 !py-3 !text-center !font-bold !text-white !shadow-md">✦ DESCUBRE EL BLOG DE RECETAS ↗</a>
         </div>
     </nav>
 
@@ -457,6 +457,24 @@
         </div>
         <div id="grid-destacados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <p class="text-[#899078] text-sm col-span-full text-center">Preparando nuestra selección...</p>
+        </div>
+    </section>
+
+
+    <!-- SECCIÓN DESTACADA: BLOG DE RECETAS -->
+    <section id="blog-tasty" class="mx-auto max-w-6xl px-4 py-12 md:py-16">
+        <div class="relative overflow-hidden rounded-[2rem] border border-[#A87853]/30 bg-gradient-to-br from-[#563B30] via-[#684737] to-[#8B6042] px-6 py-10 text-center text-[#F4EBDD] shadow-[0_18px_45px_rgba(86,59,48,.2)] md:px-12 md:py-14">
+            <div class="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full border border-white/10"></div>
+            <div class="pointer-events-none absolute -right-5 -top-9 h-44 w-44 rounded-full border border-white/10"></div>
+            <div class="relative mx-auto max-w-3xl">
+                <span class="mb-4 inline-flex items-center gap-2 rounded-full border border-[#F4EBDD]/30 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.2em] text-[#F4EBDD]">✦ El universo Tasty Pastries</span>
+                <h2 class="font-serif text-3xl font-bold leading-tight md:text-5xl">Hay mucho más por descubrir que un buen postre.</h2>
+                <p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#F4EBDD]/85 md:text-base">Explora nuestro blog: recetas, ingredientes, técnicas e inspiración para disfrutar y aprender sobre el fascinante mundo de la cocina.</p>
+                <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                    <a href="blog/" class="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#F4EBDD] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#563B30] shadow-lg transition hover:-translate-y-1 hover:bg-white hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4EBDD] sm:w-auto">Explorar el blog de recetas <span aria-hidden="true">→</span></a>
+                    <a href="blog/articulos/plantilla.html?slug=chocolate-caliente-venezolano-sin-azucar" class="inline-flex min-h-14 w-full items-center justify-center rounded-xl border-2 border-[#F4EBDD]/60 px-6 py-3 text-sm font-bold text-[#F4EBDD] transition hover:border-white hover:bg-white/10 sm:w-auto">Leer el primer artículo</a>
+                </div>
+            </div>
         </div>
     </section>
 
