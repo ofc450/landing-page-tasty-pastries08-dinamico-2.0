@@ -1080,7 +1080,7 @@
                 const msg = document.createElement('p'); msg.className = 'text-[#899078] text-sm col-span-full text-center'; msg.textContent = 'Descubre todas nuestras categorías en el catálogo.'; grid.appendChild(msg); return;
             }
             unicos.forEach((p, indice) => {
-                const card = document.createElement('article'); card.className = 'featured-card'; card.id = 'producto-' + encodeURIComponent(String(p.id));
+                const card = document.createElement('article'); card.className = 'featured-card';
                 const media = document.createElement('div'); media.className = 'featured-media';
                 const imgUrl = safeImageURL(p.img);
                 if (imgUrl) { const img = document.createElement('img'); img.src = imgUrl; img.alt = String(p.nombre || 'Producto Tasty Pastries'); img.loading = 'lazy'; media.appendChild(img); }
@@ -1150,6 +1150,10 @@
             Object.entries(grids).forEach(([cat, grid]) => {
                 if (grid && !grid.children.length) { const empty = document.createElement('p'); empty.className = 'text-[#899078] text-sm col-span-full'; empty.textContent = 'Próximamente'; grid.appendChild(empty); }
             });
+            if (location.hash.startsWith('#producto-')) {
+                const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+                if (target) setTimeout(() => target.scrollIntoView({behavior: 'smooth', block: 'center'}), 150);
+            }
         }
 
         function abrirModal(id) {
