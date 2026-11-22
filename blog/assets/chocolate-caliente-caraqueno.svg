@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Chocolate caliente venezolano</title>
+<desc id="desc">Ilustración editorial de una taza de chocolate caliente sobre una mesa cálida, con cacao, canela y una silueta de montaña inspirada en el Ávila.</desc>
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f7ead7"/><stop offset="1" stop-color="#d8b796"/></linearGradient>
+ <linearGradient id="drink" x2="0" y2="1"><stop stop-color="#7c4a32"/><stop offset="1" stop-color="#3c211b"/></linearGradient>
+ <linearGradient id="cup" x2="0" y2="1"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#e8d8c2"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="15"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<circle cx="1030" cy="105" r="170" fill="#fff5df" opacity=".38"/>
+<path d="M0 340 Q130 260 250 310 T500 285 T760 300 T1200 245 V500 H0Z" fill="#75816d" opacity=".72"/>
+<path d="M0 390 Q180 310 330 370 T650 345 T940 355 T1200 310 V520 H0Z" fill="#4e6658" opacity=".82"/>
+<path d="M0 475 H1200 V675 H0Z" fill="#684633"/>
+<path d="M0 490 Q300 455 600 490 T1200 480" fill="none" stroke="#9d7250" stroke-width="8" opacity=".5"/>
+<ellipse cx="600" cy="565" rx="330" ry="48" fill="#2b1a15" opacity=".25" filter="url(#shadow)"/>
+<!-- saucer -->
+<ellipse cx="600" cy="530" rx="290" ry="72" fill="#e9d9c4"/>
+<ellipse cx="600" cy="518" rx="260" ry="54" fill="#fff8ed"/>
+<ellipse cx="600" cy="515" rx="220" ry="35" fill="#c6a98b" opacity=".55"/>
+<!-- cup handle -->
+<path d="M790 300 C960 270 970 450 805 455" fill="none" stroke="#e9d9c4" stroke-width="54"/>
+<path d="M800 320 C910 310 916 420 810 430" fill="none" stroke="#fff8ed" stroke-width="28"/>
+<!-- cup -->
+<path d="M360 235 Q365 470 430 500 Q600 555 770 500 Q835 465 840 235Z" fill="url(#cup)" stroke="#b18d6b" stroke-width="7"/>
+<ellipse cx="600" cy="238" rx="242" ry="58" fill="#fff8ed" stroke="#b18d6b" stroke-width="7"/>
+<ellipse cx="600" cy="240" rx="216" ry="43" fill="url(#drink)"/>
+<path d="M430 235 Q510 210 580 236 T770 230" fill="none" stroke="#b9825c" stroke-width="9" opacity=".65"/>
+<!-- cinnamon -->
+<g transform="rotate(-24 690 180)"><rect x="665" y="92" width="28" height="175" rx="13" fill="#9a5e32"/><rect x="700" y="100" width="22" height="160" rx="11" fill="#bd8050"/><path d="M678 100 Q686 120 678 145" stroke="#e2b17d" stroke-width="5" fill="none"/></g>
+<!-- cocoa beans -->
+<g fill="#573326"><ellipse cx="175" cy="535" rx="30" ry="18" transform="rotate(-25 175 535)"/><ellipse cx="230" cy="570" rx="28" ry="17" transform="rotate(22 230 570)"/><ellipse cx="1010" cy="550" rx="29" ry="18" transform="rotate(-18 1010 550)"/></g>
+<g fill="none" stroke="#b88962" stroke-width="4"><path d="M150 530q25 12 45 0M208 565q22 10 43 0M990 545q22 12 42 0"/></g>
+<!-- title panel -->
+<rect x="65" y="55" width="410" height="120" rx="18" fill="#fff8ed" opacity=".86"/>
+<text x="95" y="105" font-family="Georgia,serif" font-size="35" fill="#563b30">Chocolate caliente</text>
+<text x="95" y="148" font-family="Arial,sans-serif" font-size="21" letter-spacing="3" fill="#98704f">TRADICIÓN CARAQUEÑA</text>
+</svg>

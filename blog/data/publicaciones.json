@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "descripcion": "Registro central de publicaciones del blog Tasty Pastries.",
+  "categorias": [
+    {
+      "id": "recetas",
+      "nombre": "Recetas"
+    },
+    {
+      "id": "ingredientes",
+      "nombre": "Ingredientes"
+    },
+    {
+      "id": "tecnicas",
+      "nombre": "Técnicas"
+    },
+    {
+      "id": "inspiracion",
+      "nombre": "Inspiración"
+    }
+  ],
+  "etiquetas_disponibles": [
+    "vegano",
+    "sin-azucar-anadida",
+    "sin-gluten",
+    "sin-harina-de-trigo",
+    "sin-lacteos",
+    "con-avena",
+    "con-harina-de-almendra"
+  ],
+  "publicaciones": [
+    {
+      "slug": "chocolate-caliente-venezolano-sin-azucar",
+      "titulo": "El alma de Caracas en una taza: chocolate caliente venezolano, historia y tradición",
+      "resumen": "Aprende a preparar un chocolate caliente venezolano, espeso y cremoso, sin azúcar añadida. Una receta con cacao, leche y el endulzante que prefieras.",
+      "categoria": "recetas",
+      "categoria_label": "Recetas",
+      "etiquetas": [
+        "sin-azucar-anadida",
+        "chocolate-venezolano",
+        "cacao",
+        "bebidas-calientes",
+        "tradicion-venezolana"
+      ],
+      "fecha_publicacion": "22 de noviembre de 2026",
+      "tiempo_lectura": 8,
+      "contenido_html": "\n<h2>Una taza que sabe a Caracas</h2>\n<p>El caraqueño conoce bien los contrastes de su ciudad: la frescura que desciende del Ávila, el movimiento de sus calles y esa búsqueda de pequeños momentos de tranquilidad que hacen más agradable el día. Entre esos momentos hay uno especialmente entrañable: disfrutar una taza de chocolate caliente.</p>\n<p>No hablamos de una bebida ligera ni excesivamente dulce. Hablamos de una preparación de carácter intenso, cuerpo generoso y textura aterciopelada, donde el cacao es el protagonista. El chocolate caliente caraqueño representa mucho más que una merienda: reúne costumbres familiares, ingredientes de nuestra tierra y una larga tradición cacaotera.</p>\n<h2>Del cacao ancestral a las tazas europeas</h2>\n<p>El cacao ya era cultivado y utilizado por diferentes pueblos de América mucho antes de su llegada a Europa. Sus semillas tenían valor alimentario, cultural y ceremonial. Tras el contacto entre ambos continentes, las preparaciones se transformaron y fueron incorporando ingredientes y especias que dieron lugar a nuevas formas de disfrutarlo.</p>\n<p>En Venezuela, la historia del cacao tiene una identidad propia. Sus regiones productoras y sus variedades forman parte de una herencia agrícola y gastronómica reconocida dentro y fuera del país.</p>\n<h2>Venezuela: tierra de cacao y tradición</h2>\n<p>Durante el período colonial venezolano se documentan distintas preparaciones a base de cacao, entre ellas el cerrero, el chorote y el chocolate. No eran exactamente la misma bebida: variaban en ingredientes, elaboración y ocasiones de consumo.</p>\n<p>Una característica que distinguía algunas preparaciones de chocolate caraqueño era la incorporación de maíz tostado. Se utilizaba para espesar la bebida, hacerla más rendidora y favorecer la formación de espuma. Esta referencia histórica permite entender por qué la textura y el cuerpo han sido tan importantes en la tradición local.</p>\n<p>La receta que compartimos conserva esa búsqueda de una bebida espesa y cremosa. En esta versión doméstica utilizamos fécula de maíz para lograr una textura uniforme y fácil de reproducir.</p>\n<h2>Receta: chocolate caliente venezolano sin azúcar añadida</h2>\n<p>Una preparación para cuatro porciones, ideal para una tarde fresca, una merienda familiar o una ocasión especial. El secreto está en utilizar cacao puro, controlar la cocción y ajustar el dulzor al gusto.</p>\n<div class=\"recipe-data\"><span><strong>Rendimiento:</strong> 4 tazas</span><span><strong>Preparación:</strong> 10 min</span><span><strong>Cocción:</strong> 10–15 min</span><span><strong>Dificultad:</strong> Fácil</span></div>\n<h3>Ingredientes</h3>\n<ul><li>1 litro de leche entera.</li><li>60 g de cacao puro en polvo, sin azúcar añadida.</li><li>30 g de chocolate oscuro sin azúcar añadida, opcional, para intensificar el sabor y aportar cuerpo.</li><li>20 g de fécula de maíz (maicena).</li><li>1 pizca de sal fina.</li><li>1 cucharadita de extracto puro de vainilla.</li><li>Canela al gusto, opcional.</li><li>Endulzante de elección, incorporado poco a poco y según su equivalencia.</li></ul>\n<h3>Elige cómo endulzarlo</h3>\n<ul><li><strong>Stevia:</strong> utiliza una presentación apta para cocinar y sigue la equivalencia indicada por el fabricante; su concentración cambia según el producto.</li><li><strong>Eritritol:</strong> incorpóralo gradualmente hasta alcanzar el dulzor deseado.</li><li><strong>Fruto del monje (monk fruit):</strong> escoge una presentación apta para bebidas calientes y respeta la equivalencia del envase.</li><li><strong>Pasta de dátiles:</strong> aporta dulzor de la fruta y un sabor característico que combina con el cacao. Ten presente que los dátiles contienen azúcares naturalmente presentes.</li></ul>\n<p><strong>Nota:</strong> los endulzantes no tienen el mismo poder edulcorante. No existe una equivalencia universal entre ellos; por eso conviene añadirlos gradualmente y probar la preparación. Para conservar la denominación «sin azúcar añadida», revisa también que el cacao, el chocolate y los demás ingredientes envasados no incluyan azúcar añadida.</p>\n<h3>Utensilios</h3>\n<ul><li>Una olla de fondo grueso.</li><li>Un batidor manual de varillas.</li><li>Un bol pequeño.</li><li>Una taza o recipiente para medir.</li></ul>\n<h3>Preparación paso a paso</h3>\n<ol><li><strong>Disuelve la fécula.</strong> Separa aproximadamente 150 ml de leche fría y colócala en un recipiente. Agrega la fécula de maíz y mezcla hasta disolverla por completo. Reserva.</li><li><strong>Integra el cacao.</strong> Vierte el resto de la leche en una olla. Añade el cacao en polvo y mezcla con el batidor. Si utilizas chocolate oscuro sin azúcar añadida, incorpóralo troceado.</li><li><strong>Calienta lentamente.</strong> Lleva la olla a fuego medio, removiendo hasta que el chocolate se disuelva y la mezcla esté homogénea. Evita un hervor violento.</li><li><strong>Incorpora la fécula.</strong> Remueve la mezcla de leche y fécula reservada y agrégala poco a poco a la olla, sin dejar de batir.</li><li><strong>Da cuerpo al chocolate.</strong> Cocina a fuego medio-bajo durante unos 5 a 8 minutos, removiendo constantemente, hasta que la preparación espese y se vea uniforme y brillante.</li><li><strong>Aromatiza y endulza.</strong> Retira del fuego. Añade la sal y la vainilla. Incorpora el endulzante elegido gradualmente, probando hasta alcanzar el dulzor deseado. Si utilizas canela, puedes añadirla durante la cocción.</li><li><strong>Sirve.</strong> Sirve inmediatamente en tazas previamente calentadas. Si deseas una ligera espuma, bate enérgicamente justo antes de servir.</li></ol>\n<h2>Consejos para un chocolate perfecto</h2>\n<ul><li><strong>El cacao es el protagonista:</strong> utiliza cacao puro, sin azúcar añadida y de buena calidad.</li><li><strong>Controla el espesor:</strong> si prefieres una bebida más ligera, reduce ligeramente la fécula; si la deseas más espesa, ajusta con prudencia en una próxima preparación.</li><li><strong>Disuelve siempre la fécula en frío:</strong> incorporarla directamente al líquido caliente favorece la formación de grumos.</li><li><strong>Endulza al final:</strong> así podrás controlar mejor el dulzor y adaptarlo al endulzante elegido.</li><li><strong>Cuida la temperatura:</strong> una cocción moderada ayuda a obtener una textura uniforme y evita que la leche se adhiera al fondo.</li></ul>\n<h2>El ritual de acompañamiento caraqueño</h2>\n<p>En Caracas, el chocolate caliente encuentra un momento especial durante las tardes frescas, especialmente en diciembre, cuando la llegada de Pacheco anuncia temperaturas más bajas en el valle. Y como toda buena tradición venezolana, suele disfrutarse mejor acompañado.</p>\n<p>Galletas de soda, Panelas de San Joaquín y churros recién preparados son algunas opciones que evocan nuestras meriendas. En algunas familias también se acostumbra colocar trocitos de queso blanco fresco en el fondo de la taza, para disfrutar el contraste entre el cacao y la nota salada del queso.</p>\n<h2>Una tradición que podemos seguir disfrutando</h2>\n<p>El chocolate caliente venezolano es mucho más que una combinación de leche y cacao. Es memoria, cultura y tradición. Es una manera de recordar nuestras raíces, valorar la riqueza del cacao venezolano y compartir alrededor de una preparación que ha acompañado a generaciones.</p>\n<p>En Tasty Pastries creemos que disfrutar de sabores tradicionales también puede ser una oportunidad para explorar nuevas formas de preparar y endulzar nuestros alimentos. Porque conservar una tradición no significa dejar de reinventarla.</p>\n<p><strong>Una taza de chocolate, una buena conversación y el placer de compartir: así sabe el alma de Caracas.</strong></p>\n<h3>Referencias para profundizar</h3>\n<ul><li>De la Cruz, Ernesto e Ismael Pereira. «Historias, saberes y sabores en torno al cacao (Theobroma cacao L.) en la subregión de Barlovento, estado Miranda». <em>Sapiens. Revista Universitaria de Investigación</em>, 2009. <a href=\"https://ve.scielo.org/scielo.php?pid=S1317-58152009000200005&script=sci_arttext\" target=\"_blank\" rel=\"noopener\">Consultar artículo</a>.</li><li>Febres Cordero, Tulio. <em>El chocolate y el chorote: estudio histórico</em>, 1892. <a href=\"https://realacademiadegastronomia.com/libro-biblioteca-dda/estudio-sobre-el-origen-de-los-americanos-basado-en-la-onomatologa-geogrfica-indgena-el-chocolate-y-el-chorote-estudio-histrico/\" target=\"_blank\" rel=\"noopener\">Consultar ficha bibliográfica</a>.</li></ul>\n<p><em>Contenido editorial de Tasty Pastries. La receta contiene leche y, por tanto, lactosa naturalmente presente. Para mantener la característica «sin azúcar añadida», verifica la composición del cacao, del chocolate y de cada ingrediente envasado. La pasta de dátiles aporta azúcares naturalmente presentes en la fruta.</em>\n",
+      "nota": "Receta sin azúcar añadida cuando se utilizan ingredientes sin azúcar añadida y se elige un endulzante compatible. La pasta de dátiles aporta azúcares naturalmente presentes en la fruta.",
+      "imagen": "blog/assets/chocolate-caliente-caraqueno.svg",
+      "imagen_alt": "Ilustración editorial de una taza de chocolate caliente caraqueño, con cacao y canela frente a una silueta montañosa inspirada en el Ávila.",
+      "ruta": "articulos/plantilla.html?slug=chocolate-caliente-venezolano-sin-azucar"
+    }
+  ]
+}
