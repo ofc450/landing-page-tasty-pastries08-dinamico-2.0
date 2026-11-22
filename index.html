@@ -1089,7 +1089,7 @@
                 const name = document.createElement('h3'); name.className = 'font-serif font-bold text-[#563B30] featured-title'; name.textContent = p.nombre || 'Producto';
                 const desc = document.createElement('p'); desc.className = 'featured-description'; desc.textContent = p.desc || '';
                 const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'featured-action'; btn.textContent = 'Conocer este producto →'; btn.addEventListener('click', () => abrirModal(p.id));
-                const share = crearBotonCompartir('Compartir', p.nombre || 'Producto Tasty Pastries', 'Mira este producto de Tasty Pastries: ' + (p.nombre || ''), '#' + card.id, 'inline-flex items-center justify-center gap-2 rounded-full border border-[#A87853]/50 bg-white px-3 py-2 text-xs font-bold text-[#563B30] shadow-sm transition hover:bg-[#F4EBDD]'); body.append(name, desc, btn, share); card.append(media, body);
+                const share = crearBotonCompartir('Compartir', p.nombre || 'Producto Tasty Pastries', 'Mira este producto de Tasty Pastries: ' + (p.nombre || ''), '#producto-' + encodeURIComponent(String(p.id)), 'inline-flex items-center justify-center gap-2 rounded-full border border-[#A87853]/50 bg-white px-3 py-2 text-xs font-bold text-[#563B30] shadow-sm transition hover:bg-[#F4EBDD]'); body.append(name, desc, btn, share); card.append(media, body);
 
                 grid.appendChild(card);
             });
