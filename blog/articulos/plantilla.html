@@ -1,54 +1,146 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artículo | Blog Tasty Pastries</title>
   <meta name="description" content="Ideas, recetas y conocimiento gastronómico de Tasty Pastries.">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="theme-color" content="#F4EBDD">
+  <meta property="og:site_name" content="Tasty Pastries">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Blog Tasty Pastries">
+  <meta property="og:description" content="Ideas, recetas y conocimiento gastronómico para descubrir y disfrutar.">
+  <meta property="og:image" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--cream:#F4EBDD;--chocolate:#563B30;--caramel:#A87853;--olive:#899078}
-    *{box-sizing:border-box}body{margin:0;background:#fbf8f2;color:var(--chocolate);font-family:Lato,Arial,sans-serif;line-height:1.75}
-    h1,h2,h3{font-family:"Playfair Display",Georgia,serif;line-height:1.2}.wrap{width:min(820px,calc(100% - 36px));margin:auto}
-    header{background:var(--cream);padding:22px 0;border-bottom:1px solid #a8785333}.nav{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.nav a{color:var(--caramel);font-weight:700;text-decoration:none}
-    main{padding:48px 0 70px}.eyebrow{font-size:.75rem;color:var(--caramel);font-weight:700;letter-spacing:.15em;text-transform:uppercase}
-    h1{font-size:clamp(2.3rem,6vw,3.7rem);margin:12px 0}.summary{font-size:1.15rem;color:#766d64}
-    .hero-image{width:100%;max-height:480px;object-fit:cover;border-radius:16px;margin:28px 0;background:var(--cream)}
-    .meta{font-size:.84rem;color:var(--olive);margin:14px 0 22px}.tags{display:flex;flex-wrap:wrap;gap:8px}.tag{background:#f1e5d7;border-radius:999px;padding:5px 11px;font-size:.75rem}
-    .content h2{margin-top:2.2em;font-size:1.8rem}.content h3{font-size:1.3rem}.content p,.content li{color:#51463f}
-    .content img{max-width:100%;height:auto;border-radius:12px}.recipe-data{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.recipe-data span{padding:10px 13px;background:#fff;border:1px solid #a8785333;border-radius:9px;font-size:.86rem}
-    .notice{margin-top:40px;padding:22px;background:var(--cream);border-radius:14px}.notice a{color:var(--caramel);font-weight:700}
-    .not-found{text-align:center;padding:70px 0}.not-found a{color:var(--caramel)}
-    .share-article{display:inline-flex;align-items:center;gap:8px;margin:18px 0 8px;padding:11px 18px;border:0;border-radius:999px;background:var(--caramel);color:#fff;font-weight:700;box-shadow:0 5px 14px #563b3026;cursor:pointer}.share-article:hover{background:var(--chocolate);transform:translateY(-1px)}
+    :root{--cream:#F4EBDD;--chocolate:#563B30;--caramel:#A87853;--olive:#899078;--paper:#fbf8f2;--line:#a8785333}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--chocolate);font-family:Lato,Arial,sans-serif;line-height:1.75}
+    h1,h2,h3,h4{font-family:"Playfair Display",Georgia,serif;line-height:1.2}
+    a{color:var(--caramel)}
+    .wrap{width:min(820px,calc(100% - 36px));margin:auto}
+    .site-header{background:var(--cream);padding:19px 0;border-bottom:1px solid var(--line)}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .nav a{color:var(--caramel);font-weight:700;text-decoration:none;font-size:.9rem}
+    main{padding:48px 0 70px}
+    .eyebrow{font-size:.73rem;color:var(--caramel);font-weight:700;letter-spacing:.17em;text-transform:uppercase;margin:0}
+    h1{font-size:clamp(2.25rem,6vw,3.65rem);margin:13px 0 16px;letter-spacing:-.025em}
+    .summary{font-size:1.13rem;color:#766d64;line-height:1.65;margin:0;max-width:720px}
+    .meta{font-size:.82rem;color:var(--olive);margin:17px 0 15px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+    .tag{background:#f1e5d7;border-radius:999px;padding:5px 11px;font-size:.73rem;color:#72533f}
+    .share-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 22px}
+    .share-article{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:0;border-radius:999px;background:var(--caramel);color:#fff;font-weight:700;box-shadow:0 5px 14px #563b3026;cursor:pointer;font:700 .9rem Lato,Arial,sans-serif}
+    .share-article:hover{background:var(--chocolate);transform:translateY(-1px)}
+    .share-hint{font-size:.8rem;color:#81796e}
+    .hero-image{width:100%;max-height:490px;object-fit:cover;border-radius:17px;margin:10px 0 28px;background:var(--cream);display:block}
+    .content{font-size:1.02rem}
+    .content h2{margin:2.25em 0 .7em;font-size:clamp(1.55rem,4vw,2rem)}
+    .content h3{font-size:1.32rem;margin:1.7em 0 .55em}
+    .content h4{font-size:1.1rem}
+    .content p,.content li{color:#51463f}
+    .content p{margin:0 0 1.15em}
+    .content ul,.content ol{padding-left:1.45rem;margin:0 0 1.4em}
+    .content li{padding-left:.2rem;margin:.45em 0}
+    .content a{color:var(--caramel);font-weight:700}
+    .content img{max-width:100%;height:auto;border-radius:13px}
+    .content blockquote{margin:1.8em 0;padding:18px 22px;background:#f4ebdd;border-left:4px solid var(--caramel);border-radius:0 12px 12px 0;font-family:"Playfair Display",Georgia,serif;font-size:1.18rem}
+    .content hr{border:0;border-top:1px solid var(--line);margin:2.2em 0}
+    .recipe-data{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 25px}
+    .recipe-data span{padding:9px 13px;background:#fff;border:1px solid var(--line);border-radius:9px;font-size:.84rem}
+    .content .recipe-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px;margin:25px 0}
+    .content .recipe-card h2:first-child,.content .recipe-card h3:first-child{margin-top:0}
+    .content .recipe-note{padding:15px 18px;background:#f4ebdd;border-radius:11px;color:#665447}
+    .content table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem}
+    .content th,.content td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+    .content th{background:#f4ebdd}
+    .brand-note{margin:42px 0 24px;padding:23px 25px;background:var(--cream);border-radius:15px}
+    .brand-note h2{font:600 1.45rem "Playfair Display",Georgia,serif;margin:0 0 8px}
+    .brand-note p{margin:0;color:#66594e}
+    .related{margin:42px 0 0;padding-top:30px;border-top:1px solid var(--line)}
+    .related h2{font-size:1.65rem;margin:0 0 17px}
+    .related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .related-card{display:block;padding:17px;background:#fff;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--chocolate)}
+    .related-card small{display:block;color:var(--caramel);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+    .related-card strong{display:block;font:600 1.08rem "Playfair Display",Georgia,serif;margin-top:6px}
+    .related-card:hover{border-color:var(--caramel);transform:translateY(-2px)}
+    .end-cta{margin:38px 0 0;padding:28px;background:var(--chocolate);color:var(--cream);border-radius:16px;text-align:center}
+    .end-cta h2{font:600 1.65rem "Playfair Display",Georgia,serif;margin:0 0 8px}
+    .end-cta p{color:#f4ebddcf;margin:0 auto 17px;max-width:560px;font-size:.92rem}
+    .cta-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .cta-links a{display:inline-block;padding:10px 16px;border-radius:999px;background:var(--caramel);color:#fff;text-decoration:none;font-weight:700;font-size:.86rem}
+    .cta-links a.secondary{background:transparent;border:1px solid #f4ebdd80}
+    .site-footer{text-align:center;padding:22px;color:#81796e;font-size:.78rem}
+    .not-found{text-align:center;padding:70px 0}
+    .not-found a{color:var(--caramel);font-weight:700}
+    @media(max-width:600px){main{padding:34px 0 52px}.wrap{width:min(100% - 28px,820px)}.related-grid{grid-template-columns:1fr}.brand-note,.end-cta{padding:21px}.content{font-size:.98rem}}
   </style>
 </head>
 <body>
-  <header><div class="wrap nav"><a href="../">← Blog Tasty Pastries</a><a href="../../">Ir a la tienda</a></div></header>
+  <header class="site-header"><div class="wrap nav"><a href="../">← Blog Tasty Pastries</a><a href="../../">Ir a la tienda</a></div></header>
   <main class="wrap" id="article"><div class="not-found"><p class="eyebrow">Blog Tasty Pastries</p><h1>Abriendo el cuaderno de ideas…</h1></div></main>
+  <footer class="site-footer">Tasty Pastries · Cultura gastronómica, creatividad y sabor · Caracas, Venezuela</footer>
   <script>
-    const params=new URLSearchParams(location.search);const slug=params.get('slug');
+    const params=new URLSearchParams(location.search);
+    const slug=params.get('slug');
     const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
+    const articleUrl=()=>window.location.href;
     async function shareArticle(title){
-      const url=window.location.href;
+      const url=articleUrl();
       try{
         if(navigator.share){await navigator.share({title,text:'Te comparto este artículo de Tasty Pastries: '+title,url});return;}
-        if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(url);alert('Enlace copiado. Ya puedes compartirlo.');return;}
+        if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(url);alert('Enlace copiado. Ya puedes compartirlo.');return;}
         window.prompt('Copia este enlace para compartir:',url);
-      }catch(error){if(error && error.name!=='AbortError')window.prompt('Copia este enlace para compartir:',url);}
+      }catch(error){if(error&&error.name!=='AbortError')window.prompt('Copia este enlace para compartir:',url);}
     }
-
-    fetch('../data/publicaciones.json').then(r=>{if(!r.ok)throw new Error();return r.json();}).then(data=>{
-      const post=(data.publicaciones||[]).find(item=>item.slug===slug);
+    function relatedMarkup(post,allPosts){
+      const tags=post.etiquetas||[];
+      const related=allPosts.filter(item=>item.slug!==post.slug).map(item=>{
+        const sameCategory=item.categoria===post.categoria?2:0;
+        const common=(item.etiquetas||[]).filter(tag=>tags.includes(tag)).length;
+        return {item,score:sameCategory+common};
+      }).filter(entry=>entry.score>0).sort((a,b)=>b.score-a.score).slice(0,2);
+      if(!related.length)return '';
+      return '<section class="related" aria-label="Artículos relacionados"><h2>También te puede interesar</h2><div class="related-grid">'+related.map(({item})=>'<a class="related-card" href="'+esc(item.ruta||('articulos/plantilla.html?slug='+encodeURIComponent(item.slug)))+'"><small>'+esc(item.categoria_label||item.categoria||'Tasty Pastries')+'</small><strong>'+esc(item.titulo)+'</strong></a>').join('')+'</div></section>';
+    }
+    fetch('../data/publicaciones.json').then(r=>{if(!r.ok)throw new Error('No se pudo cargar el registro');return r.json();}).then(data=>{
+      const posts=Array.isArray(data.publicaciones)?data.publicaciones:[];
+      const post=posts.find(item=>item.slug===slug);
       if(!post)throw new Error('not-found');
-      document.title=post.titulo+' | Blog Tasty Pastries';
+      const title=post.meta_titulo||post.titulo+' | Blog Tasty Pastries';
+      const description=post.meta_descripcion||post.resumen||'Ideas, recetas y conocimiento gastronómico de Tasty Pastries.';
+      document.title=title;
+      document.querySelector('meta[name="description"]').setAttribute('content',description);
+      document.querySelector('meta[property="og:title"]').setAttribute('content',post.titulo);
+      document.querySelector('meta[property="og:description"]').setAttribute('content',description);
+      if(post.imagen)document.querySelector('meta[property="og:image"]').setAttribute('content',new URL('../../'+post.imagen,location.href).href);
       const image=post.imagen?'<img class="hero-image" src="../../'+esc(post.imagen)+'" alt="'+esc(post.imagen_alt||post.titulo)+'">':'';
       const tags=(post.etiquetas||[]).map(tag=>'<span class="tag">'+esc(tag.replaceAll('-',' '))+'</span>').join('');
       const meta=[post.fecha_publicacion,post.tiempo_lectura?post.tiempo_lectura+' min de lectura':''].filter(Boolean).join(' · ');
-      let body=post.contenido_html||'<p>El contenido de este artículo se está preparando.</p>';
-      document.getElementById('article').innerHTML='<p class="eyebrow">'+esc(post.categoria_label||post.categoria)+'</p><h1>'+esc(post.titulo)+'</h1><p class="summary">'+esc(post.resumen)+'</p><div class="meta">'+esc(meta)+'</div><div class="tags">'+tags+'</div><button type="button" class="share-article" id="share-article">↗ Compartir artículo</button>'+image+'<article class="content">'+body+'</article>'+(post.nota?'<aside class="notice">'+esc(post.nota)+'</aside>':'')+'<aside class="notice"><strong>Conoce Tasty Pastries</strong><p>Repostería artesanal elaborada por encargo en Caracas.</p><a href="../../#catalogo">Explorar nuestra propuesta →</a></aside>';
+      const body=post.contenido_html||'<p>El contenido de este artículo se está preparando.</p>';
+      const category=post.categoria_label||post.categoria||'Cultura gastronómica';
+      const brandMessage=post.mensaje_marca||'En Tasty Pastries creemos que el sabor, la creatividad y el cuidado en cada preparación pueden convivir. Descubre nuestra propuesta de repostería artesanal elaborada por encargo.';
+      const instagram=post.instagram_url||'https://www.instagram.com/tastypastries08/';
+      document.getElementById('article').innerHTML=
+        '<p class="eyebrow">'+esc(category)+'</p>'+
+        '<h1>'+esc(post.titulo)+'</h1>'+
+        '<p class="summary">'+esc(post.resumen)+'</p>'+
+        '<div class="meta">'+esc(meta)+'</div>'+
+        (tags?'<div class="tags">'+tags+'</div>':'')+
+        '<div class="share-row"><button type="button" class="share-article" id="share-article">↗ Compartir artículo</button><span class="share-hint">¿Te resultó interesante? Compártelo.</span></div>'+
+        image+
+        '<article class="content">'+body+'</article>'+
+        (post.nota?'<aside class="brand-note"><h2>Una nota de Tasty Pastries</h2><p>'+esc(post.nota)+'</p></aside>':'')+
+        '<aside class="brand-note"><h2>El universo Tasty Pastries</h2><p>'+esc(brandMessage)+'</p></aside>'+
+        relatedMarkup(post,posts)+
+        '<section class="end-cta"><h2>Sigamos descubriendo sabores</h2><p>Encuentra más ideas, recetas y novedades en nuestro blog y acompáñanos en Instagram.</p><div class="cta-links"><a href="'+esc(instagram)+'" target="_blank" rel="noopener noreferrer">Seguir en Instagram</a><a class="secondary" href="../">Explorar el blog</a><a class="secondary" href="../../#catalogo">Conocer nuestros productos</a></div></section>';
       document.getElementById('share-article').addEventListener('click',()=>shareArticle(post.titulo));
-    }).catch(()=>{document.getElementById('article').innerHTML='<div class="not-found"><p class="eyebrow">Blog Tasty Pastries</p><h1>Este artículo todavía no está disponible</h1><p>Puede que el enlace no sea correcto o que la publicación esté en preparación.</p><a href="../">Volver al blog</a></div>';});
+    }).catch(()=>{
+      document.getElementById('article').innerHTML='<div class="not-found"><p class="eyebrow">Blog Tasty Pastries</p><h1>Este artículo todavía no está disponible</h1><p>Puede que el enlace no sea correcto o que la publicación esté en preparación.</p><a href="../">Volver al blog</a></div>';
+    });
   </script>
 </body>
 </html>
