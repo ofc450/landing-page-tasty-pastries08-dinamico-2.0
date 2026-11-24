@@ -104,7 +104,7 @@
         return {item,score:sameCategory+common};
       }).filter(entry=>entry.score>0).sort((a,b)=>b.score-a.score).slice(0,2);
       if(!related.length)return '';
-      return '<section class="related" aria-label="Artículos relacionados"><h2>También te puede interesar</h2><div class="related-grid">'+related.map(({item})=>'<a class="related-card" href="'+esc(item.ruta||('articulos/plantilla.html?slug='+encodeURIComponent(item.slug)))+'"><small>'+esc(item.categoria_label||item.categoria||'Tasty Pastries')+'</small><strong>'+esc(item.titulo)+'</strong></a>').join('')+'</div></section>';
+      return '<section class="related" aria-label="Artículos relacionados"><h2>También te puede interesar</h2><div class="related-grid">'+related.map(({item})=>'<a class="related-card" href="'+esc(item.ruta||('plantilla.html?slug='+encodeURIComponent(item.slug)))+'"><small>'+esc(item.categoria_label||item.categoria||'Tasty Pastries')+'</small><strong>'+esc(item.titulo)+'</strong></a>').join('')+'</div></section>';
     }
     fetch('../data/publicaciones.json').then(r=>{if(!r.ok)throw new Error('No se pudo cargar el registro');return r.json();}).then(data=>{
       const posts=Array.isArray(data.publicaciones)?data.publicaciones:[];
