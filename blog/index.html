@@ -9,6 +9,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5E12088DEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5E12088DEN');
+  </script>
   <style>
     :root{--cream:#F4EBDD;--chocolate:#563B30;--caramel:#A87853;--olive:#899078;--white:#fff}
     *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--chocolate);font-family:Lato,Arial,sans-serif;line-height:1.65}
@@ -104,7 +112,7 @@
         const image = post.imagen ? '<img src="../'+safe(post.imagen)+'" alt="'+safe(post.imagen_alt || post.titulo)+'" loading="lazy">' : '<div style="aspect-ratio:16/10;background:#eadfce"></div>';
         const href = post.ruta ? safe(post.ruta) : (post.slug ? 'articulos/plantilla.html?slug='+encodeURIComponent(post.slug) : '#');
         const absoluteUrl = new URL(href, window.location.href).href;
-        return '<article class="card">'+image+'<div class="cardbody"><span class="tag">'+safe(post.categoria_label || post.categoria)+'</span><h3>'+safe(post.titulo)+'</h3><p>'+safe(post.resumen)+'</p><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a class="read" href="'+href+'">Leer artículo →</a><button type="button" class="share-post" data-share-url="'+safe(absoluteUrl)+'" data-share-title="'+safe(post.titulo)+'" style="border:1px solid #A87853;border-radius:999px;padding:8px 13px;color:#563B30;font-weight:700;background:#fff">↗ Compartir</button></div></div></article>';
+        return '<article class="card">'+image+'<div class="cardbody"><span class="tag">'+safe(post.categoria_label || post.categoria)+'</span><h3>'+safe(post.titulo)+'</h3><p>'+safe(post.resumen)+'</p><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a class="read" data-article-slug="'+safe(post.slug)+'" data-article-category="'+safe(post.categoria)+'" href="'+href+'">Leer artículo →</a><button type="button" class="share-post" data-share-url="'+safe(absoluteUrl)+'" data-share-title="'+safe(post.titulo)+'" data-article-slug="'+safe(post.slug)+'" style="border:1px solid #A87853;border-radius:999px;padding:8px 13px;color:#563B30;font-weight:700;background:#fff">↗ Compartir</button></div></div></article>';
       }).join('');
       countEl.textContent = filtered.length+' de '+publications.length+' publicaciones';
       emptyEl.hidden = publications.length !== 0;
@@ -119,9 +127,20 @@
       }catch(error){if(error && error.name!=='AbortError')window.prompt('Copia este enlace para compartir:',url);}
     }
     postsEl.addEventListener('click',event=>{
-      const button=event.target.closest('[data-share-url]');if(!button)return;
-      event.preventDefault();event.stopPropagation();
-      sharePost(button.dataset.shareTitle,button.dataset.shareUrl);
+      const shareButton=event.target.closest('[data-share-url]');
+      if(shareButton){
+        event.preventDefault();event.stopPropagation();
+        if(typeof gtag==='function')gtag('event','share',{method:'blog_index',content_type:'article',article_slug:shareButton.dataset.articleSlug});
+        sharePost(shareButton.dataset.shareTitle,shareButton.dataset.shareUrl);return;
+      }
+      const articleLink=event.target.closest('[data-article-slug]');
+      if(articleLink && typeof gtag==='function')gtag('event','article_select',{content_type:'article',content_category:articleLink.dataset.articleCategory,article_slug:articleLink.dataset.articleSlug,click_location:'blog_index'});
+    });
+    document.getElementById('category').addEventListener('change',event=>{
+      if(typeof gtag==='function')gtag('event','category_filter',{content_category:event.target.value||'all',click_location:'blog_index'});
+    });
+    document.getElementById('search').addEventListener('keydown',event=>{
+      if(event.key==='Enter' && typeof gtag==='function')gtag('event','search',{search_term:event.target.value,search_location:'blog_index'});
     });
 
     document.getElementById('search').addEventListener('input',renderPosts);
