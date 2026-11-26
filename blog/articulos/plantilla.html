@@ -15,6 +15,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5E12088DEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5E12088DEN');
+  </script>
   <style>
     :root{--cream:#F4EBDD;--chocolate:#563B30;--caramel:#A87853;--olive:#899078;--paper:#fbf8f2;--line:#a8785333}
     *{box-sizing:border-box}
@@ -137,7 +145,26 @@
         '<aside class="brand-note"><h2>El universo Tasty Pastries</h2><p>'+esc(brandMessage)+'</p></aside>'+
         relatedMarkup(post,posts)+
         '<section class="end-cta"><h2>Sigamos descubriendo sabores</h2><p>Encuentra más ideas, recetas y novedades en nuestro blog y acompáñanos en Instagram.</p><div class="cta-links"><a href="'+esc(instagram)+'" target="_blank" rel="noopener noreferrer">Seguir en Instagram</a><a class="secondary" href="../">Explorar el blog</a><a class="secondary" href="../../#catalogo">Conocer nuestros productos</a></div></section>';
-      document.getElementById('share-article').addEventListener('click',()=>shareArticle(post.titulo));
+      if(typeof gtag==='function')gtag('event','article_view',{content_type:'article',content_category:post.categoria||'uncategorized',article_slug:post.slug,article_title:post.titulo});
+      document.getElementById('article').addEventListener('click',event=>{
+        const link=event.target.closest('a');
+        if(!link)return;
+        const href=link.getAttribute('href')||'';
+        const loc=link.closest('.related')?'related_articles':link.closest('.end-cta')?'article_footer':link.closest('.content')?'article_content':'article_other';
+        if(/wa\.me|api\.whatsapp\.com/i.test(href)){
+          if(typeof gtag==='function')gtag('event','whatsapp_click',{content_type:'article',content_category:post.categoria||'uncategorized',article_slug:post.slug,click_location:loc});
+        }else if(/#catalogo|catalog/i.test(href)){
+          if(typeof gtag==='function')gtag('event','catalog_click',{content_type:'article',content_category:post.categoria||'uncategorized',article_slug:post.slug,click_location:loc});
+        }else if(link.closest('.related')){
+          if(typeof gtag==='function')gtag('event','article_related_click',{content_category:post.categoria||'uncategorized',article_slug:post.slug,click_location:loc});
+        }else if(link.closest('.content') && link.hostname!==location.hostname){
+          if(typeof gtag==='function')gtag('event','outbound_content_click',{content_category:post.categoria||'uncategorized',article_slug:post.slug,click_location:loc,link_url:href});
+        }
+      });
+      document.getElementById('share-article').addEventListener('click',()=>{
+        if(typeof gtag==='function')gtag('event','share',{method:'article_page',content_type:'article',content_category:post.categoria||'uncategorized',article_slug:post.slug});
+        shareArticle(post.titulo);
+      });
     }).catch(()=>{
       document.getElementById('article').innerHTML='<div class="not-found"><p class="eyebrow">Blog Tasty Pastries</p><h1>Este artículo todavía no está disponible</h1><p>Puede que el enlace no sea correcto o que la publicación esté en preparación.</p><a href="../">Volver al blog</a></div>';
     });
